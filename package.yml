@@ -1,0 +1,8 @@
+package: 2factor_auth
+version: '1.0.0-beta1'
+author: 'Markus Staab'
+
+requires:
+    php:
+        version: '^7.1'
+    redaxo: ^5.7.0-beta1

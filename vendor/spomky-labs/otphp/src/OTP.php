@@ -129,6 +129,7 @@ abstract class OTP implements OTPInterface
             $result[] = chr($int & 0xFF);
             $int >>= 8;
         }
+        
         return str_pad(implode(array_reverse($result)), 8, "\000", STR_PAD_LEFT);
     }
 

@@ -4,13 +4,14 @@ echo rex_view::title(rex_i18n::msg('2factor_auth_login'), '');
 
 $otp = rex_post('rex_login_otp', 'string');
 
-
 $message = '';
 if ($otp) {
     if (rex_one_time_password::getInstance()->verify($otp)) {
-        rex_view::success('Passt');
+        $message = rex_view::success('Passt');
+
+        rex_response::sendRedirect('?ok');
     } else {
-        rex_view::warning('Falsches one-time-password, bitte erneut versuchen');
+        $message = rex_view::warning('Falsches one-time-password, bitte erneut versuchen');
     }
 }
 

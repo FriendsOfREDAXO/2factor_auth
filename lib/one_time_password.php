@@ -1,5 +1,6 @@
 <?php
 use OTPHP\TOTP;
+use OTPHP\Factory;
 
 final class rex_one_time_password {
     use rex_singleton_trait;
@@ -19,19 +20,18 @@ final class rex_one_time_password {
     }
 
     private function totp() {
-        $secret = "EZUQQQILCA4C4EL7LRV6O5G4SVOT5D7TBGHDARVM3QTWD4PM7LZBVTCLD4VLQBJSFYU2II32A42TZDXNFJ2RJZKNBIJB6V3N6VNIUCY";
-        $otp = TOTP::create($secret);
-        $user = rex::getUser();
-        $otp->setLabel($user->getLogin().'@'.rex::getServername() . ' ('. $_SERVER['HTTP_HOST'] .')');
-        return $otp;
+        $uri = rex_one_time_password_config::forCurrentUser()->provisioningUri;
+
+        // re-create from an existant uri
+        return Factory::loadFromProvisioningUri($uri);
     }
 
-    static public function verified() {
+    public function verified() {
         return rex_session('otp_verified', 'boolean', false);
     }
 
-    static public function required() {
-        // TODO
-        return true;
+    public function enabled()
+    {
+        return rex_one_time_password_config::forCurrentUser()->enabled;
     }
 }

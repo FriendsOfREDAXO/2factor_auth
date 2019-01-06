@@ -1,25 +1,8 @@
 <?php
-use OTPHP\TOTP;
 
 echo rex_view::title(rex_i18n::msg('2factor_auth_setup'), '');
 
 $uri = rex_one_time_password::getInstance()->getProvisioningUri();
-/*
-$secret = "EZUQQQILCA4C4EL7LRV6O5G4SVOT5D7TBGHDARVM3QTWD4PM7LZBVTCLD4VLQBJSFYU2II32A42TZDXNFJ2RJZKNBIJB6V3N6VNIUCY";
-$otp = TOTP::create($secret);
-$user = rex::getUser();
-$otp->setLabel($user->getLogin().'@'.rex::getServername() . ' ('. $_SERVER['HTTP_HOST'] .')');
-echo 'The current OTP is: '.$otp->now();
-$uri = $otp->getProvisioningUri();
-dump($uri);
-
-dump($otp->verify('539450'));
-
-$googleChartUri = $otp->getQrCodeUri();
-// echo "<img src='{$googleChartUri}'>";
-
-//rex_view::addJsFile($this->getAssetsUrl('qrious.min.js'))
-*/
 
 ?>
     <input type="hidden" value="<?php echo $uri; ?>" id="2fa-uri">
@@ -35,4 +18,3 @@ $googleChartUri = $otp->getQrCodeUri();
     </script>
 
 <?php
-exit();

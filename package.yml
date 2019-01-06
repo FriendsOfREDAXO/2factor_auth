@@ -5,7 +5,6 @@ author: 'Markus Staab'
 pages:
     2factor_auth_setup:
         title: '2 Faktor Setup'
-        hasNavigation: false
         main: true
         icon: rex-icon rex-icon-install
         path: pages/setup.php

@@ -9,7 +9,13 @@ final class rex_one_time_password {
     }
 
     public function verify($otp) {
-        return $this->totp()->verify($otp);
+        $verified = $this->totp()->verify($otp);
+
+        if ($verified) {
+            rex_set_session('otp_verified', true);
+        }
+
+        return $verified;
     }
 
     private function totp() {
@@ -18,5 +24,14 @@ final class rex_one_time_password {
         $user = rex::getUser();
         $otp->setLabel($user->getLogin().'@'.rex::getServername() . ' ('. $_SERVER['HTTP_HOST'] .')');
         return $otp;
+    }
+
+    static public function verified() {
+        return rex_session('otp_verified', 'boolean', false);
+    }
+
+    static public function required() {
+        // TODO
+        return true;
     }
 }

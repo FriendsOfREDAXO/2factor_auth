@@ -2,21 +2,21 @@ package: 2factor_auth
 version: '1.0.0-beta1'
 author: 'Markus Staab'
 
-page:
-    title: 'dummy'
-    hidden: true
-
 pages:
-    setup:
+    2factor_auth_setup:
         title: '2 Faktor setup'
         hasNavigation: false
+        main: true
         path: pages/setup.php
-    login:
-        title: '2 Faktor login'
+    2factor_auth_verify:
+        title: '2 Faktor verify'
         hasNavigation: false
-        path: pages/login.php
+        main: true
+        path: pages/verify.php
 
 requires:
     php:
         version: '^7.1'
     redaxo: ^5.7.0-beta1
+
+load: early

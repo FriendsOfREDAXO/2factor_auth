@@ -4,14 +4,16 @@ author: 'Markus Staab'
 
 pages:
     2factor_auth_setup:
-        title: '2 Faktor setup'
+        title: '2 Faktor Setup'
         hasNavigation: false
         main: true
+        icon: rex-icon rex-icon-install
         path: pages/setup.php
     2factor_auth_verify:
-        title: '2 Faktor verify'
+        title: '2 Faktor Verifizierung'
         hasNavigation: false
         main: true
+        hidden: true
         path: pages/verify.php
 
 requires:

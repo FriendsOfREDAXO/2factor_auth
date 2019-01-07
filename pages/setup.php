@@ -7,6 +7,11 @@ $func = rex_request('func', 'string');
 
 $otp = rex_one_time_password::getInstance();
 
+if ($func && !$csrfToken->isValid()) {
+    echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
+    $func = '';
+}
+
 if ($func === 'disable') {
     $config = rex_one_time_password_config::loadFromDb();
     $config->disable();

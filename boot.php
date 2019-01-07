@@ -10,4 +10,3 @@ if (rex::isBackend() && rex::getUser()) {
         }
     }
 }
-

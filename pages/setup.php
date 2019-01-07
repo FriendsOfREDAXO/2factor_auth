@@ -2,7 +2,7 @@
 
 echo rex_view::title(rex_i18n::msg('2factor_auth_setup'), '');
 
-$csrfToken = rex_csrf_token::factory('2factor_auth');
+$csrfToken = rex_csrf_token::factory('2factor_auth_setup');
 $func = rex_request('func', 'string');
 
 $otp = rex_one_time_password::getInstance();

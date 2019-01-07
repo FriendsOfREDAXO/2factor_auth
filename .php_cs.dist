@@ -1,0 +1,36 @@
+<?php
+
+return PhpCsFixer\Config::create()
+    ->setUsingCache(true)
+    ->setRiskyAllowed(true)
+    ->setRules([
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
+        'array_indentation' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'blank_line_before_statement' => false,
+        'braces' => ['allow_single_line_closure' => false],
+        'concat_space' => false,
+        'function_to_constant' => ['functions' => ['get_class', 'get_called_class', 'php_sapi_name', 'phpversion', 'pi']],
+        'heredoc_to_nowdoc' => true,
+        'logical_operators' => true,
+        'native_constant_invocation' => false,
+        'no_blank_lines_after_phpdoc' => false,
+        'no_php4_constructor' => true,
+        'no_superfluous_elseif' => true,
+        'no_unneeded_final_method' => false,
+        'no_unreachable_default_argument_value' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'phpdoc_annotation_without_dot' => false,
+        'phpdoc_no_package' => false,
+        'phpdoc_to_comment' => false,
+        'phpdoc_trim_consecutive_blank_line_separation' => true,
+        'phpdoc_var_without_name' => false,
+        'psr4' => false,
+        'semicolon_after_instruction' => false,
+        'space_after_semicolon' => true,
+        'string_line_ending' => true,
+        'yoda_style' => false,
+    ])
+;

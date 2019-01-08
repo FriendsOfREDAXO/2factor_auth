@@ -31,9 +31,16 @@ if ($otp->enabled()) {
     } elseif ($func === 'setup') {
         $config = rex_one_time_password_config::loadFromDb();
         $uri = $config->provisioningUri; ?>
-        <input type="hidden" value="<?php echo $uri; ?>" id="2fa-uri">
+        <input type="text" value="<?php echo $uri; ?>" id="2fa-uri" readonly>
+        <clipboard-copy for="2fa-uri" class="">
+            Copy
+        </clipboard-copy>
+        <div id="notice" hidden>Copied to clipboard</div>
+
+        <br /><br />
 
         <canvas id="qr-code"></canvas>
+
         <script src="<?php echo $this->getAssetsUrl('qrious.min.js'); ?>"></script>
         <script>
             new QRious({
@@ -41,6 +48,24 @@ if ($otp->enabled()) {
                 value: document.getElementById("2fa-uri").value,
                 size: 300
             });
+        </script>
+
+
+        <style>
+            clipboard-copy {
+                border: 2px solid black;
+                cursor: default;
+            }
+        </style>
+        <script src="<?php echo $this->getAssetsUrl('clipboard-copy-element.js'); ?>"></script>
+        <script>
+            document.addEventListener('copy', function() {
+                const notice = document.getElementById('notice')
+                notice.hidden = false
+                setTimeout(function() {
+                    notice.hidden = true
+                }, 1000)
+            })
         </script>
 
         <?php

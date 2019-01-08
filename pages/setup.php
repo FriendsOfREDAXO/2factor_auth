@@ -15,6 +15,8 @@ if ($func && !$csrfToken->isValid()) {
 if ($func === 'disable') {
     $config = rex_one_time_password_config::loadFromDb();
     $config->disable();
+
+    $func = '';
 }
 
 if ($otp->enabled()) {

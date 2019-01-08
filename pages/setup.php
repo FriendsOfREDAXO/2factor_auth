@@ -30,9 +30,7 @@ if ($otp->enabled()) {
         echo '<p><a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup'] + $csrfToken->getUrlParams()) . '">' . rex_i18n::msg('2factor_auth_setup') . '</a></p>';
     } elseif ($func === 'setup') {
         $config = rex_one_time_password_config::loadFromDb();
-        $uri = $config->provisioningUri;
-
-        ?>
+        $uri = $config->provisioningUri; ?>
         <input type="hidden" value="<?php echo $uri; ?>" id="2fa-uri">
 
         <canvas id="qr-code"></canvas>
@@ -63,9 +61,7 @@ if ($otp->enabled()) {
             }
         }
 
-        echo $message;
-
-        ?>
+        echo $message; ?>
         <form method="post">
             <?php echo $csrfToken->getHiddenField(); ?>
             <input type="hidden" name="page" value="2factor_auth_setup"/>
@@ -74,7 +70,6 @@ if ($otp->enabled()) {
             <input type="submit"/>
         </form>
         <?php
-
     } else {
         throw new Exception('unknown state');
     }

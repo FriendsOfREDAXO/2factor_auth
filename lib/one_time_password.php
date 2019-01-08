@@ -1,15 +1,19 @@
 <?php
+
 use OTPHP\TOTP;
 use OTPHP\Factory;
 
-final class rex_one_time_password {
+final class rex_one_time_password
+{
     use rex_singleton_trait;
 
-    public function getProvisioningUri() {
+    public function getProvisioningUri()
+    {
         return $this->totp()->getProvisioningUri();
     }
 
-    public function verify($otp) {
+    public function verify($otp)
+    {
         $verified = $this->totp()->verify($otp);
 
         if ($verified) {
@@ -19,14 +23,16 @@ final class rex_one_time_password {
         return $verified;
     }
 
-    private function totp() {
+    private function totp()
+    {
         $uri = rex_one_time_password_config::forCurrentUser()->provisioningUri;
 
         // re-create from an existant uri
         return Factory::loadFromProvisioningUri($uri);
     }
 
-    public function verified() {
+    public function verified()
+    {
         return rex_session('otp_verified', 'boolean', false);
     }
 

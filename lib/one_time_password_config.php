@@ -1,4 +1,5 @@
 <?php
+
 use OTPHP\TOTP;
 
 final class rex_one_time_password_config
@@ -6,12 +7,14 @@ final class rex_one_time_password_config
     public $provisioningUri = null;
     public $enabled = false;
 
-    static public function forCurrentUser() {
+    public static function forCurrentUser()
+    {
         $user = rex::getUser();
         return self::fromJson($user->getValue('one_time_password_config'));
     }
 
-    static public function loadFromDb() {
+    public static function loadFromDb()
+    {
         $user = rex::getUser();
 
         // get non-cached values
@@ -26,7 +29,8 @@ final class rex_one_time_password_config
         return $config;
     }
 
-    static private function fromJson($json) {
+    private static function fromJson($json)
+    {
         if ($json) {
             $configArr = json_decode($json, true);
 
@@ -57,20 +61,23 @@ final class rex_one_time_password_config
         }
     }
 
-    public function enable() {
+    public function enable()
+    {
         $this->init();
         $this->enabled = true;
 
         return $this->save();
     }
 
-    public function disable() {
+    public function disable()
+    {
         $this->enabled = false;
 
         return $this->save();
     }
 
-    private function save() {
+    private function save()
+    {
         $user = rex::getUser();
 
         $userSql = rex_sql::factory();

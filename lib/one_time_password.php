@@ -1,8 +1,10 @@
 <?php
 
-use OTPHP\TOTP;
 use OTPHP\Factory;
 
+/**
+ * @internal
+ */
 final class rex_one_time_password
 {
     use rex_singleton_trait;

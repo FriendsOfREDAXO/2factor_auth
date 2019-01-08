@@ -2,6 +2,9 @@
 
 use OTPHP\TOTP;
 
+/**
+ * @internal
+ */
 final class rex_one_time_password_config
 {
     public $provisioningUri = null;

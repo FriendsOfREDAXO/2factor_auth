@@ -63,11 +63,12 @@ if ($otp->enabled()) {
 
         echo $message; ?>
         <form method="post">
+            <p>Setup mittels einmal passwort bestätigen</p>
             <?php echo $csrfToken->getHiddenField(); ?>
             <input type="hidden" name="page" value="2factor_auth_setup"/>
             <input type="hidden" name="func" value="verify"/>
             <input type="text" name="rex_login_otp"/>
-            <input type="submit"/>
+            <input type="submit" value="Bestätigen" />
         </form>
         <?php
     } else {

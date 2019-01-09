@@ -18,6 +18,6 @@ pages:
 requires:
     php:
         version: '^7.1'
-    redaxo: ^5.7.0-beta1
+    redaxo: ^5.7.0-beta2
 
 load: early

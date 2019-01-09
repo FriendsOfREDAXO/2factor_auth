@@ -1,6 +1,6 @@
 <?php
 
-echo rex_view::title(rex_i18n::msg('2factor_auth_setup'), '');
+echo rex_view::title($this->i18n('page_setup'), '');
 
 $csrfToken = rex_csrf_token::factory('2factor_auth_setup');
 $func = rex_request('func', 'string');
@@ -20,14 +20,14 @@ if ($func === 'disable') {
 }
 
 if ($otp->enabled()) {
-    echo rex_view::info('2 Faktor Authentifizierung ist aktiviert');
+    echo rex_view::info($this->i18n('2fa_active'));
 
-    echo '<p><a class="btn btn-delete" href="' . rex_url::currentBackendPage(['func' => 'disable'] + $csrfToken->getUrlParams()) . '">' . rex_i18n::msg('2factor_auth_disable') . '</a></p>';
+    echo '<p><a class="btn btn-delete" href="' . rex_url::currentBackendPage(['func' => 'disable'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_disable') . '</a></p>';
 } else {
-    echo rex_view::info('2 Faktor Authentifizierung ist deaktiviert');
+    echo rex_view::info($this->i18n('2fa_inactive'));
 
     if (empty($func)) {
-        echo '<p><a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup'] + $csrfToken->getUrlParams()) . '">' . rex_i18n::msg('2factor_auth_setup') . '</a></p>';
+        echo '<p><a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup') . '</a></p>';
     } elseif ($func === 'setup') {
         $config = rex_one_time_password_config::loadFromDb();
         $uri = $config->provisioningUri; ?>
@@ -70,30 +70,30 @@ if ($otp->enabled()) {
 
         <?php
 
-        echo '<p><a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'verify'] + $csrfToken->getUrlParams()) . '">' . rex_i18n::msg('2factor_auth_setup_verify') . '</a></p>';
+        echo '<p><a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'verify'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup_verify') . '</a></p>';
     } elseif ($func === 'verify') {
         $otp = rex_post('rex_login_otp', 'string', null);
 
         $message = '';
         if ($otp !== null) {
             if (rex_one_time_password::getInstance()->verify($otp)) {
-                $message = rex_view::success('Passt');
+                $message = rex_view::success($this->i18n('2fa_setup_successfull'));
 
                 $config = rex_one_time_password_config::loadFromDb();
                 $config->enable();
             } else {
-                $message = rex_view::warning('Falsches one-time-password, bitte erneut versuchen');
+                $message = rex_view::warning($this->i18n('2fa_wrong_opt'));
             }
         }
 
         echo $message; ?>
         <form method="post">
-            <p>Setup mittels einmal passwort bestätigen</p>
+            <p><?php echo $this->i18n('2fa_verify_headline'); ?></p>
             <?php echo $csrfToken->getHiddenField(); ?>
             <input type="hidden" name="page" value="2factor_auth_setup"/>
             <input type="hidden" name="func" value="verify"/>
             <input type="text" name="rex_login_otp"/>
-            <input type="submit" value="Bestätigen" />
+            <input type="submit" value="<?php echo $this->i18n('2fa_verify_action'); ?>" />
         </form>
         <?php
     } else {

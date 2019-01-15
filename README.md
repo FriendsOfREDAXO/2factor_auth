@@ -13,7 +13,7 @@ Mit diesem Addon wird der Login in das REDAXO durch einen zweiten Authentifizier
 
 ## Einrichtung
 
-Als Authentifikator-Apps stehen alle Apps zur Verfügung, die den OTP-Standard einhalten, z.B.
+Als Authentifikator-Apps stehen alle Apps zur Verfügung, die den OTP-Standard einhalten, zum Beispiel
 
 Umgebung    | App                    | Hilfe
 ----------- | ---------------------- | -----

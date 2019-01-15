@@ -6,7 +6,7 @@ Mit diesem Addon wird der Login in das REDAXO durch einen zweiten Authentifizier
 ## Installation
 
 1. Unter https://github.com/FriendsOfREDAXO/2factor_auth/ Download als ZIP-Datei
-2. In `/redaxo/src/addons/` kopieren und von `2factor_auth-master` in `2factor_auth` umbennenn
+2. In `/redaxo/src/addons/` kopieren und von `2factor_auth-master` in `2factor_auth` umbennenen
 3. Im REDAXO-Backend unter AddOns installieren und aktivieren
 
 > Das Addon befindet sich in der Entwicklung. Wenn das Addon releasefähig ist, wird es auch im Installer angeboten.

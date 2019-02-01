@@ -29,6 +29,8 @@ Zunächst muss eine der Apps installiert sein, um die Einrichtung abzuschließen
 2. Die 2-Faktor-Einrichtung aktivieren. Es wird ein QR-Code dargestellt.
 3. Den QR-Code in der Authentifikator-App einlesen. 
 
+> Hinweis: Manche OTP-Apps benötigen den manuellen Modus. Hierbei gilt: Name = `Name der Website`; Benutzer = `REDAXO-Benutzername`; Secret = `Secret-Schlüssel`
+
 Damit ist die Einrichtung abgeschlossen.
 
 ## Verwendung

@@ -1,5 +1,5 @@
 # 2-Faktor-Authentifizierung für REDAXO CMS >5.7
-🐣 2-Faktor-Authentifizierung mittels one-time-password (OTP)
+2-Faktor-Authentifizierung mittels one-time-password (OTP)
 
 Mit diesem Addon wird der Login in das REDAXO durch einen zweiten Authentifizierungsweg abgesichert.
 

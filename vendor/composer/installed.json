@@ -122,17 +122,17 @@
     },
     {
         "name": "spomky-labs/otphp",
-        "version": "v9.1.3",
-        "version_normalized": "9.1.3.0",
+        "version": "v9.1.4",
+        "version_normalized": "9.1.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/Spomky-Labs/otphp.git",
-            "reference": "68c70d3b5bf6e851d44651af7de5a0b171bb3d11"
+            "reference": "48d463cf909320399fe08eab2e1cd18d899d5068"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Spomky-Labs/otphp/zipball/68c70d3b5bf6e851d44651af7de5a0b171bb3d11",
-            "reference": "68c70d3b5bf6e851d44651af7de5a0b171bb3d11",
+            "url": "https://api.github.com/repos/Spomky-Labs/otphp/zipball/48d463cf909320399fe08eab2e1cd18d899d5068",
+            "reference": "48d463cf909320399fe08eab2e1cd18d899d5068",
             "shasum": ""
         },
         "require": {
@@ -144,7 +144,7 @@
             "phpunit/phpunit": "^6.0",
             "satooshi/php-coveralls": "^1.0"
         },
-        "time": "2019-01-06T14:05:41+00:00",
+        "time": "2019-03-18T10:08:51+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {

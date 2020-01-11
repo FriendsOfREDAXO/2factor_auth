@@ -14,7 +14,11 @@ pages:
         main: true
         hidden: true
         path: pages/verify.php
-
+    2factor_auth_help: 
+        title: Hilfe
+        SubPath: README.md
+        itemclass: pull-right 
+        
 requires:
     php:
         version: '^7.1'

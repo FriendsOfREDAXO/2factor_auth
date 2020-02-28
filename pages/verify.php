@@ -23,11 +23,11 @@ if ($otp) {
 
 echo $message;
 ?>
-<form method="post">
+<form method="post" autocomplete="off">
     <p>Login mittels einmal passwort bestätigen</p>
     <?php echo $csrfToken->getHiddenField(); ?>
     <input type="hidden" name="page" value="2factor_auth_verify"/>
-    <input type="text" name="rex_login_otp"/>
+    <input type="text" name="rex_login_otp" />
     <input type="submit" value="Anmelden" />
 </form>
 

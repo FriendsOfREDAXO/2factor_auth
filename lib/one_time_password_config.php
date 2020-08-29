@@ -75,6 +75,7 @@ final class rex_one_time_password_config
     public function disable()
     {
         $this->enabled = false;
+        $this->provisioningUri = null;
 
         return $this->save();
     }

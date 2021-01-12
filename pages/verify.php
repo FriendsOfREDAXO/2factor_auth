@@ -27,7 +27,7 @@ echo $message;
     <p>Login mittels einmal passwort bestätigen</p>
     <?php echo $csrfToken->getHiddenField(); ?>
     <input type="hidden" name="page" value="2factor_auth_verify"/>
-    <input type="text" name="rex_login_otp" />
+    <input type="text" name="rex_login_otp" autocomplete="one-time-code" />
     <input type="submit" value="Anmelden" />
 </form>
 

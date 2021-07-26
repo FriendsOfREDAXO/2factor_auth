@@ -10,3 +10,6 @@ if (rex::isBackend() && rex::getUser()) {
         }
     }
 }
+
+rex_view::addJsFile($this->getAssetsUrl('qrious.min.js'));
+rex_view::addJsFile($this->getAssetsUrl('clipboard-copy-element.js'));

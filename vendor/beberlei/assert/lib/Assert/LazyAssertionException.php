@@ -23,10 +23,8 @@ class LazyAssertionException extends InvalidArgumentException
 
     /**
      * @param InvalidArgumentException[] $errors
-     *
-     * @return self
      */
-    public static function fromErrors(array $errors)
+    public static function fromErrors(array $errors): self
     {
         $message = \sprintf('The following %d assertions failed:', \count($errors))."\n";
 
@@ -45,7 +43,10 @@ class LazyAssertionException extends InvalidArgumentException
         $this->errors = $errors;
     }
 
-    public function getErrorExceptions()
+    /**
+     * @return InvalidArgumentException[]
+     */
+    public function getErrorExceptions(): array
     {
         return $this->errors;
     }

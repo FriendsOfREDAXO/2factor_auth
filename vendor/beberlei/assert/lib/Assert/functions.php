@@ -20,6 +20,10 @@ namespace Assert;
  * The invocation of this method starts an assertion chain
  * that is happening on the passed value.
  *
+ * @param mixed $value
+ * @param string|callable|null $defaultMessage
+ * @param string $defaultPropertyPath
+ *
  * @example
  *
  *  \Assert\that($value)->notEmpty()->integer();
@@ -27,14 +31,8 @@ namespace Assert;
  *
  * The assertion chain can be stateful, that means be careful when you reuse
  * it. You should never pass around the chain.
- *
- * @param mixed  $value
- * @param string $defaultMessage
- * @param string $defaultPropertyPath
- *
- * @return \Assert\AssertionChain
  */
-function that($value, $defaultMessage = null, $defaultPropertyPath = null)
+function that($value, $defaultMessage = null, string $defaultPropertyPath = null): AssertionChain
 {
     return Assert::that($value, $defaultMessage, $defaultPropertyPath);
 }
@@ -42,13 +40,11 @@ function that($value, $defaultMessage = null, $defaultPropertyPath = null)
 /**
  * Start validation on a set of values, returns {@link AssertionChain}.
  *
- * @param mixed  $values
- * @param string $defaultMessage
+ * @param mixed $values
+ * @param string|callable|null $defaultMessage
  * @param string $defaultPropertyPath
- *
- * @return \Assert\AssertionChain
  */
-function thatAll($values, $defaultMessage = null, $defaultPropertyPath = null)
+function thatAll($values, $defaultMessage = null, string $defaultPropertyPath = null): AssertionChain
 {
     return Assert::thatAll($values, $defaultMessage, $defaultPropertyPath);
 }
@@ -56,25 +52,21 @@ function thatAll($values, $defaultMessage = null, $defaultPropertyPath = null)
 /**
  * Start validation and allow NULL, returns {@link AssertionChain}.
  *
- * @param mixed  $value
- * @param string $defaultMessage
+ * @param mixed $value
+ * @param string|callable|null $defaultMessage
  * @param string $defaultPropertyPath
- *
- * @return \Assert\AssertionChain
  *
  * @deprecated In favour of Assert::thatNullOr($value, $defaultMessage = null, $defaultPropertyPath = null)
  */
-function thatNullOr($value, $defaultMessage = null, $defaultPropertyPath = null)
+function thatNullOr($value, $defaultMessage = null, string $defaultPropertyPath = null): AssertionChain
 {
     return Assert::thatNullOr($value, $defaultMessage, $defaultPropertyPath);
 }
 
 /**
  * Create a lazy assertion object.
- *
- * @return \Assert\LazyAssertion
  */
-function lazy()
+function lazy(): LazyAssertion
 {
     return Assert::lazy();
 }

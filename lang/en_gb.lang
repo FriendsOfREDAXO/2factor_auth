@@ -1,0 +1,12 @@
+2factor_auth_page_setup = Set up 2 factor authentication
+2factor_auth_2fa_active = 2 factor authentication is activated
+2factor_auth_2fa_inactive = 2 factor authentication is deactivated
+2factor_auth_2fa_disable = Deactivate 2 factor authentication
+2factor_auth_2fa_setup = Start setup
+2factor_auth_2fa_setup_verify = Verify settings
+2factor_auth_2fa_setup_successfull = 2 factor authentication set up successfully
+2factor_auth_2fa_wrong_opt = Wrong one-time password, please try again
+2factor_auth_2fa_verify_headline = Confirm setup using one-time password
+2factor_auth_2fa_verify_action = Confirm
+
+2factor_auth_login = Start the authentication app and enter the code

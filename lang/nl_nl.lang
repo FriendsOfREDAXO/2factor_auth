@@ -1,0 +1,12 @@
+2factor_auth_page_setup = Stel 2-factor authenticatie in
+2factor_auth_2fa_active = 2-factor authenticatie is geactiveerd
+2factor_auth_2fa_inactive = 2-factor authenticatie is gedeactiveerd
+2factor_auth_2fa_disable = 2-factor authenticatie deactiveren
+2factor_auth_2fa_setup = Start de installatie
+2factor_auth_2fa_setup_verify = Controleer instellingen
+2factor_auth_2fa_setup_successfull = 2-factor authenticatie succesvol ingesteld
+2factor_auth_2fa_wrong_opt = Verkeerd eenmalig wachtwoord, probeer het opnieuw
+2factor_auth_2fa_verify_headline = Bevestig de installatie met een eenmalig wachtwoord
+2factor_auth_2fa_verify_action = Bevestigen
+
+2factor_auth_login = Start de authenticatie-app en voer de code in

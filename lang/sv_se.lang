@@ -1,0 +1,12 @@
+2factor_auth_page_setup = Ställ in tvåfaktorsautentisering
+2factor_auth_2fa_active = Tvåfaktorsautentisering är aktiverad
+2factor_auth_2fa_inactive = Tvåfaktorsautentisering är deaktiverad
+2factor_auth_2fa_disable = Deaktivera tvåfaktorsautentisering
+2factor_auth_2fa_setup = Starta setup
+2factor_auth_2fa_setup_verify = Verifiera inställningarna
+2factor_auth_2fa_setup_successfull = Tvåfaktorsautentisering konfigurerad
+2factor_auth_2fa_wrong_opt = Felaktig engångslösenord, försök igen
+2factor_auth_2fa_verify_headline = Bekräfta installationen med ett engångslösenord
+2factor_auth_2fa_verify_action = Bekräfta
+
+2factor_auth_login =  Starta autentiseringsappen och ange koden

@@ -82,13 +82,28 @@ final class rex_one_time_password_config
 
     private function save()
     {
+        $recovery_codes = self::generateRecoveryCodes();
         $user = rex::getUser();
 
         $userSql = rex_sql::factory();
         $userSql->setTable(rex::getTablePrefix() . 'user');
         $userSql->setWhere(['id' => $user->getId()]);
         $userSql->setValue('one_time_password_config', json_encode(['provisioningUri' => $this->provisioningUri, 'enabled' => $this->enabled]));
+        $userSql->setValue('one_time_password_recovery_code', implode(",",self::generateRecoveryCodes()));
         $userSql->addGlobalUpdateFields();
         return $userSql->update();
+    }
+    
+    private static function generateRecoveryCode() {
+        return bin2hex(random_bytes(16));
+    }
+
+    public static function generateRecoveryCodes($total = 10) :array {
+        
+        $codes = [];
+        for($i; $i++; $i < $total) {
+            $codes[self::generateRecoveryCode()] = rex_login::passwordHash(self::generateRecoveryCode());
+        }
+        return $codes;
     }
 }

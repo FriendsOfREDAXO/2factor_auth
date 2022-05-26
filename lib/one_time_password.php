@@ -42,4 +42,16 @@ final class rex_one_time_password
     {
         return rex_one_time_password_config::forCurrentUser()->enabled;
     }
+
+    public static function install() {
+        $config = rex_string::yamlDecode(rex_file::get(rex_path::coreData("config.yml")));
+
+        if (!array_search("2factor_auth", $config['setup_addons'])) {
+            $config['setup_addons'][] = "2factor_auth";
+            dump($config);
+        }
+
+        rex_file::put(rex_path::coreData("config.yml"), rex_string::yamlEncode($config));
+        return;
+    }
 }

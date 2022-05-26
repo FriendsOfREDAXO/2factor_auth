@@ -55,7 +55,8 @@ final class rex_one_time_password_config
             $otp = TOTP::create();
             // the label rendered in "Google Authenticator" or similar app
             $otp->setIssuer(str_replace(':', '_', $user->getLogin()));
-            $otp->setLabel(rex::getServer());
+            $otp->setLabel(str_replace(':', '_', rex::getServer()));
+            
             $this->provisioningUri = $otp->getProvisioningUri();
 
             $this->save();

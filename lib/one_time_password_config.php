@@ -57,6 +57,9 @@ final class rex_one_time_password_config
             $label = $user->getLogin() . '@' . rex::getServername() . ' (' . $_SERVER['HTTP_HOST'] . ')';
             $label = str_replace(':', '_', $label); // colon is forbidden
             $otp->setLabel($label);
+            if(rex_config::get('2factor_auth', 'image')) {
+                $otp->setParameter('image', rex_config::get('2factor_auth', 'image_url') ?? "");
+            }
 
             $this->provisioningUri = $otp->getProvisioningUri();
 

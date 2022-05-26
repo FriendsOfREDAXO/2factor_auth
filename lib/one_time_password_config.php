@@ -56,6 +56,11 @@ final class rex_one_time_password_config
             // the label rendered in "Google Authenticator" or similar app
             $otp->setIssuer(str_replace(':', '_', $user->getLogin()));
             $otp->setLabel(rex::getServer());
+
+          if(rex_config::get('2factor_auth', 'image')) {
+                $otp->setParameter('image', rex_config::get('2factor_auth', 'image_url') ?? "");
+            }
+
             $this->provisioningUri = $otp->getProvisioningUri();
 
             $this->save();

@@ -21,4 +21,8 @@ requires:
         version: '>=7.1'
     redaxo: ^5.7.0
 
+default_config:
+    image: false
+    image_url: https://raw.githubusercontent.com/FriendsOfREDAXO/friendsofredaxo.github.io/assets/v2/FOR-avatar-01.png
+
 load: early

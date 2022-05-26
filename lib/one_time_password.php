@@ -48,7 +48,6 @@ final class rex_one_time_password
 
         if (!array_search("2factor_auth", $config['setup_addons'])) {
             $config['setup_addons'][] = "2factor_auth";
-            dump($config);
         }
 
         rex_file::put(rex_path::coreData("config.yml"), rex_string::yamlEncode($config));

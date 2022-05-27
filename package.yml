@@ -1,21 +1,23 @@
 package: 2factor_auth
 version: '2.0.0-dev'
-author: Friends Of REDAXO
-supportpage: https://github.com/FriendsOfREDAXO/2factor_auth
+author: 'Markus Staab'
+
+page:
+    title: '2FA'
+    subpages:
+        setup:
+            title: 'Setup'
+        docs:
+            title: Help
+            subPath: README.md
 
 pages:
-    2factor_auth_setup:
-        title: '2 Faktor Setup'
-        main: true
-        icon: rex-icon rex-icon-install
-        path: pages/setup.php
     2factor_auth_verify:
-        title: '2 Faktor Verifizierung'
+        title: 'OTP-Verifizierung'
         hasNavigation: false
         main: true
         hidden: true
         path: pages/verify.php
-
 requires:
     php:
         version: '>=7.1'

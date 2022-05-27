@@ -8,5 +8,6 @@
 2factor_auth_2fa_wrong_opt = Wrong one-time password, please try again
 2factor_auth_2fa_verify_headline = Confirm setup using one-time password
 2factor_auth_2fa_verify_action = Confirm
+2factor_auth_2fa_one_time_password = One-time password
 
 2factor_auth_login = Start the authentication app and enter the code

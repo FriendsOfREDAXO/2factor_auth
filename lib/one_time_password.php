@@ -27,7 +27,7 @@ final class rex_one_time_password
 
     private function totp()
     {
-        $uri = rex_one_time_password_config::forCurrentUser()->provisioningUri;
+        $uri = str_replace("&amp;", "&", rex_one_time_password_config::forCurrentUser()->provisioningUri);
 
         // re-create from an existant uri
         return Factory::loadFromProvisioningUri($uri);

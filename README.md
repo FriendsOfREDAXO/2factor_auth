@@ -1,19 +1,15 @@
-# 2-Faktor-Authentifizierung für REDAXO CMS >5.7
-2-Faktor-Authentifizierung mittels one-time-password (OTP)
+# 2-Faktor-Authentifizierung für REDAXO 5
 
-Mit diesem Addon wird der Login in das REDAXO durch einen zweiten Authentifizierungsweg abgesichert.
+2-Faktor-Authentifizierung mittels one-time-password (OTP). Mit diesem Addon wird der Login in das REDAXO durch einen zweiten Authentifizierungsweg abgesichert.
 
 ## Installation
 
 1. Unter https://github.com/FriendsOfREDAXO/2factor_auth/ Download als ZIP-Datei
-2. In `/redaxo/src/addons/` kopieren und von `2factor_auth-master` in `2factor_auth` umbennenen
 3. Im REDAXO-Backend unter AddOns installieren und aktivieren
-
-> Das Addon befindet sich in der Entwicklung. Wenn das Addon releasefähig ist, wird es auch im Installer angeboten.
 
 ## Einrichtung
 
-Als Authentifikator-Apps stehen alle Apps zur Verfügung, die den OTP-Standard einhalten, zum Beispiel
+Als Authentifikator-Apps stehen alle Apps zur Verfügung, die den OTP-Standard einhalten, zum Beispiel:
 
 Umgebung    | App                    | Hilfe
 ----------- | ---------------------- | -----
@@ -44,4 +40,7 @@ Nach der erfolgreichen Einrichtung wird jeder neue Login in das REDAXO-Backend d
 
 Anschließend ist man, wie gewohnt, im REDAXO-Backend eingeloggt.
 
-status: https://github.com/FriendsOfREDAXO/2factor_auth/issues/1
+## Autoren
+
+**Markus Staab**  
+https://github.com/staabm 

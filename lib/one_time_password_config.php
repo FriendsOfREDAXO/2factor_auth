@@ -54,6 +54,7 @@ final class rex_one_time_password_config
             // create a uri with a random secret
             $otp = TOTP::create();
             // the label rendered in "Google Authenticator" or similar app
+
             $label = $user->getLogin() . '@' . rex::getServername() . ' (' . $_SERVER['HTTP_HOST'] . ')';
             $label = str_replace(':', '_', $label); // colon is forbidden
             $otp->setLabel($label);

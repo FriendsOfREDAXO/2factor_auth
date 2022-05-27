@@ -57,7 +57,8 @@ final class rex_one_time_password_config
             $label = $user->getLogin() . '@' . rex::getServername() . ' (' . $_SERVER['HTTP_HOST'] . ')';
             $label = str_replace(':', '_', $label); // colon is forbidden
             $otp->setLabel($label);
-
+            $otp->setIssuer(str_replace(':', '_', $user->getLogin()));
+            
             $this->provisioningUri = $otp->getProvisioningUri();
 
             $this->save();

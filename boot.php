@@ -22,4 +22,9 @@ if (rex::isBackend() && rex::getUser()) {
             rex_be_controller::setCurrentPage('2factor_auth_verify');
         }
     }
+#
+    if('index.php?page=2factor_auth/setup' === rex_url::currentBackendPage()) {
+        rex_view::addJsFile($this->getAssetsUrl('qrious.min.js'));
+        rex_view::addJsFile($this->getAssetsUrl('clipboard-copy-element.js'));
+    }
 }

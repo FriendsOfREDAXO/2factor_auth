@@ -1,13 +1,20 @@
+2factor_auth = 2 Faktor Authentifizierung
 2factor_auth_page_setup = 2 Faktor Authentifizierung einrichten
 2factor_auth_2fa_active = 2 Faktor Authentifizierung ist aktiviert
 2factor_auth_2fa_inactive = 2 Faktor Authentifizierung ist deaktiviert
 2factor_auth_2fa_disable = 2 Faktor Authentifizierung deaktivieren
-2factor_auth_2fa_setup = Setup starten
+2factor_auth_2fa_disable_instruction = 2 Faktor Authentifizierung für den aktuell angemeldeten Benutzer deaktivieren.
+2factor_auth_2fa_setup = Einrichtung
+2factor_auth_2fa_verify_instruction = Geben Sie einen OTP-Code ein, um sich einzuloggen.
+2factor_auth_2fa_page_instruction = 2 Faktor Authentifizierung für den aktuell angemeldeten Benutzer einrichten.
+2factor_auth_2fa_setup_start = Einrichtung starten
 2factor_auth_2fa_setup_verify = Einstellungen verifizieren
+2factor_auth_2fa_setup_scan = QR-Code scannen oder Code kopieren
 2factor_auth_2fa_setup_successfull = 2 Faktor Authentifizierung erfolgreich eingerichtet
 2factor_auth_2fa_wrong_opt = Falsches one-time-password, bitte erneut versuchen
-2factor_auth_2fa_verify_headline = Setup mittels one-time-password bestätigen
+2factor_auth_2fa_verify_headline = OTP-Code eingeben, um die Einrichtung abzuschließen
 2factor_auth_2fa_verify_action = Bestätigen
 2factor_auth_2fa_one_time_password = Einmal-Passwort
+2factor_auth_copy = Kopieren
 
 2factor_auth_login = Authentifizierungs App starten und Code eingeben

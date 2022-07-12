@@ -40,6 +40,10 @@ Nach der erfolgreichen Einrichtung wird jeder neue Login in das REDAXO-Backend d
 
 Anschließend ist man, wie gewohnt, im REDAXO-Backend eingeloggt.
 
+## 💌 Give back some love
+
+[Consider supporting the project](https://github.com/sponsors/staabm), so we can make this tool even better even faster for everyone.
+
 ## Autoren
 
 **Markus Staab**  

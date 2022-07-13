@@ -6,6 +6,9 @@ use rex_system_setting;
 use rex_i18n;
 use rex_form_select_element;
 
+/**
+ * @internal
+ */
 class enforce_system_setting extends rex_system_setting
 {
     public const ENABLED_ALL = 1;

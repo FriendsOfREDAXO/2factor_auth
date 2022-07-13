@@ -34,7 +34,7 @@ final class one_time_password
      */
     public function verify($otp)
     {
-        $uri = str_replace("&amp;", "&", one_time_password_config::forCurrentUser()->provisioningUri);
+        $uri = str_replace("&amp;", "&", (string) one_time_password_config::forCurrentUser()->provisioningUri);
 
         $verified = $this->method->verify($uri, $otp);
 

@@ -1,11 +1,13 @@
 <?php
 
+use rex_2fa\one_time_password;
+
 require_once 'vendor/autoload.php';
 
 $addon = rex_addon::get('2factor_auth');
 
 if (rex::isBackend() && rex::getUser()) {
-    $otp = rex_one_time_password::getInstance();
+    $otp = one_time_password::getInstance();
     if ($otp->enabled()) {
         if (!$otp->verified()) {
             rex_extension::register('PAGE_BODY_ATTR', static function (rex_extension_point $ep) {

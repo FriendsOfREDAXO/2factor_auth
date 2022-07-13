@@ -1,11 +1,16 @@
 <?php
 
+namespace rex_2fa;
+
 use OTPHP\Factory;
+use rex_singleton_trait;
+use function rex_set_session;
+use function str_replace;
 
 /**
  * @internal
  */
-final class rex_one_time_password
+final class one_time_password
 {
     use rex_singleton_trait;
 
@@ -29,7 +34,7 @@ final class rex_one_time_password
      */
     private function totp()
     {
-        $uri = str_replace("&amp;", "&", rex_one_time_password_config::forCurrentUser()->provisioningUri);
+        $uri = str_replace("&amp;", "&", one_time_password_config::forCurrentUser()->provisioningUri);
 
         // re-create from an existant uri
         return Factory::loadFromProvisioningUri($uri);
@@ -48,7 +53,7 @@ final class rex_one_time_password
      */
     public function enabled()
     {
-        return rex_one_time_password_config::forCurrentUser()->enabled;
+        return one_time_password_config::forCurrentUser()->enabled;
     }
 
 }

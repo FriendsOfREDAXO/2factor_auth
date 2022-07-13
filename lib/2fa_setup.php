@@ -1,9 +1,16 @@
 <?php
 
+namespace rex_2fa;
+
+use rex_string;
+use rex_file;
+use rex_path;
+use function array_search;
+
 /**
  * @internal
  */
-final class rex_2fa_setup
+final class setup
 {
     /**
      * @return void

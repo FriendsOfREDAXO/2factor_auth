@@ -1,11 +1,15 @@
 <?php
 
+namespace rex_2fa;
+
 use OTPHP\TOTP;
+use rex;
+use rex_sql;
 
 /**
  * @internal
  */
-final class rex_one_time_password_config
+final class one_time_password_config
 {
     /**
      * @var string|null

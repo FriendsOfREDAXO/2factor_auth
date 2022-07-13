@@ -1,4 +1,8 @@
 <?php
+
+use rex_2fa\one_time_password;
+use rex_2fa\one_time_password_config;
+
 /** @var rex_addon $this */
 
 $fragment = new rex_fragment();
@@ -10,8 +14,8 @@ $success = false;
 
 $csrfToken = rex_csrf_token::factory('2factor_auth_setup');
 $func = rex_request('func', 'string');
-$otp = rex_one_time_password::getInstance();
-$config = rex_one_time_password_config::loadFromDb();
+$otp = one_time_password::getInstance();
+$config = one_time_password_config::loadFromDb();
 
 if ($func && !$csrfToken->isValid()) {
     $message = '<div class="alert alert-danger">' . $this->i18n('csrf_token_invalid') . '</div>';
@@ -19,7 +23,7 @@ if ($func && !$csrfToken->isValid()) {
 }
 
 if ($func === 'disable') {
-    $config = rex_one_time_password_config::loadFromDb();
+    $config = one_time_password_config::loadFromDb();
     $config->disable();
     $func = '';
 }
@@ -43,9 +47,9 @@ else {
         $otp = rex_post('rex_login_otp', 'string', null);
 
         if ($otp !== null && $otp !== '') {
-            if (rex_one_time_password::getInstance()->verify($otp)) {
+            if (one_time_password::getInstance()->verify($otp)) {
                 $message = '<div class="alert alert-success">' . $this->i18n('2fa_setup_successfull') . '</div>';
-                $config = rex_one_time_password_config::loadFromDb();
+                $config = one_time_password_config::loadFromDb();
                 $config->enable();
                 $success = true;
             }
@@ -61,7 +65,7 @@ else {
 }
 
 if($func === 'setup' || $func === 'verify') {
-    $config = rex_one_time_password_config::loadFromDb();
+    $config = one_time_password_config::loadFromDb();
     $uri = $config->provisioningUri;
 
     $fragment->setVar('addon', $this, false);

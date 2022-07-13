@@ -1,4 +1,7 @@
 <?php
+
+use rex_2fa\one_time_password;
+
 $error = false;
 $message = '';
 $csrfToken = rex_csrf_token::factory('2factor_auth_verify');
@@ -11,7 +14,7 @@ if ($otp && !$csrfToken->isValid()) {
 }
 
 if ($otp) {
-    if (rex_one_time_password::getInstance()->verify($otp)) {
+    if (one_time_password::getInstance()->verify($otp)) {
         $message = rex_view::success('Passt');
         rex_response::sendRedirect('?ok');
     }

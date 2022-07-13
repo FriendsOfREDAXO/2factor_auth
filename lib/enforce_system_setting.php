@@ -9,7 +9,7 @@ use rex_form_select_element;
 /**
  * @internal
  */
-class enforce_system_setting extends rex_system_setting
+final class enforce_system_setting extends rex_system_setting
 {
     public const ENABLED_ALL = 1;
     public const ENABLED_ADMINS = 2;

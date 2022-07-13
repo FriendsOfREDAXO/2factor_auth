@@ -20,7 +20,7 @@ pages:
         path: pages/verify.php
 requires:
     php:
-        version: '>=7.1'
+        version: '>=7.2'
     redaxo: ^5.7.0
 
 load: early

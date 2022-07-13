@@ -16,6 +16,7 @@ if ($otp && !$csrfToken->isValid()) {
 if ($otp) {
     if (one_time_password::getInstance()->verify($otp)) {
         $message = rex_view::success('Passt');
+        // symbolischer parameter, der nirgends ausgewertet werden sollte/darf.
         rex_response::sendRedirect('?ok');
     }
     else {

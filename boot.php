@@ -2,6 +2,8 @@
 
 require_once 'vendor/autoload.php';
 
+$addon = rex_addon::get('2factor_auth');
+
 if (rex::isBackend() && rex::getUser()) {
     $otp = rex_one_time_password::getInstance();
     if ($otp->enabled()) {
@@ -22,9 +24,10 @@ if (rex::isBackend() && rex::getUser()) {
             rex_be_controller::setCurrentPage('2factor_auth_verify');
         }
     }
-#
+
     if('index.php?page=2factor_auth/setup' === rex_url::currentBackendPage()) {
-        rex_view::addJsFile($this->getAssetsUrl('qrious.min.js'));
-        rex_view::addJsFile($this->getAssetsUrl('clipboard-copy-element.js'));
+
+        rex_view::addJsFile($addon->getAssetsUrl('qrious.min.js'));
+        rex_view::addJsFile($addon->getAssetsUrl('clipboard-copy-element.js'));
     }
 }

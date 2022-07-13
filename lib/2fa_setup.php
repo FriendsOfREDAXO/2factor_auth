@@ -21,7 +21,7 @@ final class rex_2fa_setup
     }
 
     /**
-     * @retrun void
+     * @return void
      */
     public static function uninstall() {
         $config = rex_string::yamlDecode(rex_file::get(rex_path::coreData("config.yml")));

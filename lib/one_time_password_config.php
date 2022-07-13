@@ -7,18 +7,30 @@ use OTPHP\TOTP;
  */
 final class rex_one_time_password_config
 {
-    public $provisioningUri = null;
+    /**
+     * @var string|null
+     */
+    public $provisioningUri;
+    /**
+     * @var bool
+     */
     public $enabled = false;
 
+    /**
+     * @return self
+     */
     public static function forCurrentUser()
     {
-        $user = rex::getUser();
+        $user = rex::requireUser();
         return self::fromJson($user->getValue('one_time_password_config'));
     }
 
+    /**
+     * @return self
+     */
     public static function loadFromDb()
     {
-        $user = rex::getUser();
+        $user = rex::requireUser();
 
         // get non-cached values
         $userSql = rex_sql::factory();
@@ -32,6 +44,10 @@ final class rex_one_time_password_config
         return $config;
     }
 
+    /**
+     * @param string|null $json
+     * @return self
+     */
     private static function fromJson($json)
     {
         if ($json) {
@@ -46,9 +62,12 @@ final class rex_one_time_password_config
         return new self();
     }
 
+    /**
+     * @return void
+     */
     private function init()
     {
-        $user = rex::getUser();
+        $user = rex::requireUser();
 
         if (empty($this->provisioningUri)) {
             // create a uri with a random secret
@@ -66,31 +85,40 @@ final class rex_one_time_password_config
         }
     }
 
+    /**
+     * @return void
+     */
     public function enable()
     {
         $this->init();
         $this->enabled = true;
 
-        return $this->save();
+        $this->save();
     }
 
+    /**
+     * @return void
+     */
     public function disable()
     {
         $this->enabled = false;
         $this->provisioningUri = null;
 
-        return $this->save();
+        $this->save();
     }
 
+    /**
+     * @return void
+     */
     private function save()
     {
-        $user = rex::getUser();
+        $user = rex::requireUser();
 
         $userSql = rex_sql::factory();
         $userSql->setTable(rex::getTablePrefix() . 'user');
         $userSql->setWhere(['id' => $user->getId()]);
         $userSql->setValue('one_time_password_config', json_encode(['provisioningUri' => $this->provisioningUri, 'enabled' => $this->enabled]));
         $userSql->addGlobalUpdateFields();
-        return $userSql->update();
+        $userSql->update();
     }
 }

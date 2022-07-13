@@ -7,6 +7,10 @@ $message = '';
 $csrfToken = rex_csrf_token::factory('2factor_auth_verify');
 $otp = rex_post('rex_login_otp', 'string');
 
+if ($otp === '') {
+    one_time_password::getInstance()->challenge();
+}
+
 if ($otp !== '' && !$csrfToken->isValid()) {
     $error = true;
     $message = rex_i18n::msg('csrf_token_invalid');

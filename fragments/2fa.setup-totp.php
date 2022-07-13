@@ -38,7 +38,7 @@
                 <div class="panel-body">
                     <form method="post" action="./<?= rex_url::currentBackendPage() ?>">
                         <?php echo $this->csrfToken->getHiddenField(); ?>
-                        <input type="hidden" name="func" value="verify" />
+                        <input type="hidden" name="func" value="verify-totp" />
                         <div class="form-group">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="rex_login_otp" id="rex_login_otp">

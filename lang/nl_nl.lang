@@ -1,6 +1,6 @@
 2factor_auth_page_setup = Stel 2-factor authenticatie in
-2factor_auth_2fa_active = 2-factor authenticatie is geactiveerd
-2factor_auth_2fa_inactive = 2-factor authenticatie is gedeactiveerd
+2factor_auth_2fa_active = 2-factor authenticatie is geactiveerd.
+2factor_auth_2fa_inactive = 2-factor authenticatie is gedeactiveerd.
 2factor_auth_2fa_disable = 2-factor authenticatie deactiveren
 2factor_auth_2fa_setup = Start de installatie
 2factor_auth_2fa_setup_verify = Controleer instellingen

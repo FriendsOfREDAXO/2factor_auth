@@ -1,7 +1,7 @@
 2factor_auth = 2 factor authentication
 2factor_auth_page_setup = Set up 2 factor authentication
-2factor_auth_2fa_active = 2 factor authentication is activated
-2factor_auth_2fa_inactive = 2 factor authentication is deactivated
+2factor_auth_2fa_active = 2 factor authentication is activated.
+2factor_auth_2fa_inactive = 2 factor authentication is deactivated.
 2factor_auth_2fa_disable = Deactivate 2 factor authentication
 2factor_auth_2fa_disable_instruction = Disable 2 factor authentication for the currently logged in user.
 2factor_auth_2fa_setup = Setup

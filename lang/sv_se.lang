@@ -1,6 +1,6 @@
 2factor_auth_page_setup = Ställ in tvåfaktorsautentisering
-2factor_auth_2fa_active = Tvåfaktorsautentisering är aktiverad
-2factor_auth_2fa_inactive = Tvåfaktorsautentisering är deaktiverad
+2factor_auth_2fa_active = Tvåfaktorsautentisering är aktiverad.
+2factor_auth_2fa_inactive = Tvåfaktorsautentisering är deaktiverad.
 2factor_auth_2fa_disable = Deaktivera tvåfaktorsautentisering
 2factor_auth_2fa_setup = Starta setup
 2factor_auth_2fa_setup_verify = Verifiera inställningarna

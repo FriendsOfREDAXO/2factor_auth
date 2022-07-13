@@ -105,22 +105,4 @@ final class one_time_password
 
         return $this->method;
     }
-
-    /**
-     * @return bool
-     * @deprecated use isVerified() instead
-     */
-    public function verified()
-    {
-        return $this->isVerified();
-    }
-
-    /**
-     * @return bool
-     * @deprecated use isEnabled() instead
-     */
-    public function enabled()
-    {
-        return $this->isEnabled();
-    }
 }

@@ -2,7 +2,7 @@
 
 namespace rex_2fa;
 
-use OTPHP\Factory;
+use rex;
 use rex_singleton_trait;
 use rex_config;
 use function rex_set_session;
@@ -20,12 +20,20 @@ final class one_time_password
     const ENFORCED_DISABLED = 'disabled';
 
     /**
-     * @var totp_method
+     * @var method_interface|null
      */
     private $method;
 
-    public function __construct() {
-        $this->method = new totp_method();
+    /**
+     * @return void
+     */
+    public function challenge()
+    {
+        $user = rex::requireUser();
+
+        $uri = str_replace("&amp;", "&", (string) one_time_password_config::forCurrentUser()->provisioningUri);
+
+        $this->getMethod()->challenge($uri, $user);
     }
 
     /**
@@ -36,7 +44,7 @@ final class one_time_password
     {
         $uri = str_replace("&amp;", "&", (string) one_time_password_config::forCurrentUser()->provisioningUri);
 
-        $verified = $this->method->verify($uri, $otp);
+        $verified = $this->getMethod()->verify($uri, $otp);
 
         if ($verified) {
             rex_set_session('otp_verified', true);
@@ -80,9 +88,21 @@ final class one_time_password
     }
 
     /**
-     * @return totp_method
+     * @return method_interface
      */
     public function getMethod() {
+        if ($this->method === null) {
+            $methodType = one_time_password_config::forCurrentUser()->method;
+
+            if ($methodType === "totp") {
+                $this->method = new method_totp();
+            } elseif ($methodType === "email") {
+                $this->method = new method_email();
+            } else {
+                throw new \rex_exception("Unknown method: $methodType");
+            }
+        }
+
         return $this->method;
     }
 

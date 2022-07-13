@@ -20,17 +20,8 @@ final class totp_method
      */
     public function verify($provisioningUrl, $otp)
     {
-        return $this->totp($provisioningUrl)->verify($otp);
-    }
-
-    /**
-     * @param string $provisioningUrl
-     * @return \OTPHP\OTPInterface
-     */
-    private function totp($provisioningUrl)
-    {
         // re-create from an existant uri
-        return Factory::loadFromProvisioningUri($provisioningUrl);
+        return Factory::loadFromProvisioningUri($provisioningUrl)->verify($otp);
     }
 
     /**

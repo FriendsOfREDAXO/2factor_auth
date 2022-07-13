@@ -49,9 +49,9 @@ else {
         //
     }
     elseif ($func === 'verify') {
-        $otp = rex_post('rex_login_otp', 'string', null);
+        $otp = rex_post('rex_login_otp', 'string', '');
 
-        if ($otp !== null && $otp !== '') {
+        if ($otp !== '') {
             if (one_time_password::getInstance()->verify($otp)) {
                 $message = '<div class="alert alert-success">' . $this->i18n('2fa_setup_successfull') . '</div>';
                 $config = one_time_password_config::loadFromDb($otpMethod);

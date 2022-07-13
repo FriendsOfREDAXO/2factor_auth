@@ -20,7 +20,8 @@ final class setup
 
         // add as setup_addon, to make sure 2factor runs in safe_mode.
         // otherwise 2fa could be worked arround by a admin user.
-        if (false === array_search("2factor_auth", $config['setup_addons'])) {
+        $key = array_search("2factor_auth", $config['setup_addons'], true);
+        if (false === $key) {
             $config['setup_addons'][] = "2factor_auth";
 
             rex_file::put(rex_path::coreData("config.yml"), rex_string::yamlEncode($config));
@@ -33,7 +34,7 @@ final class setup
     public static function uninstall() {
         $config = rex_string::yamlDecode(rex_file::get(rex_path::coreData("config.yml")));
 
-        $key = array_search("2factor_auth", $config['setup_addons']);
+        $key = array_search("2factor_auth", $config['setup_addons'], true);
         if ($key !== false) {
             unset($config['setup_addons'][$key]);
             rex_file::put(rex_path::coreData("config.yml"), rex_string::yamlEncode($config));

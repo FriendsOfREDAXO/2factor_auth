@@ -4,10 +4,6 @@
 
 ![Screenshot](https://github.com/FriendsOfREDAXO/2factor_auth/blob/assets/screen.png?raw=true)
 
-## Installation
-
-1. Unter `2factor_auth` aus dem Installer downloaden
-3. Im REDAXO-Backend unter AddOns installieren und aktivieren
 
 ## Einrichtung
 

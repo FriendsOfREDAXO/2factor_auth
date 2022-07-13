@@ -15,6 +15,10 @@ final class one_time_password
 {
     use rex_singleton_trait;
 
+    const ENFORCED_ALL = 'all';
+    const ENFORCED_ADMINS = 'admins_only';
+    const ENFORCED_DISABLED = 'disabled';
+
     /**
      * @param string $otp
      * @return bool
@@ -58,19 +62,21 @@ final class one_time_password
     }
 
     /**
+     * @param self::ENFORCE* $enforce
+     *
      * @return void
      */
-    public function enforce(bool $enforce)
+    public function enforce($enforce)
     {
         rex_config::set('2factor_auth', 'enforce', $enforce);
     }
 
     /**
-     * @return bool
+     * @return self::ENFORCE*
      */
     public function isEnforced()
     {
-        return rex_config::get('2factor_auth', 'enforce', false);
+        return rex_config::get('2factor_auth', 'enforce', self::ENFORCED_DISABLED);
     }
 
     /**

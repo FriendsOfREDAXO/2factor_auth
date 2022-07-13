@@ -28,8 +28,11 @@ if ($func === 'disable') {
     $func = '';
 }
 
-if ($otp->isEnforced()) {
-    $message .= '<div class="alert alert-warning">' . $this->i18n('2fa_enforced') . '</div>';
+if ($otp->isEnforced() === one_time_password::ENFORCED_ALL) {
+    $message .= '<div class="alert alert-warning">' . $this->i18n('2fa_enforced') . ': ' . $this->i18n('2fa_enforced_yes_all') . '</div>';
+}
+if ($otp->isEnforced() === one_time_password::ENFORCED_ADMINS) {
+    $message .= '<div class="alert alert-warning">' . $this->i18n('2fa_enforced') . ': ' . $this->i18n('2fa_enforced_yes_admins') . '</div>';
 }
 
 if ($otp->isEnabled() && $config->enabled) {

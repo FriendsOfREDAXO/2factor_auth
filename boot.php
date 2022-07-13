@@ -20,15 +20,20 @@ if (rex::isBackend() && rex::getUser() !== null) {
 
     $otp = one_time_password::getInstance();
 
-    if ($otp->isEnforced()) {
-        if (!$otp->isEnabled()) {
+    // den benutzer auf das setup leiten, weil erwzungen aber noch nicht durchgefuehrt
+    if ($otp->isEnforced() !== one_time_password::ENFORCED_DISABLED && !$otp->isEnabled()) {
+        if ($otp->isEnforced() === one_time_password::ENFORCED_ALL ||
+            $otp->isEnforced() === one_time_password::ENFORCED_ADMINS && rex::getUser()->isAdmin())
+        {
             if ('2factor_auth' !== rex_be_controller::getCurrentPagePart(1)) {
-               rex_be_controller::setCurrentPage('2factor_auth/setup');
+                rex_be_controller::setCurrentPage('2factor_auth/setup');
+                return;
             }
-            return;
         }
     }
 
+    // den benutzer zur einmal passwort eingabe leiten, weil one-time-passwort aktiv
+    // und bisher fuer die session noch nicht eingegeben
     if ($otp->isEnabled()) {
         if (!$otp->isVerified()) {
             rex_extension::register('PAGE_BODY_ATTR', static function (rex_extension_point $ep) {

@@ -60,16 +60,18 @@ final class one_time_password_config
         if (is_string($json)) {
             $configArr = json_decode($json, true);
 
-            // compat with older versions, which did not yet define a method
-            if (!array_key_exists('method', $configArr)) {
-                $configArr['method'] = 'totp';
-            }
+            if (is_array($configArr)) {
+                // compat with older versions, which did not yet define a method
+                if (!array_key_exists('method', $configArr)) {
+                    $configArr['method'] = 'totp';
+                }
 
-            $config = new self();
-            $config->provisioningUri = $configArr['provisioningUri'];
-            $config->enabled = $configArr['enabled'];
-            $config->method = $configArr['method'];
-            return $config;
+                $config = new self();
+                $config->provisioningUri = $configArr['provisioningUri'];
+                $config->enabled = $configArr['enabled'];
+                $config->method = $configArr['method'];
+                return $config;
+            }
         }
 
         $default = new self();

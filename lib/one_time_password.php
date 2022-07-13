@@ -20,29 +20,29 @@ final class one_time_password
     const ENFORCED_DISABLED = 'disabled';
 
     /**
+     * @var totp_method
+     */
+    private $method;
+
+    public function __construct() {
+        $this->method = new totp_method();
+    }
+
+    /**
      * @param string $otp
      * @return bool
      */
     public function verify($otp)
     {
-        $verified = $this->totp()->verify($otp);
+        $uri = str_replace("&amp;", "&", one_time_password_config::forCurrentUser()->provisioningUri);
+
+        $verified = $this->method->verify($uri, $otp);
 
         if ($verified) {
             rex_set_session('otp_verified', true);
         }
 
         return $verified;
-    }
-
-    /**
-     * @return \OTPHP\OTPInterface
-     */
-    private function totp()
-    {
-        $uri = str_replace("&amp;", "&", one_time_password_config::forCurrentUser()->provisioningUri);
-
-        // re-create from an existant uri
-        return Factory::loadFromProvisioningUri($uri);
     }
 
     /**
@@ -77,6 +77,13 @@ final class one_time_password
     public function isEnforced()
     {
         return rex_config::get('2factor_auth', 'enforce', self::ENFORCED_DISABLED);
+    }
+
+    /**
+     * @return totp_method
+     */
+    public function getMethod() {
+        return $this->method;
     }
 
     /**

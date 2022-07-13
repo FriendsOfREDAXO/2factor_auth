@@ -2,7 +2,6 @@
 
 namespace rex_2fa;
 
-use OTPHP\TOTP;
 use rex;
 use rex_sql;
 
@@ -32,7 +31,7 @@ final class one_time_password_config
     /**
      * @return self
      */
-    public static function loadFromDb()
+    public static function loadFromDb(totp_method $method)
     {
         $user = rex::requireUser();
 
@@ -44,7 +43,7 @@ final class one_time_password_config
 
         $json = $userSql->getValue('one_time_password_config');
         $config = self::fromJson($json);
-        $config->init();
+        $config->init($method);
         return $config;
     }
 
@@ -54,7 +53,7 @@ final class one_time_password_config
      */
     private static function fromJson($json)
     {
-        if ($json) {
+        if (is_string($json)) {
             $configArr = json_decode($json, true);
 
             $config = new self();
@@ -69,21 +68,12 @@ final class one_time_password_config
     /**
      * @return void
      */
-    private function init()
+    private function init(totp_method $method)
     {
         $user = rex::requireUser();
 
-        if (empty($this->provisioningUri)) {
-            // create a uri with a random secret
-            $otp = TOTP::create();
-            // the label rendered in "Google Authenticator" or similar app
-
-            $label = $user->getLogin() . '@' . rex::getServerName() . ' (' . $_SERVER['HTTP_HOST'] . ')';
-            $label = str_replace(':', '_', $label); // colon is forbidden
-            $otp->setLabel($label);
-            $otp->setIssuer(str_replace(':', '_', $user->getLogin()));
-
-            $this->provisioningUri = $otp->getProvisioningUri();
+        if (null === $this->provisioningUri) {
+            $this->provisioningUri = $method->getProvisioningUri($user);
 
             $this->save();
         }
@@ -94,8 +84,10 @@ final class one_time_password_config
      */
     public function enable()
     {
-        $this->init();
         $this->enabled = true;
+        if ($this->provisioningUri === null) {
+            throw new \rex_exception('Missing provisioning url');
+        }
 
         $this->save();
     }
@@ -121,7 +113,12 @@ final class one_time_password_config
         $userSql = rex_sql::factory();
         $userSql->setTable(rex::getTablePrefix() . 'user');
         $userSql->setWhere(['id' => $user->getId()]);
-        $userSql->setValue('one_time_password_config', json_encode(['provisioningUri' => $this->provisioningUri, 'enabled' => $this->enabled]));
+        $userSql->setValue('one_time_password_config', json_encode(
+            [
+                'provisioningUri' => $this->provisioningUri,
+                'enabled' => $this->enabled,
+            ]
+        ));
         $userSql->addGlobalUpdateFields();
         $userSql->update();
     }

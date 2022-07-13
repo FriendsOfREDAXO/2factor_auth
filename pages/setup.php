@@ -15,15 +15,16 @@ $success = false;
 $csrfToken = rex_csrf_token::factory('2factor_auth_setup');
 $func = rex_request('func', 'string');
 $otp = one_time_password::getInstance();
-$config = one_time_password_config::loadFromDb();
+$otpMethod = $otp->getMethod();
+$config = one_time_password_config::loadFromDb($otpMethod);
 
-if ($func && !$csrfToken->isValid()) {
+if ($func !== '' && !$csrfToken->isValid()) {
     $message = '<div class="alert alert-danger">' . $this->i18n('csrf_token_invalid') . '</div>';
     $func = '';
 }
 
 if ($func === 'disable') {
-    $config = one_time_password_config::loadFromDb();
+    $config = one_time_password_config::loadFromDb($otpMethod);
     $config->disable();
     $func = '';
 }
@@ -40,7 +41,7 @@ if ($otp->isEnabled() && $config->enabled) {
     $buttons = '<a class="btn btn-delete" href="' . rex_url::currentBackendPage(['func' => 'disable'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_disable') . '</a>';
 }
 else {
-    if (empty($func)) {
+    if ($func === '') {
         $content = $this->i18n('2fa_inactive') . "<br/><br/>". $this->i18n('2factor_auth_2fa_page_instruction');
         $buttons = '<a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup_start') . '</a>';
     }
@@ -53,7 +54,7 @@ else {
         if ($otp !== null && $otp !== '') {
             if (one_time_password::getInstance()->verify($otp)) {
                 $message = '<div class="alert alert-success">' . $this->i18n('2fa_setup_successfull') . '</div>';
-                $config = one_time_password_config::loadFromDb();
+                $config = one_time_password_config::loadFromDb($otpMethod);
                 $config->enable();
                 $success = true;
             }
@@ -69,7 +70,7 @@ else {
 }
 
 if($func === 'setup' || $func === 'verify') {
-    $config = one_time_password_config::loadFromDb();
+    $config = one_time_password_config::loadFromDb($otpMethod);
     $uri = $config->provisioningUri;
 
     $fragment->setVar('addon', $this, false);

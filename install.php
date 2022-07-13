@@ -11,4 +11,4 @@ if (!array_search("2factor_auth", $config['setup_addons'])) {
     dump($config);
 }
 
-one_time_password::install();
+rex_one_time_password::install();

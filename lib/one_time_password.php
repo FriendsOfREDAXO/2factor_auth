@@ -51,6 +51,5 @@ final class rex_one_time_password
         }
 
         rex_file::put(rex_path::coreData("config.yml"), rex_string::yamlEncode($config));
-        return;
     }
 }

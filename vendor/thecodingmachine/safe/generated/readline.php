@@ -7,14 +7,14 @@ use Safe\Exceptions\ReadlineException;
 /**
  * This function adds a line to the command line history.
  *
- * @param string $prompt The line to be added in the history.
+ * @param string $line The line to be added in the history.
  * @throws ReadlineException
  *
  */
-function readline_add_history(string $prompt): void
+function readline_add_history(string $line): void
 {
     error_clear_last();
-    $result = \readline_add_history($prompt);
+    $result = \readline_add_history($line);
     if ($result === false) {
         throw ReadlineException::createFromPhpError();
     }
@@ -31,6 +31,38 @@ function readline_add_history(string $prompt): void
  * The callback feature is useful when combined with
  * stream_select as it allows interleaving of IO and
  * user input, unlike readline.
+ *
+ *
+ * Readline Callback Interface Example
+ *
+ * 10) {
+ * $prompting = false;
+ * readline_callback_handler_remove();
+ * } else {
+ * readline_callback_handler_install("[$c] Enter something: ", 'rl_callback');
+ * }
+ * }
+ *
+ * $c = 1;
+ * $prompting = true;
+ *
+ * readline_callback_handler_install("[$c] Enter something: ", 'rl_callback');
+ *
+ * while ($prompting) {
+ * $w = NULL;
+ * $e = NULL;
+ * $n = stream_select($r = array(STDIN), $w, $e, null);
+ * if ($n && in_array(STDIN, $r)) {
+ * // read a character, will call the callback when a newline is entered
+ * readline_callback_read_char();
+ * }
+ * }
+ *
+ * echo "Prompting disabled. All done.\n";
+ * ?>
+ * ]]>
+ *
+ *
  *
  * @param string $prompt The prompt message.
  * @param callable $callback The callback function takes one parameter; the
@@ -68,15 +100,15 @@ function readline_clear_history(): void
  * This function registers a completion function. This is the same kind of
  * functionality you'd get if you hit your tab key while using Bash.
  *
- * @param callable $callback You must supply the name of an existing function which accepts a
+ * @param callable $function You must supply the name of an existing function which accepts a
  * partial command line and returns an array of possible matches.
  * @throws ReadlineException
  *
  */
-function readline_completion_function(callable $callback): void
+function readline_completion_function(callable $function): void
 {
     error_clear_last();
-    $result = \readline_completion_function($callback);
+    $result = \readline_completion_function($function);
     if ($result === false) {
         throw ReadlineException::createFromPhpError();
     }

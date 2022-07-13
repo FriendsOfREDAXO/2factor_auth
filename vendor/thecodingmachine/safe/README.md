@@ -9,6 +9,8 @@
 Safe PHP
 ========
 
+**Work in progress**
+
 A set of core PHP functions rewritten to throw exceptions instead of returning `false` when an error is encountered.
 
 ## The problem
@@ -113,7 +115,7 @@ tool that performs instant refactoring of your application.
 Run
 
 ```bash
-$ composer require --dev rector/rector
+$ composer require --dev rector/rector:^0.7
 ```
 
 to install `rector/rector`.
@@ -121,7 +123,7 @@ to install `rector/rector`.
 Run
 
 ```bash
-vendor/bin/rector process src/ --config vendor/thecodingmachine/safe/rector-migrate.php
+vendor/bin/rector process src/ --config vendor/thecodingmachine/safe/rector-migrate-0.7.php
 ```
 
 to run `rector/rector`.

@@ -5,66 +5,21 @@ namespace Safe;
 use Safe\Exceptions\MbstringException;
 
 /**
- * Returns a string containing the character specified by the Unicode code point value,
- * encoded in the specified encoding.
  *
- * This function complements mb_ord.
  *
- * @param int $codepoint A Unicode codepoint value, e.g. 128024 for U+1F418 ELEPHANT
- * @param string $encoding The encoding
- * parameter is the character encoding. If it is omitted or NULL, the internal character
- * encoding value will be used.
- * @return string A string containing the requested character, if it can be represented in the specified
- * encoding.
+ * @param int $cp
+ * @param string $encoding
+ * @return string Returns a specific character.
  * @throws MbstringException
  *
  */
-function mb_chr(int $codepoint, string $encoding = null): string
+function mb_chr(int $cp, string $encoding = null): string
 {
     error_clear_last();
     if ($encoding !== null) {
-        $result = \mb_chr($codepoint, $encoding);
+        $result = \mb_chr($cp, $encoding);
     } else {
-        $result = \mb_chr($codepoint);
-    }
-    if ($result === false) {
-        throw MbstringException::createFromPhpError();
-    }
-    return $result;
-}
-
-
-/**
- * Converts string from from_encoding,
- * or the current internal encoding, to to_encoding.
- * If string is an array, all its string values will be
- * converted recursively.
- *
- * @param string|array $string The string or array to be converted.
- * @param string $to_encoding The desired encoding of the result.
- * @param mixed $from_encoding The current encoding used to interpret string.
- * Multiple encodings may be specified as an array or comma separated
- * list, in which case the correct encoding will be guessed using the
- * same algorithm as mb_detect_encoding.
- *
- * If from_encoding is NULL or not specified, the
- * mbstring.internal_encoding setting
- * will be used if set, otherwise the default_charset setting.
- *
- * See supported encodings
- * for valid values of to_encoding
- * and from_encoding.
- * @return string|array The encoded string or array on success.
- * @throws MbstringException
- *
- */
-function mb_convert_encoding($string, string $to_encoding, $from_encoding = null)
-{
-    error_clear_last();
-    if ($from_encoding !== null) {
-        $result = \mb_convert_encoding($string, $to_encoding, $from_encoding);
-    } else {
-        $result = \mb_convert_encoding($string, $to_encoding);
+        $result = \mb_chr($cp);
     }
     if ($result === false) {
         throw MbstringException::createFromPhpError();
@@ -75,12 +30,12 @@ function mb_convert_encoding($string, string $to_encoding, $from_encoding = null
 
 /**
  * Sets the automatic character
- * encoding detection order to encoding.
+ * encoding detection order to encoding_list.
  *
- * @param mixed $encoding encoding is an array or
+ * @param mixed $encoding_list encoding_list is an array or
  * comma separated list of character encoding. See supported encodings.
  *
- * If encoding is omitted or NULL, it returns
+ * If encoding_list is omitted, it returns
  * the current character encoding detection order as array.
  *
  * This setting affects mb_detect_encoding and
@@ -102,11 +57,11 @@ function mb_convert_encoding($string, string $to_encoding, $from_encoding = null
  * @throws MbstringException
  *
  */
-function mb_detect_order($encoding = null)
+function mb_detect_order($encoding_list = null)
 {
     error_clear_last();
-    if ($encoding !== null) {
-        $result = \mb_detect_order($encoding);
+    if ($encoding_list !== null) {
+        $result = \mb_detect_order($encoding_list);
     } else {
         $result = \mb_detect_order();
     }
@@ -163,21 +118,15 @@ function mb_encoding_aliases(string $encoding): array
  * clutter the function namespace with a callback function's name
  * not used anywhere else.
  * @param string $string The string being checked.
- * @param string $options The search option. See mb_regex_set_options for explanation.
- * @return string|null The resultant string on success.
- * If string is not valid for the current encoding, NULL
- * is returned.
+ * @param string $option The search option. See mb_regex_set_options for explanation.
+ * @return string The resultant string on success.
  * @throws MbstringException
  *
  */
-function mb_ereg_replace_callback(string $pattern, callable $callback, string $string, string $options = null): ?string
+function mb_ereg_replace_callback(string $pattern, callable $callback, string $string, string $option = "msr"): string
 {
     error_clear_last();
-    if ($options !== null) {
-        $result = \mb_ereg_replace_callback($pattern, $callback, $string, $options);
-    } else {
-        $result = \mb_ereg_replace_callback($pattern, $callback, $string);
-    }
+    $result = \mb_ereg_replace_callback($pattern, $callback, $string, $option);
     if ($result === false) {
         throw MbstringException::createFromPhpError();
     }
@@ -193,21 +142,15 @@ function mb_ereg_replace_callback(string $pattern, callable $callback, string $s
  * Multibyte characters may be used in pattern.
  * @param string $replacement The replacement text.
  * @param string $string The string being checked.
- * @param string $options
- * @return string|null The resultant string on success.
- * If string is not valid for the current encoding, NULL
- * is returned.
+ * @param string $option
+ * @return string The resultant string on success.
  * @throws MbstringException
  *
  */
-function mb_ereg_replace(string $pattern, string $replacement, string $string, string $options = null): ?string
+function mb_ereg_replace(string $pattern, string $replacement, string $string, string $option = "msr"): string
 {
     error_clear_last();
-    if ($options !== null) {
-        $result = \mb_ereg_replace($pattern, $replacement, $string, $options);
-    } else {
-        $result = \mb_ereg_replace($pattern, $replacement, $string);
-    }
+    $result = \mb_ereg_replace($pattern, $replacement, $string, $option);
     if ($result === false) {
         throw MbstringException::createFromPhpError();
     }
@@ -243,15 +186,15 @@ function mb_ereg_search_getregs(): array
  *
  * @param string $string The search string.
  * @param string $pattern The search pattern.
- * @param string $options The search option. See mb_regex_set_options for explanation.
+ * @param string $option The search option. See mb_regex_set_options for explanation.
  * @throws MbstringException
  *
  */
-function mb_ereg_search_init(string $string, string $pattern = null, string $options = null): void
+function mb_ereg_search_init(string $string, string $pattern = null, string $option = "msr"): void
 {
     error_clear_last();
-    if ($options !== null) {
-        $result = \mb_ereg_search_init($string, $pattern, $options);
+    if ($option !== "msr") {
+        $result = \mb_ereg_search_init($string, $pattern, $option);
     } elseif ($pattern !== null) {
         $result = \mb_ereg_search_init($string, $pattern);
     } else {
@@ -267,16 +210,16 @@ function mb_ereg_search_init(string $string, string $pattern = null, string $opt
  * Returns the matched part of a multibyte regular expression.
  *
  * @param string $pattern The search pattern.
- * @param string $options The search option. See mb_regex_set_options for explanation.
+ * @param string $option The search option. See mb_regex_set_options for explanation.
  * @return array
  * @throws MbstringException
  *
  */
-function mb_ereg_search_regs(string $pattern = null, string $options = null): array
+function mb_ereg_search_regs(string $pattern = null, string $option = "ms"): array
 {
     error_clear_last();
-    if ($options !== null) {
-        $result = \mb_ereg_search_regs($pattern, $options);
+    if ($option !== "ms") {
+        $result = \mb_ereg_search_regs($pattern, $option);
     } elseif ($pattern !== null) {
         $result = \mb_ereg_search_regs($pattern);
     } else {
@@ -292,14 +235,14 @@ function mb_ereg_search_regs(string $pattern = null, string $options = null): ar
 /**
  *
  *
- * @param int $offset The position to set. If it is negative, it counts from the end of the string.
+ * @param int $position The position to set. If it is negative, it counts from the end of the string.
  * @throws MbstringException
  *
  */
-function mb_ereg_search_setpos(int $offset): void
+function mb_ereg_search_setpos(int $position): void
 {
     error_clear_last();
-    $result = \mb_ereg_search_setpos($offset);
+    $result = \mb_ereg_search_setpos($position);
     if ($result === false) {
         throw MbstringException::createFromPhpError();
     }
@@ -310,61 +253,17 @@ function mb_ereg_search_setpos(int $offset): void
  *
  *
  * @param string $pattern The regular expression pattern.  Multibyte characters may be used. The case will be ignored.
- * @param string $replacement The replacement text.
+ * @param string $replace The replacement text.
  * @param string $string The searched string.
- * @param string $options
+ * @param string $option
  * @return string The resultant string.
- * If string is not valid for the current encoding, NULL
- * is returned.
  * @throws MbstringException
  *
  */
-function mb_eregi_replace(string $pattern, string $replacement, string $string, string $options = null): string
+function mb_eregi_replace(string $pattern, string $replace, string $string, string $option = "msri"): string
 {
     error_clear_last();
-    if ($options !== null) {
-        $result = \mb_eregi_replace($pattern, $replacement, $string, $options);
-    } else {
-        $result = \mb_eregi_replace($pattern, $replacement, $string);
-    }
-    if ($result === false) {
-        throw MbstringException::createFromPhpError();
-    }
-    return $result;
-}
-
-
-/**
- *
- *
- * @param string $type If type is not specified or is specified as "all",
- * "internal_encoding", "http_input",
- * "http_output", "http_output_conv_mimetypes",
- * "mail_charset", "mail_header_encoding",
- * "mail_body_encoding", "illegal_chars",
- * "encoding_translation", "language",
- * "detect_order", "substitute_character"
- * and "strict_detection"
- * will be returned.
- *
- * If type is specified as
- * "internal_encoding", "http_input",
- * "http_output", "http_output_conv_mimetypes",
- * "mail_charset", "mail_header_encoding",
- * "mail_body_encoding", "illegal_chars",
- * "encoding_translation", "language",
- * "detect_order", "substitute_character"
- * or "strict_detection"
- * the specified setting parameter will be returned.
- * @return mixed An array of type information if type
- * is not specified, otherwise a specific type.
- * @throws MbstringException
- *
- */
-function mb_get_info(string $type = "all")
-{
-    error_clear_last();
-    $result = \mb_get_info($type);
+    $result = \mb_eregi_replace($pattern, $replace, $string, $option);
     if ($result === false) {
         throw MbstringException::createFromPhpError();
     }
@@ -437,25 +336,21 @@ function mb_internal_encoding(string $encoding = null)
 
 
 /**
- * Returns the Unicode code point value of the given character.
  *
- * This function complements mb_chr.
  *
- * @param string $string A string
- * @param string $encoding The encoding
- * parameter is the character encoding. If it is omitted or NULL, the internal character
- * encoding value will be used.
- * @return int The Unicode code point for the first character of string.
+ * @param string $str
+ * @param string $encoding
+ * @return int Returns a code point of character.
  * @throws MbstringException
  *
  */
-function mb_ord(string $string, string $encoding = null): int
+function mb_ord(string $str, string $encoding = null): int
 {
     error_clear_last();
     if ($encoding !== null) {
-        $result = \mb_ord($string, $encoding);
+        $result = \mb_ord($str, $encoding);
     } else {
-        $result = \mb_ord($string);
+        $result = \mb_ord($str);
     }
     if ($result === false) {
         throw MbstringException::createFromPhpError();
@@ -472,15 +367,15 @@ function mb_ord(string $string, string $encoding = null): int
  * encoding and set values to the result array or
  * global variables.
  *
- * @param string $string The URL encoded data.
+ * @param string $encoded_string The URL encoded data.
  * @param array|null $result An array containing decoded and character encoded converted values.
  * @throws MbstringException
  *
  */
-function mb_parse_str(string $string, ?array &$result): void
+function mb_parse_str(string $encoded_string, ?array &$result): void
 {
     error_clear_last();
-    $result = \mb_parse_str($string, $result);
+    $result = \mb_parse_str($encoded_string, $result);
     if ($result === false) {
         throw MbstringException::createFromPhpError();
     }
@@ -491,7 +386,7 @@ function mb_parse_str(string $string, ?array &$result): void
  * Set/Get character encoding for a multibyte regex.
  *
  * @param string $encoding The encoding
- * parameter is the character encoding. If it is omitted or NULL, the internal character
+ * parameter is the character encoding. If it is omitted, the internal character
  * encoding value will be used.
  * @return string|bool
  * @throws MbstringException
@@ -549,7 +444,7 @@ function mb_regex_encoding(string $encoding = null)
  * automatically (which leads to doubling CR if CRLF is used).
  * This should be a last resort, as it does not comply with
  * RFC 2822.
- * @param string $additional_params additional_params is a MTA command line
+ * @param string $additional_parameter additional_parameter is a MTA command line
  * parameter. It is useful when setting the correct Return-Path
  * header when using sendmail.
  *
@@ -569,14 +464,10 @@ function mb_regex_encoding(string $encoding = null)
  * @throws MbstringException
  *
  */
-function mb_send_mail(string $to, string $subject, string $message, $additional_headers = [], string $additional_params = null): void
+function mb_send_mail(string $to, string $subject, string $message, $additional_headers = null, string $additional_parameter = null): void
 {
     error_clear_last();
-    if ($additional_params !== null) {
-        $result = \mb_send_mail($to, $subject, $message, $additional_headers, $additional_params);
-    } else {
-        $result = \mb_send_mail($to, $subject, $message, $additional_headers);
-    }
+    $result = \mb_send_mail($to, $subject, $message, $additional_headers, $additional_parameter);
     if ($result === false) {
         throw MbstringException::createFromPhpError();
     }
@@ -597,6 +488,37 @@ function mb_split(string $pattern, string $string, int $limit = -1): array
 {
     error_clear_last();
     $result = \mb_split($pattern, $string, $limit);
+    if ($result === false) {
+        throw MbstringException::createFromPhpError();
+    }
+    return $result;
+}
+
+
+/**
+ * This function will return an array of strings, it is a version of str_split with support for encodings of variable character size as well as fixed-size encodings of 1,2 or 4 byte characters.
+ * If the split_length parameter is specified, the string is broken down into chunks of the specified length in characters (not bytes).
+ * The encoding parameter can be optionally specified and it is good practice to do so.
+ *
+ * @param string $string The string to split into characters or chunks.
+ * @param int $split_length If specified, each element of the returned array will be composed of multiple characters instead of a single character.
+ * @param string $encoding The encoding
+ * parameter is the character encoding. If it is omitted, the internal character
+ * encoding value will be used.
+ *
+ * A string specifying one of the supported encodings.
+ * @return array mb_str_split returns an array of strings.
+ * @throws MbstringException
+ *
+ */
+function mb_str_split(string $string, int $split_length = 1, string $encoding = null): array
+{
+    error_clear_last();
+    if ($encoding !== null) {
+        $result = \mb_str_split($string, $split_length, $encoding);
+    } else {
+        $result = \mb_str_split($string, $split_length);
+    }
     if ($result === false) {
         throw MbstringException::createFromPhpError();
     }

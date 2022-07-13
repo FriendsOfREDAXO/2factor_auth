@@ -122,11 +122,7 @@ function ibase_blob_cancel($blob_handle): void
 function ibase_blob_create($link_identifier = null)
 {
     error_clear_last();
-    if ($link_identifier !== null) {
-        $result = \ibase_blob_create($link_identifier);
-    } else {
-        $result = \ibase_blob_create();
-    }
+    $result = \ibase_blob_create($link_identifier);
     if ($result === false) {
         throw IbaseException::createFromPhpError();
     }
@@ -170,11 +166,7 @@ function ibase_blob_get($blob_handle, int $len): string
 function ibase_close($connection_id = null): void
 {
     error_clear_last();
-    if ($connection_id !== null) {
-        $result = \ibase_close($connection_id);
-    } else {
-        $result = \ibase_close();
-    }
+    $result = \ibase_close($connection_id);
     if ($result === false) {
         throw IbaseException::createFromPhpError();
     }
@@ -197,11 +189,7 @@ function ibase_close($connection_id = null): void
 function ibase_commit_ret($link_or_trans_identifier = null): void
 {
     error_clear_last();
-    if ($link_or_trans_identifier !== null) {
-        $result = \ibase_commit_ret($link_or_trans_identifier);
-    } else {
-        $result = \ibase_commit_ret();
-    }
+    $result = \ibase_commit_ret($link_or_trans_identifier);
     if ($result === false) {
         throw IbaseException::createFromPhpError();
     }
@@ -222,11 +210,7 @@ function ibase_commit_ret($link_or_trans_identifier = null): void
 function ibase_commit($link_or_trans_identifier = null): void
 {
     error_clear_last();
-    if ($link_or_trans_identifier !== null) {
-        $result = \ibase_commit($link_or_trans_identifier);
-    } else {
-        $result = \ibase_commit();
-    }
+    $result = \ibase_commit($link_or_trans_identifier);
     if ($result === false) {
         throw IbaseException::createFromPhpError();
     }
@@ -325,11 +309,7 @@ function ibase_delete_user($service_handle, string $user_name): void
 function ibase_drop_db($connection = null): void
 {
     error_clear_last();
-    if ($connection !== null) {
-        $result = \ibase_drop_db($connection);
-    } else {
-        $result = \ibase_drop_db();
-    }
+    $result = \ibase_drop_db($connection);
     if ($result === false) {
         throw IbaseException::createFromPhpError();
     }
@@ -586,11 +566,7 @@ function ibase_restore($service_handle, string $source_file, string $dest_db, in
 function ibase_rollback_ret($link_or_trans_identifier = null): void
 {
     error_clear_last();
-    if ($link_or_trans_identifier !== null) {
-        $result = \ibase_rollback_ret($link_or_trans_identifier);
-    } else {
-        $result = \ibase_rollback_ret();
-    }
+    $result = \ibase_rollback_ret($link_or_trans_identifier);
     if ($result === false) {
         throw IbaseException::createFromPhpError();
     }
@@ -611,11 +587,7 @@ function ibase_rollback_ret($link_or_trans_identifier = null): void
 function ibase_rollback($link_or_trans_identifier = null): void
 {
     error_clear_last();
-    if ($link_or_trans_identifier !== null) {
-        $result = \ibase_rollback($link_or_trans_identifier);
-    } else {
-        $result = \ibase_rollback();
-    }
+    $result = \ibase_rollback($link_or_trans_identifier);
     if ($result === false) {
         throw IbaseException::createFromPhpError();
     }

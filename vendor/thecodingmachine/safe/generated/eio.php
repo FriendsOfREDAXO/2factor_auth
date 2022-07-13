@@ -414,57 +414,6 @@ function eio_fchmod($fd, int $mode, int $pri = EIO_PRI_DEFAULT, callable $callba
 
 
 /**
- * eio_fchown changes ownership of the file specified by
- * fd file descriptor.
- *
- * @param mixed $fd Stream, Socket resource, or numeric file descriptor.
- * @param int $uid User ID. Is ignored when equal to -1.
- * @param int $gid Group ID. Is ignored when equal to -1.
- * @param int $pri The request priority: EIO_PRI_DEFAULT, EIO_PRI_MIN, EIO_PRI_MAX, or NULL.
- * If NULL passed, pri internally is set to
- * EIO_PRI_DEFAULT.
- * @param callable $callback
- * callback function is called when the request is done.
- * It should match the following prototype:
- *
- *
- * data
- * is custom data passed to the request.
- *
- *
- * result
- * request-specific result value; basically, the value returned by corresponding
- * system call.
- *
- *
- * req
- * is optional request resource which can be used with functions like eio_get_last_error
- *
- *
- *
- * is custom data passed to the request.
- *
- * request-specific result value; basically, the value returned by corresponding
- * system call.
- *
- * is optional request resource which can be used with functions like eio_get_last_error
- * @param mixed $data is custom data passed to the request.
- * @return resource eio_chmod returns request resource on success.
- * @throws EioException
- *
- */
-function eio_fchown($fd, int $uid, int $gid = -1, int $pri = EIO_PRI_DEFAULT, callable $callback = null, $data = null)
-{
-    error_clear_last();
-    $result = \eio_fchown($fd, $uid, $gid, $pri, $callback, $data);
-    if ($result === false) {
-        throw EioException::createFromPhpError();
-    }
-    return $result;
-}
-
-
-/**
  * eio_fdatasync synchronizes a file's in-core state with storage device.
  *
  * @param mixed $fd Stream, Socket resource, or numeric file descriptor, e.g. returned by eio_open.
@@ -1112,8 +1061,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  * is optional request resource which can be used with functions like eio_get_last_error
  * @param string $data is custom data passed to the request.
- * @return resource eio_readdir returns request resource on success.
- * Sets result argument of
+ * @return resource eio_readdir returns request resource on success. Sets result argument of
  * callback function according to
  * flags:
  *
@@ -1123,7 +1071,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_READDIR_DENTS
- * (int)
+ * (integer)
  *
  *
  *
@@ -1143,7 +1091,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_READDIR_DIRS_FIRST
- * (int)
+ * (integer)
  *
  *
  *
@@ -1155,7 +1103,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_READDIR_STAT_ORDER
- * (int)
+ * (integer)
  *
  *
  *
@@ -1170,7 +1118,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_READDIR_FOUND_UNKNOWN
- * (int)
+ * (integer)
  *
  *
  *
@@ -1189,7 +1137,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_UNKNOWN
- * (int)
+ * (integer)
  *
  *
  *
@@ -1200,7 +1148,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_FIFO
- * (int)
+ * (integer)
  *
  *
  *
@@ -1211,7 +1159,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_CHR
- * (int)
+ * (integer)
  *
  *
  *
@@ -1222,7 +1170,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_MPC
- * (int)
+ * (integer)
  *
  *
  *
@@ -1233,7 +1181,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_DIR
- * (int)
+ * (integer)
  *
  *
  *
@@ -1244,7 +1192,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_NAM
- * (int)
+ * (integer)
  *
  *
  *
@@ -1255,7 +1203,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_BLK
- * (int)
+ * (integer)
  *
  *
  *
@@ -1266,7 +1214,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_MPB
- * (int)
+ * (integer)
  *
  *
  *
@@ -1277,7 +1225,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_REG
- * (int)
+ * (integer)
  *
  *
  *
@@ -1288,7 +1236,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_NWK
- * (int)
+ * (integer)
  *
  *
  *
@@ -1298,7 +1246,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_CMP
- * (int)
+ * (integer)
  *
  *
  *
@@ -1309,7 +1257,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_LNK
- * (int)
+ * (integer)
  *
  *
  *
@@ -1320,7 +1268,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_SOCK
- * (int)
+ * (integer)
  *
  *
  *
@@ -1331,7 +1279,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_DOOR
- * (int)
+ * (integer)
  *
  *
  *
@@ -1342,7 +1290,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_WHT
- * (int)
+ * (integer)
  *
  *
  *
@@ -1353,7 +1301,7 @@ function eio_readahead($fd, int $offset, int $length, int $pri = EIO_PRI_DEFAULT
  *
  *
  * EIO_DT_MAX
- * (int)
+ * (integer)
  *
  *
  *
@@ -1724,8 +1672,7 @@ function eio_stat(string $path, int $pri, callable $callback, $data = null)
  *
  * is optional request resource which can be used with functions like eio_get_last_error
  * @param mixed $data is custom data passed to the request.
- * @return resource eio_statvfs returns request resource on success.
- * On success assigns result argument of
+ * @return resource eio_statvfs returns request resource on success. On success assigns result argument of
  * callback to an array.
  * @throws EioException
  *

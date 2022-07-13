@@ -5,14 +5,12 @@ namespace Safe;
 use Safe\Exceptions\FunchandException;
 
 /**
- * Creates a function dynamically from the parameters passed, and returns a unique name for it.
+ * Creates an anonymous function from the parameters passed, and
+ * returns a unique name for it.
  *
- * @param string $args The function arguments, as a single comma-separated string.
+ * @param string $args The function arguments.
  * @param string $code The function code.
  * @return string Returns a unique function name as a string.
- * Note that the name contains a non-printable character ("\0"),
- * so care should be taken when printing the name or incorporating it in any other
- * string.
  * @throws FunchandException
  *
  */
@@ -30,18 +28,18 @@ function create_function(string $args, string $code): string
 /**
  *
  *
- * @param callable(): void $callback The function to register.
- * @param mixed $args
+ * @param callable(): void $function The function to register.
+ * @param mixed $params
  * @throws FunchandException
  *
  */
-function register_tick_function(callable $callback, ...$args): void
+function register_tick_function(callable $function, ...$params): void
 {
     error_clear_last();
-    if ($args !== []) {
-        $result = \register_tick_function($callback, ...$args);
+    if ($params !== []) {
+        $result = \register_tick_function($function, ...$params);
     } else {
-        $result = \register_tick_function($callback);
+        $result = \register_tick_function($function);
     }
     if ($result === false) {
         throw FunchandException::createFromPhpError();

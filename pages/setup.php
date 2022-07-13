@@ -36,15 +36,12 @@ if ($otp->isEnforced() === one_time_password::ENFORCED_ADMINS) {
 }
 
 if ($otp->isEnabled() && $config->enabled) {
-    $message .= '<div class="alert alert-info">' . $this->i18n('2fa_active') . '</div>';
-    $content = $this->i18n('2fa_disable_instruction');
+    $content = $this->i18n('2fa_active') . "<br/><br/>". $this->i18n('2fa_disable_instruction');
     $buttons = '<a class="btn btn-delete" href="' . rex_url::currentBackendPage(['func' => 'disable'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_disable') . '</a>';
 }
 else {
-    $message .= '<div class="alert alert-info">' . $this->i18n('2fa_inactive') . '</div>';
-
     if (empty($func)) {
-        $content = $this->i18n('2factor_auth_2fa_page_instruction');
+        $content = $this->i18n('2fa_inactive') . "<br/><br/>". $this->i18n('2factor_auth_2fa_page_instruction');
         $buttons = '<a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup_start') . '</a>';
     }
     elseif ($func === 'setup') {

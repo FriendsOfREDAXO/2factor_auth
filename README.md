@@ -2,6 +2,8 @@
 
 2-Faktor-Authentifizierung mittels one-time-password (OTP). Mit diesem Addon wird der Login in das REDAXO durch einen zweiten Authentifizierungsweg abgesichert.
 
+![Screenshot](https://github.com/FriendsOfREDAXO/2factor_auth/blob/assets/screen.png?raw=true)
+
 ## Installation
 
 1. Unter `2factor_auth` aus dem Installer downloaden

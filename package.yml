@@ -7,7 +7,6 @@ page:
     subpages:
         setup:
             title: 'Setup'
-            pjax: true
         docs:
             title: Help
             subPath: README.md

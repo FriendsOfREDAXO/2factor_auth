@@ -28,13 +28,17 @@ if ($func === 'disable') {
     $func = '';
 }
 
-if ($otp->enabled() && $config->enabled) {
-    $message = '<div class="alert alert-info">' . $this->i18n('2fa_active') . '</div>';
+if ($otp->isEnforced()) {
+    $message .= '<div class="alert alert-warning">' . $this->i18n('2fa_enforced') . '</div>';
+}
+
+if ($otp->isEnabled() && $config->enabled) {
+    $message .= '<div class="alert alert-info">' . $this->i18n('2fa_active') . '</div>';
     $content = $this->i18n('2fa_disable_instruction');
     $buttons = '<a class="btn btn-delete" href="' . rex_url::currentBackendPage(['func' => 'disable'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_disable') . '</a>';
 }
 else {
-    $message = '<div class="alert alert-info">' . $this->i18n('2fa_inactive') . '</div>';
+    $message .= '<div class="alert alert-info">' . $this->i18n('2fa_inactive') . '</div>';
 
     if (empty($func)) {
         $content = $this->i18n('2factor_auth_2fa_page_instruction');

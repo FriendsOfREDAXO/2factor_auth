@@ -4,6 +4,7 @@ namespace rex_2fa;
 
 use OTPHP\Factory;
 use rex_singleton_trait;
+use rex_config;
 use function rex_set_session;
 use function str_replace;
 
@@ -43,7 +44,7 @@ final class one_time_password
     /**
      * @return bool
      */
-    public function verified()
+    public function isVerified()
     {
         return rex_session('otp_verified', 'boolean', false);
     }
@@ -51,9 +52,42 @@ final class one_time_password
     /**
      * @return bool
      */
-    public function enabled()
+    public function isEnabled()
     {
         return one_time_password_config::forCurrentUser()->enabled;
     }
 
+    /**
+     * @return void
+     */
+    public function enforce(bool $enforce)
+    {
+        rex_config::set('2factor_auth', 'enforce', $enforce);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnforced()
+    {
+        return rex_config::get('2factor_auth', 'enforce', false);
+    }
+
+    /**
+     * @return bool
+     * @deprecated use isVerified() instead
+     */
+    public function verified()
+    {
+        return $this->isVerified();
+    }
+
+    /**
+     * @return bool
+     * @deprecated use isEnabled() instead
+     */
+    public function enabled()
+    {
+        return $this->isEnabled();
+    }
 }

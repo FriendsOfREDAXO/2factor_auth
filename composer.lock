@@ -75,16 +75,16 @@
         },
         {
             "name": "paragonie/constant_time_encoding",
-            "version": "v2.5.0",
+            "version": "v2.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/constant_time_encoding.git",
-                "reference": "9229e15f2e6ba772f0c55dd6986c563b937170a8"
+                "reference": "58c3f47f650c94ec05a151692652a868995d2938"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/9229e15f2e6ba772f0c55dd6986c563b937170a8",
-                "reference": "9229e15f2e6ba772f0c55dd6986c563b937170a8",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/58c3f47f650c94ec05a151692652a868995d2938",
+                "reference": "58c3f47f650c94ec05a151692652a868995d2938",
                 "shasum": ""
             },
             "require": {
@@ -138,7 +138,7 @@
                 "issues": "https://github.com/paragonie/constant_time_encoding/issues",
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
-            "time": "2022-01-17T05:32:27+00:00"
+            "time": "2022-06-14T06:56:20+00:00"
         },
         {
             "name": "spomky-labs/otphp",
@@ -217,16 +217,16 @@
         },
         {
             "name": "thecodingmachine/safe",
-            "version": "v2.2.0",
+            "version": "v2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thecodingmachine/safe.git",
-                "reference": "5570fbf82d3d27dfaff59db2bd1c9000838d66d9"
+                "reference": "2a8d758fd17763faf86e4aa798193e17b9fac38c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/5570fbf82d3d27dfaff59db2bd1c9000838d66d9",
-                "reference": "5570fbf82d3d27dfaff59db2bd1c9000838d66d9",
+                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/2a8d758fd17763faf86e4aa798193e17b9fac38c",
+                "reference": "2a8d758fd17763faf86e4aa798193e17b9fac38c",
                 "shasum": ""
             },
             "require": {
@@ -349,9 +349,9 @@
             "description": "PHP core functions that throw exceptions instead of returning FALSE on error",
             "support": {
                 "issues": "https://github.com/thecodingmachine/safe/issues",
-                "source": "https://github.com/thecodingmachine/safe/tree/v2.2.0"
+                "source": "https://github.com/thecodingmachine/safe/tree/v2.2.1"
             },
-            "time": "2022-05-25T13:37:55+00:00"
+            "time": "2022-06-09T15:36:45+00:00"
         }
     ],
     "packages-dev": [],

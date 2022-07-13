@@ -21,7 +21,7 @@ if (rex::isBackend() && rex::getUser() !== null) {
     $otp = one_time_password::getInstance();
 
     // den benutzer auf das setup leiten, weil erwzungen aber noch nicht durchgefuehrt
-    if ($otp->isEnforced() !== one_time_password::ENFORCED_DISABLED && !$otp->isEnabled()) {
+    if (!$otp->isEnabled()) {
         if ($otp->isEnforced() === one_time_password::ENFORCED_ALL ||
             $otp->isEnforced() === one_time_password::ENFORCED_ADMINS && rex::getUser()->isAdmin())
         {

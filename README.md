@@ -16,7 +16,8 @@ iOS         | FreeOTP                | App: https://itunes.apple.com/de/app/free
 Android     | FreeOTP                | App: https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp
 iOS         | Google Authentificator | App: https://itunes.apple.com/de/app/google-authenticator/id388497605
 Android     | Google Authentificator | App: https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2
-iOS/Android | 2FAS Authenticator.    | Website: https://2fas.com
+Android     | 2FAS Authenticator.    | App: https://play.google.com/store/apps/details?id=com.twofasapp
+iOS         | 2FAS Authenticator.    | App: https://apps.apple.com/us/app/2fas-auth/id1217793794
 
 Zunächst muss eine der Apps installiert sein, um die Einrichtung abzuschließen. Anschließend:
 

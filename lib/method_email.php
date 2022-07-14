@@ -22,7 +22,7 @@ final class method_email implements method_interface
         $mail = new rex_mailer();
 
         $otp = Factory::loadFromProvisioningUri($provisioningUrl);
-	$otpCode = $otp->at(time());
+        $otpCode = $otp->at(time());
 
         $mail->addAddress($user->getEmail());
         $mail->Subject = '2FA-Code: '. rex::getServerName() . ' (' . $_SERVER['HTTP_HOST'] . ')';

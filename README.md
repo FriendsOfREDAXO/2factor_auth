@@ -11,14 +11,14 @@ Mit diesem Addon wird der Login in das REDAXO CMS durch einen zweiten Authentifi
 Als Authentifikator-Apps stehen alle Apps zur Verfügung, die den OTP-Standard einhalten, zum Beispiel:
 
 Umgebung    | App                    | Hilfe
------------ | ---------------------- | -----
+----------- |------------------------| -----
 OSX/Windows | 1Password              | Kurzanleitung: https://support.1password.com/one-time-passwords/
 iOS         | FreeOTP                | App: https://itunes.apple.com/de/app/freeotp-authenticator/id872559395, Kurzanleitung: https://support.1password.com/one-time-passwords/
 Android     | FreeOTP                | App: https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp
 iOS         | Google Authentificator | App: https://itunes.apple.com/de/app/google-authenticator/id388497605
 Android     | Google Authentificator | App: https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2
-Android     | 2FAS Authenticator.    | App: https://play.google.com/store/apps/details?id=com.twofasapp
-iOS         | 2FAS Authenticator.    | App: https://apps.apple.com/us/app/2fas-auth/id1217793794
+Android     | 2FAS Authenticator     | App: https://play.google.com/store/apps/details?id=com.twofasapp
+iOS         | 2FAS Authenticator     | App: https://apps.apple.com/us/app/2fas-auth/id1217793794
 
 Zunächst muss eine der Apps installiert sein, um die Einrichtung abzuschließen. Anschließend:
 

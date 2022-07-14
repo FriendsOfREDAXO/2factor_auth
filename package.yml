@@ -3,7 +3,8 @@ version: '2.0.0-dev'
 author: 'Markus Staab'
 
 page:
-    title: '2FA'
+    title: '2 Faktor Login'
+    icon: rex-icon fa-lock
     subpages:
         setup:
             title: 'Setup'
@@ -18,6 +19,7 @@ pages:
         main: true
         hidden: true
         path: pages/verify.php
+
 requires:
     php:
         version: '>=7.2'

@@ -1,4 +1,4 @@
-2factor_auth = 2 Faktor Authentifizierung
+2factor_auth = 2 Faktor Login
 2factor_auth_page_setup = 2 Faktor Authentifizierung einrichten
 2factor_auth_2fa_enforced = 2 Faktor Authentifizierung
 2factor_auth_2fa_enforced_yes_all = Ja - Erzwungen für alle REDAXO-CMS Benutzer

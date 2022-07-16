@@ -17,7 +17,8 @@ final class method_totp implements method_interface
      * @param string $provisioningUrl
      * @return void
      */
-    public function challenge($provisioningUrl, rex_user $user) {
+    public function challenge($provisioningUrl, rex_user $user)
+    {
         // nothing todo
     }
 

@@ -3,7 +3,11 @@
 namespace rex_2fa;
 
 use rex;
+use rex_exception;
 use rex_sql;
+use function array_key_exists;
+use function is_array;
+use function is_string;
 
 /**
  * @internal
@@ -101,11 +105,11 @@ final class one_time_password_config
     {
         $this->enabled = true;
 
-        if ($this->provisioningUri === null) {
-            throw new \rex_exception('Missing provisioning url');
+        if (null === $this->provisioningUri) {
+            throw new rex_exception('Missing provisioning url');
         }
-        if ($this->method === null) {
-            throw new \rex_exception('Missing method');
+        if (null === $this->method) {
+            throw new rex_exception('Missing method');
         }
 
         $this->save();

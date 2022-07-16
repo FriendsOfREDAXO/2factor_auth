@@ -7,23 +7,22 @@ $message = '';
 $csrfToken = rex_csrf_token::factory('2factor_auth_verify');
 $otp = rex_post('rex_login_otp', 'string');
 
-if ($otp === '') {
+if ('' === $otp) {
     one_time_password::getInstance()->challenge();
 }
 
-if ($otp !== '' && !$csrfToken->isValid()) {
+if ('' !== $otp && !$csrfToken->isValid()) {
     $error = true;
     $message = rex_i18n::msg('csrf_token_invalid');
     $otp = '';
 }
 
-if ($otp !== '') {
+if ('' !== $otp) {
     if (one_time_password::getInstance()->verify($otp)) {
         $message = rex_view::success('Passt');
         // symbolischer parameter, der nirgends ausgewertet werden sollte/darf.
         rex_response::sendRedirect('?ok');
-    }
-    else {
+    } else {
         $error = true;
         $message = 'Falsches one-time-password, bitte erneut versuchen';
     }

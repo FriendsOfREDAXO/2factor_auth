@@ -2,9 +2,10 @@
 
 namespace rex_2fa;
 
-use rex_system_setting;
-use rex_i18n;
+use InvalidArgumentException;
 use rex_form_select_element;
+use rex_i18n;
+use rex_system_setting;
 
 /**
  * @internal
@@ -33,7 +34,7 @@ final class enforce_system_setting extends rex_system_setting
 
         $otp = one_time_password::getInstance();
 
-        switch($otp->isEnforced()) {
+        switch ($otp->isEnforced()) {
             case one_time_password::ENFORCED_ALL:
                 $select->setSelected(self::ENABLED_ALL);
                 break;
@@ -54,7 +55,7 @@ final class enforce_system_setting extends rex_system_setting
 
         $opt = one_time_password::getInstance();
 
-        switch($value) {
+        switch ($value) {
             case self::ENABLED_ALL:
                 $opt->enforce(one_time_password::ENFORCED_ALL);
                 break;
@@ -65,7 +66,7 @@ final class enforce_system_setting extends rex_system_setting
                 $opt->enforce(one_time_password::ENFORCED_DISABLED);
                 break;
             default:
-                throw new \InvalidArgumentException('Invalid value '. $value .' for 2fa enforce');
+                throw new InvalidArgumentException('Invalid value '. $value .' for 2fa enforce');
         }
 
         return true;

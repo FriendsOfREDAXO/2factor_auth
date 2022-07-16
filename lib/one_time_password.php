@@ -3,8 +3,9 @@
 namespace rex_2fa;
 
 use rex;
-use rex_singleton_trait;
 use rex_config;
+use rex_exception;
+use rex_singleton_trait;
 use function rex_set_session;
 use function str_replace;
 
@@ -15,9 +16,9 @@ final class one_time_password
 {
     use rex_singleton_trait;
 
-    const ENFORCED_ALL = 'all';
-    const ENFORCED_ADMINS = 'admins_only';
-    const ENFORCED_DISABLED = 'disabled';
+    public const ENFORCED_ALL = 'all';
+    public const ENFORCED_ADMINS = 'admins_only';
+    public const ENFORCED_DISABLED = 'disabled';
 
     /**
      * @var method_interface|null
@@ -31,7 +32,7 @@ final class one_time_password
     {
         $user = rex::requireUser();
 
-        $uri = str_replace("&amp;", "&", (string) one_time_password_config::forCurrentUser()->provisioningUri);
+        $uri = str_replace('&amp;', '&', (string) one_time_password_config::forCurrentUser()->provisioningUri);
 
         $this->getMethod()->challenge($uri, $user);
     }
@@ -42,7 +43,7 @@ final class one_time_password
      */
     public function verify($otp)
     {
-        $uri = str_replace("&amp;", "&", (string) one_time_password_config::forCurrentUser()->provisioningUri);
+        $uri = str_replace('&amp;', '&', (string) one_time_password_config::forCurrentUser()->provisioningUri);
 
         $verified = $this->getMethod()->verify($uri, $otp);
 
@@ -90,16 +91,17 @@ final class one_time_password
     /**
      * @return method_interface
      */
-    public function getMethod() {
-        if ($this->method === null) {
+    public function getMethod()
+    {
+        if (null === $this->method) {
             $methodType = one_time_password_config::forCurrentUser()->method;
 
-            if ($methodType === "totp") {
+            if ('totp' === $methodType) {
                 $this->method = new method_totp();
-            } elseif ($methodType === "email") {
+            } elseif ('email' === $methodType) {
                 $this->method = new method_email();
             } else {
-                throw new \rex_exception("Unknown method: $methodType");
+                throw new rex_exception("Unknown method: $methodType");
             }
         }
 

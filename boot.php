@@ -3,7 +3,7 @@
 use rex_2fa\enforce_system_setting;
 use rex_2fa\one_time_password;
 
-require_once 'vendor/autoload.php';
+require_once __DIR__.'/vendor/autoload.php';
 
 $addon = rex_addon::get('2factor_auth');
 

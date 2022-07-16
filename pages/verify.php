@@ -23,6 +23,12 @@ if ('' !== $otp) {
         // symbolischer parameter, der nirgends ausgewertet werden sollte/darf.
         rex_response::sendRedirect('?ok');
     } else {
+        // requires redaxo-core 5.14+
+        if (method_exists(rex_backend_login::class, 'increaseLoginTries')) {
+            $backendLogin = rex::getProperty('login');
+            $backendLogin->increaseLoginTries();
+        }
+
         $error = true;
         $message = 'Falsches one-time-password, bitte erneut versuchen';
     }

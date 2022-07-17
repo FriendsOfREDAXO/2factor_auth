@@ -14,20 +14,17 @@ use function str_replace;
 final class method_totp implements method_interface
 {
     /**
-     * @param string $provisioningUrl
      * @return void
      */
-    public function challenge($provisioningUrl, rex_user $user)
+    public function challenge(string $provisioningUrl, rex_user $user)
     {
         // nothing todo
     }
 
     /**
-     * @param string $provisioningUrl
-     * @param string $otp
      * @return bool
      */
-    public function verify($provisioningUrl, $otp)
+    public function verify(string $provisioningUrl, string $otp)
     {
         // re-create from an existant uri
         return Factory::loadFromProvisioningUri($provisioningUrl)->verify($otp);

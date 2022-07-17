@@ -106,10 +106,10 @@ final class one_time_password_config
         $this->enabled = true;
 
         if (null === $this->provisioningUri) {
-            throw new rex_exception('Missing provisioning url');
+            throw new exception('Missing provisioning url');
         }
         if (null === $this->method) {
-            throw new rex_exception('Missing method');
+            throw new exception('Missing method');
         }
 
         $this->save();

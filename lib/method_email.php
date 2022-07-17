@@ -16,10 +16,9 @@ use function str_replace;
 final class method_email implements method_interface
 {
     /**
-     * @param string $provisioningUrl
      * @return void
      */
-    public function challenge($provisioningUrl, rex_user $user)
+    public function challenge(string $provisioningUrl, rex_user $user)
     {
         $mail = new rex_mailer();
 
@@ -33,16 +32,14 @@ final class method_email implements method_interface
         $mail->AltBody = rex::getServerName()." Login verification \r\n ------------------ \r\n". $otpCode . "\r\n ------------------ \r\nis your 2 factor authentication code.";
 
         if (!$mail->send()) {
-            throw new rex_exception('Unable to send e-mail. Make sure to setup the phpmailer AddOn.');
+            throw new exception('Unable to send e-mail. Make sure to setup the phpmailer AddOn.');
         }
     }
 
     /**
-     * @param string $provisioningUrl
-     * @param string $otp
      * @return bool
      */
-    public function verify($provisioningUrl, $otp)
+    public function verify(string $provisioningUrl, string $otp)
     {
         // re-create from an existant uri
         return Factory::loadFromProvisioningUri($provisioningUrl)->verify($otp);

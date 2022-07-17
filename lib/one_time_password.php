@@ -4,7 +4,7 @@ namespace rex_2fa;
 
 use rex;
 use rex_config;
-use rex_exception;
+use InvalidArgumentException;
 use rex_singleton_trait;
 use function rex_set_session;
 use function str_replace;
@@ -101,7 +101,7 @@ final class one_time_password
             } elseif ('email' === $methodType) {
                 $this->method = new method_email();
             } else {
-                throw new rex_exception("Unknown method: $methodType");
+                throw new InvalidArgumentException("Unknown method: $methodType");
             }
         }
 

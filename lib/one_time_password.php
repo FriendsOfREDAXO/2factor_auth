@@ -2,9 +2,9 @@
 
 namespace rex_2fa;
 
+use InvalidArgumentException;
 use rex;
 use rex_config;
-use InvalidArgumentException;
 use rex_singleton_trait;
 use function rex_set_session;
 use function str_replace;

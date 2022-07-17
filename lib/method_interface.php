@@ -10,14 +10,14 @@ use rex_user;
 interface method_interface
 {
     /**
-     * @return void
      * @throws exception
+     * @return void
      */
     public function challenge(string $provisioningUrl, rex_user $user);
 
     /**
-     * @return bool
      * @throws exception
+     * @return bool
      */
     public function verify(string $provisioningUrl, string $otp);
 

@@ -3,7 +3,6 @@
 namespace rex_2fa;
 
 use rex;
-use rex_exception;
 use rex_sql;
 use function array_key_exists;
 use function is_array;

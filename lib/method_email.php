@@ -5,7 +5,6 @@ namespace rex_2fa;
 use OTPHP\Factory;
 use OTPHP\TOTP;
 use rex;
-use rex_exception;
 use rex_mailer;
 use rex_user;
 use function str_replace;

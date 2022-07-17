@@ -2,6 +2,8 @@
 
 use rex_2fa\one_time_password;
 
+/** @var rex_addon $this */
+
 $error = false;
 $message = '';
 $csrfToken = rex_csrf_token::factory('2factor_auth_verify');

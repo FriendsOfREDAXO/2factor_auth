@@ -4,9 +4,6 @@ namespace rex_2fa;
 
 use rex;
 use rex_sql;
-use function array_key_exists;
-use function is_array;
-use function is_string;
 
 /**
  * @internal
@@ -25,23 +22,37 @@ final class one_time_password_config
      * @var 'totp'|'email'|null
      */
     public $method;
+    /**
+     * @var \rex_user
+     */
+    public $user;
+
+    public function __construct(\rex_user $user)
+    {
+        $this->user = $user;
+    }
 
     /**
      * @return self
      */
     public static function forCurrentUser()
     {
-        $user = rex::requireUser();
-        return self::fromJson($user->getValue('one_time_password_config'));
+        return self::forUser(rex::requireUser());
     }
 
     /**
      * @return self
      */
-    public static function loadFromDb(method_interface $method)
+    public static function forUser(\rex_user $user)
     {
-        $user = rex::requireUser();
+        return self::fromJson($user->getValue('one_time_password_config'), $user);
+    }
 
+    /**
+     * @return self
+     */
+    public static function loadFromDb(method_interface $method, $user)
+    {
         // get non-cached values
         $userSql = rex_sql::factory();
         $userSql->setTable(rex::getTablePrefix() . 'user');
@@ -49,7 +60,7 @@ final class one_time_password_config
         $userSql->select();
 
         $json = $userSql->getValue('one_time_password_config');
-        $config = self::fromJson($json);
+        $config = self::fromJson($json, $user);
         $config->init($method);
         return $config;
     }
@@ -58,18 +69,18 @@ final class one_time_password_config
      * @param string|null $json
      * @return self
      */
-    private static function fromJson($json)
+    private static function fromJson($json, $user)
     {
-        if (is_string($json)) {
+        if (\is_string($json)) {
             $configArr = json_decode($json, true);
 
-            if (is_array($configArr)) {
+            if (\is_array($configArr)) {
                 // compat with older versions, which did not yet define a method
-                if (!array_key_exists('method', $configArr)) {
+                if (!\array_key_exists('method', $configArr)) {
                     $configArr['method'] = 'totp';
                 }
 
-                $config = new self();
+                $config = new self($user);
                 $config->provisioningUri = $configArr['provisioningUri'];
                 $config->enabled = $configArr['enabled'];
                 $config->method = $configArr['method'];
@@ -77,7 +88,7 @@ final class one_time_password_config
             }
         }
 
-        $default = new self();
+        $default = new self($user);
         $default->init(new method_totp());
         return $default;
     }
@@ -87,11 +98,9 @@ final class one_time_password_config
      */
     private function init(method_interface $method)
     {
-        $user = rex::requireUser();
-
         $this->method = $method instanceof method_email ? 'email' : 'totp';
         if (null === $this->provisioningUri) {
-            $this->provisioningUri = $method->getProvisioningUri($user);
+            $this->provisioningUri = $method->getProvisioningUri($this->user);
         }
 
         $this->save();
@@ -130,11 +139,9 @@ final class one_time_password_config
      */
     private function save()
     {
-        $user = rex::requireUser();
-
         $userSql = rex_sql::factory();
         $userSql->setTable(rex::getTablePrefix() . 'user');
-        $userSql->setWhere(['id' => $user->getId()]);
+        $userSql->setWhere(['id' => $this->user->getId()]);
         $userSql->setValue('one_time_password_config', json_encode(
             [
                 'provisioningUri' => $this->provisioningUri,

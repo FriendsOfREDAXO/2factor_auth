@@ -1,6 +1,5 @@
 <?php
 
-use rex_2fa\one_time_password;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,6 +18,8 @@ class rex_command_2factor_auth_user extends rex_console_command
         $this
             ->setDescription('Deaktivates a 2factor_auth for a user')
             ->addArgument('user', InputArgument::REQUIRED, 'Username')
+            ->addOption('disable', 'disable', InputOption::VALUE_OPTIONAL, 'Disable', 'none')
+            ->addOption('enable', 'enable', InputOption::VALUE_OPTIONAL, 'Enable', 'none')
         ;
     }
 
@@ -39,65 +40,32 @@ class rex_command_2factor_auth_user extends rex_console_command
         }
 
         $user = rex_user::fromSql($user);
-        $id = $user->getId();
+        $config = \rex_2fa\one_time_password_config::forUser($user);
 
-        $io->text('User found: '.$user->getLogin());
-        $io->text('Current status: '.$user->getLogin()."\n");
-
-
-
-
-
-
-        return 0;
-
-        $passwordPolicy = rex_backend_password_policy::factory();
-
-        $password = $input->getArgument('password');
-
-        if ($password && true !== $msg = $passwordPolicy->check($password, $id)) {
-            throw new InvalidArgumentException($msg);
+        if (!$config) {
+            $io->warning('User Config not found');
+            return 0;
         }
 
-        if (!$password) {
-            $description = $passwordPolicy->getDescription();
-            $description = $description ? ' ('.$description.')' : '';
+        $io->info('User found: '.$user->getLogin()."\n".'Current status: '.$config->method);
 
-            $password = $io->askHidden('Password'.$description, static function ($password) use ($id, $passwordPolicy) {
-                if (true !== $msg = $passwordPolicy->check($password, $id)) {
-                    throw new InvalidArgumentException($msg);
-                }
+        $enable = $input->getOption('enable');
+        $disable = $input->getOption('disable');
 
-                return $password;
-            });
+        if ('none' == $enable && 'none' == $disable) {
+            $io->warning('Please decide: (--enable) or (--disable) for disabling 2factor_auth');
+            return 0;
         }
 
-        if (!$password) {
-            throw new InvalidArgumentException('Missing password.');
+        if ('none' != $enable) {
+            $config->enable();
+            $io->success('2factor_auth for User `'.$user->getLogin().'` has been enabled');
         }
 
-        return 0;
-
-
-        $passwordHash = rex_backend_login::passwordHash($password);
-
-        rex_sql::factory()
-            ->setTable(rex::getTable('user'))
-            ->setWhere(['id' => $id])
-            ->setValue('password', $passwordHash)
-            ->addGlobalUpdateFields('console')
-            ->setDateTimeValue('password_changed', time())
-            ->setArrayValue('previous_passwords', $passwordPolicy->updatePreviousPasswords($user, $passwordHash))
-            ->setValue('password_change_required', (int) $input->getOption('password-change-required'))
-            ->update();
-
-        rex_extension::registerPoint(new rex_extension_point('PASSWORD_UPDATED', '', [
-            'user_id' => $id,
-            'user' => $user,
-            'password' => $password,
-        ], true));
-
-        $io->success(sprintf('Saved new password for user "%s".', $username));
+        if ('none' != $disable) {
+            $config->disable();
+            $io->success('2factor_auth for User `'.$user->getLogin().'` has been disabled');
+        }
 
         return 0;
     }

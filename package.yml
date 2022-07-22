@@ -20,6 +20,9 @@ pages:
         hidden: true
         path: pages/verify.php
 
+console_commands:
+    2factor_auth:enforce: rex_command_2factor_auth_enforce
+
 requires:
     php:
         version: '>=7.2'

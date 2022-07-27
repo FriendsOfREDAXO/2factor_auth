@@ -50,7 +50,7 @@ final class method_email implements method_interface
     public function getProvisioningUri(rex_user $user)
     {
         // create a uri with a random secret
-        $otp = TOTP::create(null, 60);
+        $otp = TOTP::create(null, 300);
 
         // the label rendered in "Google Authenticator" or similar app
         $label = $user->getLogin() . '@' . rex::getServerName() . ' (' . $_SERVER['HTTP_HOST'] . ')';

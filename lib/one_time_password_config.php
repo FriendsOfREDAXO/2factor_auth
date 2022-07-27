@@ -137,6 +137,16 @@ final class one_time_password_config
     /**
      * @return void
      */
+    public function updateMethod(method_interface $method)
+    {
+        $this->method = $method instanceof method_email ? 'email' : 'totp';
+        $this->provisioningUri = $method->getProvisioningUri($this->user);
+        $this->save();
+    }
+
+    /**
+     * @return void
+     */
     private function save()
     {
         $userSql = rex_sql::factory();

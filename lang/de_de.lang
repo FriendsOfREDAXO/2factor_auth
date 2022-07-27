@@ -27,3 +27,4 @@
 2factor_auth_copy = Kopieren
 
 2factor_auth_login = Authentifizierungs App starten und Code eingeben
+2fa_setup_start_email_send = E-Mail wurde versendet

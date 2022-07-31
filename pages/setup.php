@@ -14,13 +14,26 @@ $success = false;
 
 $csrfToken = rex_csrf_token::factory('2factor_auth_setup');
 $func = rex_request('func', 'string');
+
+if ('setup-email' === $func || 'setup-totp' === $func) {
+    switch ($func) {
+        case 'setup-email':
+            $otpMethod = new \rex_2fa\method_email();
+            break;
+        default:
+            $otpMethod = new \rex_2fa\method_totp();
+            break;
+    }
+
+    $config = one_time_password_config::loadFromDb($otpMethod, rex::requireUser());
+    $config->updateMethod($otpMethod);
+    $user_id = rex::requireUser()->getId();
+    rex_user::clearInstance($user_id);
+    rex::setProperty('user', rex_user::get($user_id));
+}
+
 $otp = one_time_password::getInstance();
 $otpMethod = $otp->getMethod();
-
-if ('setup-email' === $func) {
-    $otpMethod = new \rex_2fa\method_email();
-    $config = one_time_password_config::loadFromDb($otpMethod, rex::requireUser());
-}
 
 if ('' !== $func && !$csrfToken->isValid()) {
     $message = '<div class="alert alert-danger">' . $this->i18n('csrf_token_invalid') . '</div>';
@@ -52,7 +65,7 @@ if ($otp->isEnabled() && $config->enabled) {
            <a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup-email'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup_start_email') . '</a>
         ';
     } elseif ('setup-totp' === $func) {
-    // nothing todo
+        // nothing todo
     } elseif ('setup-email' === $func) {
         if (!rex_addon::get('phpmailer')->isAvailable()) {
             $content = rex_view::error($this->i18n('2fa_setup_start_phpmailer_required'));
@@ -68,6 +81,7 @@ if ($otp->isEnabled() && $config->enabled) {
         }
 
         if ('' !== $func) {
+            $message = rex_view::info($this->i18n('2fa_setup_start_email_send'));
             one_time_password::getInstance()->challenge();
         }
     } elseif ('verify-totp' === $func || 'verify-email' === $func) {
@@ -78,6 +92,7 @@ if ($otp->isEnabled() && $config->enabled) {
                 $message = '<div class="alert alert-success">' . $this->i18n('2fa_setup_successfull') . '</div>';
                 $config = one_time_password_config::loadFromDb($otpMethod, rex::requireUser());
                 $config->enable();
+                $content = '';
                 $success = true;
             }
         }

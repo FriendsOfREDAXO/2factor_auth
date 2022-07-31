@@ -36,6 +36,7 @@ final class method_totp implements method_interface
     public function getProvisioningUri(rex_user $user)
     {
         // create a uri with a random secret
+        // default period is 30s and digest is sha1. Google Authenticator is restricted to this settings
         $otp = TOTP::create();
 
         // the label rendered in "Google Authenticator" or similar app

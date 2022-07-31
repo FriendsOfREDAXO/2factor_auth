@@ -5,6 +5,7 @@
     <?= $this->message ?>
 <?php endif; ?>
 
+<?php if (!$this->success) : ?>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">2. <?= $this->addon->i18n('2fa_verify_headline') ?></h3>
@@ -31,4 +32,4 @@
         </form>
     </div>
 </div>
-
+<?php endif; ?>

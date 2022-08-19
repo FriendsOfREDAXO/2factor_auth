@@ -3,7 +3,7 @@ version: '2.0.4'
 author: 'Markus Staab'
 
 page:
-    title: 'translate:2 Faktor Login'
+    title: 'translate:2FaktorLogin'
     icon: rex-icon fa-lock
     subpages:
         setup:

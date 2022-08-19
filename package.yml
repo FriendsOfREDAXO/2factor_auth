@@ -7,14 +7,14 @@ page:
     icon: rex-icon fa-lock
     subpages:
         setup:
-            title: 'Setup'
+            title: 'translate:setup'
         docs:
-            title: Help
+            title: translate:help
             subPath: README.md
 
 pages:
     2factor_auth_verify:
-        title: 'OTP-Verifizierung'
+        title: 'translate:OTP-Verifizierung'
         hasNavigation: false
         main: true
         hidden: true

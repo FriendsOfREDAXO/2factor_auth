@@ -1,9 +1,9 @@
 package: 2factor_auth
-version: '2.0.3'
+version: '2.0.4'
 author: 'Markus Staab'
 
 page:
-    title: '2 Faktor Login'
+    title: 'translate:2 Faktor Login'
     icon: rex-icon fa-lock
     subpages:
         setup:

@@ -1,14 +1,14 @@
-# 2 Faktor Authentifizierung
+# 2-Faktor-Authentifizierung
 
-2 Faktor Authentifizierung mittels one-time-password (OTP).
+2-Faktor-Authentifizierung mittels one-time-password (OTP).
 Mit diesem Addon wird der Login in das REDAXO CMS durch einen zweiten Authentifizierungsweg abgesichert.
 
-![2 Faktor Authentifizierung Weboberfläche](https://github.com/FriendsOfREDAXO/2factor_auth/blob/assets/screen.png?raw=true)
+![2-Faktor-Authentifizierung Weboberfläche](https://github.com/FriendsOfREDAXO/2factor_auth/blob/assets/screen.png?raw=true)
 
 ## Systemeinstellungen
 
-Der Administrator hat die Möglichkeit unter `System` die 2 Faktor Authentifizierung für die Benutzer zu erzwingen.
-Alternativ kann die 2 Faktor Authentifizierung als Optional gehandhabt werden.
+Der Administrator hat die Möglichkeit unter `System` die 2-Faktor-Authentifizierung für die Benutzer zu erzwingen.
+Alternativ kann die 2-Faktor-Authentifizierung als Optional gehandhabt werden.
 
 ## Einrichtung Endbenutzer
 
@@ -26,7 +26,7 @@ iOS         | 2FAS Authenticator     | App: https://apps.apple.com/us/app/2fas-a
 
 Zunächst muss eine der Apps installiert sein, um die Einrichtung abzuschließen. Anschließend:
 
-1. Im REDAXO-Backend > `2 Faktor Login` öffnen.
+1. Im REDAXO-Backend > `2-Faktor-Login` öffnen.
 2. Die 2-Faktor-Einrichtung aktivieren. Es wird ein QR-Code dargestellt.
 3. Den QR-Code in der Authentifikator-App einlesen. 
 

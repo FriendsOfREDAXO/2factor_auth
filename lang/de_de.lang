@@ -28,6 +28,16 @@
 2factor_auth_2fa_verify_action = Bestätigen
 2factor_auth_2fa_one_time_password = Einmal-Passwort
 2factor_auth_copy = Kopieren
+2factor_auth_2fa_status_email_info = Aktuell ist eine E-Mail-2-Faktor-Authentifizierung aktiviert.
+2factor_auth_2fa_status_otp_info = Aktuell ist eine OTP-2-Faktor-Authentifizierung aktiviert.
+
+2factor_auth_2fa_page_totp_instruction = Bei einer TOTP-Authentifizierung wird eine gesonderte Applikation benötigt, z.B. auf einem immer verfügbaren Mobilgerät. Diese muss initial eingerichtet werden. Nach einem Login in REDAXO wird ein Code abgefragt, welcher dann in dieser Applikation eingesehen und eingetragen werden kann, um ins REDAXO Backend zu kommen.
+2factor_auth_2fa_page_email_instruction = Bei einer E-Mail-Authentifizierung wird nach dem Login eine E-Mail an den entsprechenden User geschickt. Mit dem in der E-Mail mitgeschickten Code kommt man ins Backendsystem von REDAXO. Der User muss eine E-Mail im eigenen Profil eingetragen haben.
 
 2factor_auth_login = Authentifizierungs App starten und Code eingeben
 2fa_setup_start_email_send = E-Mail wurde versendet
+
+2factor_auth_2fa_info_email_sent = Eine E-Mail mit dem Code wurde versendet
+2factor_auth_2fa_info_email_enter_code = Bitte geben sie den Code aus der versendeten E-Mail ein.
+2factor_auth_2fa_info_topt_enter_code = Bitte schauen sie in der Authenticator App nach dem passenden Code.
+

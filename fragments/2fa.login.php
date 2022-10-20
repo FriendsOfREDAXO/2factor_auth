@@ -9,10 +9,16 @@
                 echo $fragment->parse('core/login_branding.php');
                 ?>
 
-                <?php if ('' !== $this->message) : ?>
+                <?php if ('' !== $this->info_messages) : ?>
+                <div class="rex-js-login-message">
+                        <div class="alert alert-info">
+                            <?= $this->info_messages?>
+                        </div>
+                </div>
+                <?php endif; ?><?php if ('' !== $this->error_messages) : ?>
                     <div class="rex-js-login-message">
-                        <div class="alert <?= $this->error ? 'alert-danger' : 'alert-success' ?>">
-                            <?= $this->message?>
+                        <div class="alert alert-danger">
+                            <?= $this->error_messages?>
                         </div>
                     </div>
                 <?php endif; ?>

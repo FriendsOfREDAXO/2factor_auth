@@ -7,6 +7,7 @@ use rex_2fa\one_time_password_config;
 
 $fragment = new rex_fragment();
 $message = '';
+$title = $this->i18n('2fa_setup');
 $buttons = '';
 $content = '';
 $uri = '';
@@ -55,15 +56,24 @@ if (one_time_password::ENFORCED_ADMINS === $otp->isEnforced()) {
 
 $config = one_time_password_config::loadFromDb($otpMethod, rex::requireUser());
 if ($otp->isEnabled() && $config->enabled) {
-    $content = $this->i18n('2fa_disable_instruction');
-    $buttons = '<a class="btn btn-delete" href="' . rex_url::currentBackendPage(['func' => 'disable'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_disable') . '</a>';
+    $title = $this->i18n('status');
+    switch ($config->method) {
+        case 'email':
+            $content = '<p>'.$this->i18n('2fa_status_email_info').'</p>';
+            break;
+        default:
+            $content = '<p>'.$this->i18n('2fa_status_otp_info').'</p>';
+            break;
+    }
+    $this->i18n('2fa_status_otp_instruction');
+    $content .= '<p><a class="btn btn-delete" href="' . rex_url::currentBackendPage(['func' => 'disable'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_disable') . '</a></p>';
 } else {
     if ('' === $func) {
-        $content = $this->i18n('2factor_auth_2fa_page_instruction');
-        $buttons = '
-           <a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup-totp'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup_start_totp') . '</a>
-           <a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup-email'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup_start_email') . '</a>
-        ';
+        $content .= '<p>'.$this->i18n('2factor_auth_2fa_page_totp_instruction').'</p>';
+        $content .= '<p><a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup-totp'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup_start_totp') . '</a></p>';
+        $content .= '<p>'.$this->i18n('2factor_auth_2fa_page_email_instruction').'</p>';
+        $content .= '<p><a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup-email'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup_start_email') . '</a></p>';
+
     } elseif ('setup-totp' === $func) {
         // nothing todo
     } elseif ('setup-email' === $func) {
@@ -124,7 +134,7 @@ if ('setup-email' === $func || 'verify-email' === $func || 'setup-totp' === $fun
 } else {
     $fragment = new rex_fragment();
     $fragment->setVar('before', $message, false);
-    $fragment->setVar('heading', 'Setup', false);
+    $fragment->setVar('heading', $title, false);
     $fragment->setVar('body', $content, false);
     $fragment->setVar('buttons', $buttons, false);
     echo $fragment->parse('core/page/section.php');

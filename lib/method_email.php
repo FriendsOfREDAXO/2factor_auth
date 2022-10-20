@@ -7,6 +7,7 @@ use OTPHP\TOTP;
 use rex;
 use rex_mailer;
 use rex_user;
+
 use function str_replace;
 
 /**
@@ -26,7 +27,7 @@ final class method_email implements method_interface
 
         $mail->addAddress($user->getEmail());
         $mail->Subject = '2FA-Code: '. rex::getServerName() . ' (' . $_SERVER['HTTP_HOST'] . ')';
-        $mail->isHTML(true);
+        $mail->isHTML();
         $mail->Body = '<style>body { font-size: 1.2em; text-align: center;}</style><h2>'.rex::getServerName().' Login verification</h2><br><h3><strong>'. $otpCode . '</strong></h3><br> is your 2 factor authentication code.';
         $mail->AltBody = rex::getServerName()." Login verification \r\n ------------------ \r\n". $otpCode . "\r\n ------------------ \r\nis your 2 factor authentication code.";
 
@@ -35,19 +36,13 @@ final class method_email implements method_interface
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function verify(string $provisioningUrl, string $otp)
+    public function verify(string $provisioningUrl, string $otp): bool
     {
         // re-create from an existant uri
         return Factory::loadFromProvisioningUri($provisioningUrl)->verify($otp);
     }
 
-    /**
-     * @return string
-     */
-    public function getProvisioningUri(rex_user $user)
+    public function getProvisioningUri(rex_user $user): string
     {
         // create a uri with a random secret
         $otp = TOTP::create(null, 300);

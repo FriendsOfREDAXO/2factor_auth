@@ -17,9 +17,9 @@ $selectEnforce->setName('2factor_auth_enforce');
 $selectEnforce->setAttribute('class', 'form-control selectpicker');
 $selectEnforce->setSelected($this->getConfig('enforce'));
 
-$selectEnforce->addOption($this->i18n('2factor_auth_enforce_'.rex_2fa\one_time_password::ENFORCED_ALL), rex_2fa\one_time_password::ENFORCED_ALL);
-$selectEnforce->addOption($this->i18n('2factor_auth_enforce_'.rex_2fa\one_time_password::ENFORCED_ADMINS), rex_2fa\one_time_password::ENFORCED_ADMINS);
-$selectEnforce->addOption($this->i18n('2factor_auth_enforce_'.rex_2fa\one_time_password::ENFORCED_DISABLED), rex_2fa\one_time_password::ENFORCED_DISABLED);
+$selectEnforce->addOption($this->i18n('2factor_auth_enforce_'.FriendsOfREDAXO\TwoFactorAuth\one_time_password::ENFORCED_ALL), FriendsOfREDAXO\TwoFactorAuth\one_time_password::ENFORCED_ALL);
+$selectEnforce->addOption($this->i18n('2factor_auth_enforce_'.FriendsOfREDAXO\TwoFactorAuth\one_time_password::ENFORCED_ADMINS), FriendsOfREDAXO\TwoFactorAuth\one_time_password::ENFORCED_ADMINS);
+$selectEnforce->addOption($this->i18n('2factor_auth_enforce_'.FriendsOfREDAXO\TwoFactorAuth\one_time_password::ENFORCED_DISABLED), FriendsOfREDAXO\TwoFactorAuth\one_time_password::ENFORCED_DISABLED);
 
 $selectOption = new rex_select();
 $selectOption->setId('2factor_auth_option');
@@ -27,9 +27,9 @@ $selectOption->setName('2factor_auth_option');
 $selectOption->setAttribute('class', 'form-control selectpicker');
 $selectOption->setSelected($this->getConfig('option'));
 
-$selectOption->addOption($this->i18n('2factor_auth_option_'.rex_2fa\one_time_password::OPTION_ALL), rex_2fa\one_time_password::OPTION_ALL);
-$selectOption->addOption($this->i18n('2factor_auth_option_'.rex_2fa\one_time_password::OPTION_TOTP), rex_2fa\one_time_password::OPTION_TOTP);
-$selectOption->addOption($this->i18n('2factor_auth_option_'.rex_2fa\one_time_password::OPTION_EMAIL), rex_2fa\one_time_password::OPTION_EMAIL);
+$selectOption->addOption($this->i18n('2factor_auth_option_'.FriendsOfREDAXO\TwoFactorAuth\one_time_password::OPTION_ALL), FriendsOfREDAXO\TwoFactorAuth\one_time_password::OPTION_ALL);
+$selectOption->addOption($this->i18n('2factor_auth_option_'.FriendsOfREDAXO\TwoFactorAuth\one_time_password::OPTION_TOTP), FriendsOfREDAXO\TwoFactorAuth\one_time_password::OPTION_TOTP);
+$selectOption->addOption($this->i18n('2factor_auth_option_'.FriendsOfREDAXO\TwoFactorAuth\one_time_password::OPTION_EMAIL), FriendsOfREDAXO\TwoFactorAuth\one_time_password::OPTION_EMAIL);
 
 $content = '
 <form action="index.php" method="post" id="ycom_auth_settings">

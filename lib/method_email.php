@@ -1,6 +1,6 @@
 <?php
 
-namespace rex_2fa;
+namespace FriendsOfREDAXO\TwoFactorAuth;
 
 use OTPHP\Factory;
 use OTPHP\TOTP;

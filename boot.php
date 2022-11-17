@@ -1,6 +1,6 @@
 <?php
 
-use rex_2fa\one_time_password;
+use FriendsOfREDAXO\TwoFactorAuth\one_time_password;
 
 require_once __DIR__.'/vendor/autoload.php';
 

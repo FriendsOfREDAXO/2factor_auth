@@ -18,10 +18,8 @@ if (rex::isBackend() && null !== rex::getUser()) {
     if (!$otp->isEnabled()) {
         if (one_time_password::ENFORCED_ALL === $otp->isEnforced() ||
             one_time_password::ENFORCED_ADMINS === $otp->isEnforced() && rex::getUser()->isAdmin()) {
-            if ('2factor_auth' !== rex_be_controller::getCurrentPagePart(1)) {
-                rex_be_controller::setCurrentPage('2factor_auth/setup');
-                return;
-            }
+            rex_be_controller::setCurrentPage('2factor_auth/setup');
+            return;
         }
     }
 

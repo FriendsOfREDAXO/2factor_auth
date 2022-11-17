@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class rex_command_2factor_auth_enforce extends rex_console_command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Enforce/Disable a 2factor_auth for users/admins or admins')
@@ -43,12 +43,10 @@ class rex_command_2factor_auth_enforce extends rex_console_command
                 $status = 'disabled';
                 break;
         }
-        if ($status) {
-            if ('none' == $all && 'none' == $admins && 'none' == $disable) {
-                $io->info('Please decide: (--all) for all, (--admins) for admins or (--disable) for disabling 2factor_auth enforcement.
+        if ('none' == $all && 'none' == $admins && 'none' == $disable) {
+            $io->info('Please decide: (--all) for all, (--admins) for admins or (--disable) for disabling 2factor_auth enforcement.
 Current Status: '.$status);
-                return 0;
-            }
+            return 0;
         }
 
         if ('none' != $all) {

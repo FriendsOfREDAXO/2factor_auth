@@ -7,10 +7,16 @@ page:
     icon: rex-icon fa-lock
     subpages:
         setup:
-            title: 'translate:setup'
+            title: 'translate:2factor_auth_private_setup'
         docs:
-            title: translate:help
+            title: translate:readme
             subPath: README.md
+            icon: rex-icon fa-info-circle
+            itemclass: pull-right
+        settings:
+            title: 'translate:2factor_auth_settings'
+            perm: admin[]
+            itemclass: pull-right
 
 pages:
     2factor_auth_verify:

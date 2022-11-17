@@ -51,7 +51,7 @@ final class one_time_password_config
     /**
      * @return self
      */
-    public static function loadFromDb(method_interface $method, $user)
+    public static function loadFromDb(method_interface $method, \rex_user $user): self
     {
         // get non-cached values
         $userSql = rex_sql::factory();
@@ -59,7 +59,7 @@ final class one_time_password_config
         $userSql->setWhere(['id' => $user->getId()]);
         $userSql->select();
 
-        $json = $userSql->getValue('one_time_password_config');
+        $json = (string) $userSql->getValue('one_time_password_config');
         $config = self::fromJson($json, $user);
         $config->init($method);
         return $config;
@@ -69,7 +69,7 @@ final class one_time_password_config
      * @param string|null $json
      * @return self
      */
-    private static function fromJson($json, $user)
+    private static function fromJson($json, \rex_user $user)
     {
         if (\is_string($json)) {
             $configArr = json_decode($json, true);

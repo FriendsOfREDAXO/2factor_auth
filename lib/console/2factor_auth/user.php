@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class rex_command_2factor_auth_user extends rex_console_command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Deaktivates a 2factor_auth for a user')
@@ -35,17 +35,12 @@ class rex_command_2factor_auth_user extends rex_console_command
             ->setWhere(['login' => $username])
             ->select();
 
-        if (!$user->getRows()) {
+        if (1 != $user->getRows()) {
             throw new InvalidArgumentException(sprintf('User "%s" does not exist.', $username));
         }
 
         $user = rex_user::fromSql($user);
         $config = \rex_2fa\one_time_password_config::forUser($user);
-
-        if (!$config) {
-            $io->warning('User Config not found');
-            return 0;
-        }
 
         $io->info('User found: '.$user->getLogin()."\n".'Current status: '.$config->method);
 

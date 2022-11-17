@@ -16,6 +16,25 @@ $success = false;
 $csrfToken = rex_csrf_token::factory('2factor_auth_setup');
 $func = rex_request('func', 'string');
 
+$otp = one_time_password::getInstance();
+$otp_options = $otp->getAuthOption();
+
+if (one_time_password::OPTION_EMAIL == $otp_options) {
+    // email_only -> kein totp
+    echo rex_view::info($this->i18n('2factor_auth_select_'.one_time_password::OPTION_EMAIL));
+    if ('setup-totp' == $func) {
+        $func = '';
+    }
+}
+
+if (one_time_password::OPTION_TOTP == $otp_options) {
+    // only email email_only
+    echo rex_view::info($this->i18n('2factor_auth_select_'.one_time_password::OPTION_EMAIL));
+    if ('setup-email' == $func) {
+        $func = '';
+    }
+}
+
 if ('setup-email' === $func || 'setup-totp' === $func) {
     switch ($func) {
         case 'setup-email':
@@ -33,11 +52,10 @@ if ('setup-email' === $func || 'setup-totp' === $func) {
     rex::setProperty('user', rex_user::get($user_id));
 }
 
-$otp = one_time_password::getInstance();
 $otpMethod = $otp->getMethod();
 
 if ('' !== $func && !$csrfToken->isValid()) {
-    $message = '<div class="alert alert-danger">' . $this->i18n('csrf_token_invalid') . '</div>';
+    $message = rex_view::error($this->i18n('csrf_token_invalid'));
     $func = '';
 }
 
@@ -48,10 +66,10 @@ if ('disable' === $func) {
 }
 
 if (one_time_password::ENFORCED_ALL === $otp->isEnforced()) {
-    $message .= '<div class="alert alert-warning">' . $this->i18n('2fa_enforced') . ': ' . $this->i18n('2fa_enforced_yes_all') . '</div>';
+    $message .= rex_view::info($this->i18n('2fa_enforced') . ': ' . $this->i18n('2factor_auth_enforce_'.one_time_password::ENFORCED_ALL));
 }
 if (one_time_password::ENFORCED_ADMINS === $otp->isEnforced()) {
-    $message .= '<div class="alert alert-warning">' . $this->i18n('2fa_enforced') . ': ' . $this->i18n('2fa_enforced_yes_admins') . '</div>';
+    $message .= rex_view::info($this->i18n('2fa_enforced') . ': ' . $this->i18n('2factor_auth_enforce_'.one_time_password::ENFORCED_ADMINS));
 }
 
 $config = one_time_password_config::loadFromDb($otpMethod, rex::requireUser());
@@ -69,11 +87,14 @@ if ($otp->isEnabled() && $config->enabled) {
     $content .= '<p><a class="btn btn-delete" href="' . rex_url::currentBackendPage(['func' => 'disable'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_disable') . '</a></p>';
 } else {
     if ('' === $func) {
-        $content .= '<p>'.$this->i18n('2factor_auth_2fa_page_totp_instruction').'</p>';
-        $content .= '<p><a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup-totp'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup_start_totp') . '</a></p>';
-        $content .= '<p>'.$this->i18n('2factor_auth_2fa_page_email_instruction').'</p>';
-        $content .= '<p><a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup-email'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup_start_email') . '</a></p>';
-
+        if (one_time_password::OPTION_ALL == $otp_options || one_time_password::OPTION_TOTP == $otp_options) {
+            $content .= '<p>'.$this->i18n('2factor_auth_2fa_page_totp_instruction').'</p>';
+            $content .= '<p><a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup-totp'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup_start_totp') . '</a></p>';
+        }
+        if (one_time_password::OPTION_ALL == $otp_options || one_time_password::OPTION_EMAIL == $otp_options) {
+            $content .= '<p>'.$this->i18n('2factor_auth_2fa_page_email_instruction').'</p>';
+            $content .= '<p><a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup-email'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup_start_email') . '</a></p>';
+        }
     } elseif ('setup-totp' === $func) {
         // nothing todo
     } elseif ('setup-email' === $func) {

@@ -2,10 +2,11 @@
 
 namespace rex_2fa;
 
+use function array_search;
+
 use rex_file;
 use rex_path;
 use rex_string;
-use function array_search;
 
 /**
  * @internal
@@ -17,7 +18,9 @@ final class setup
      */
     public static function install()
     {
-        $config = rex_string::yamlDecode(rex_file::get(rex_path::coreData('config.yml')));
+        /** @var string $coreConfig */
+        $coreConfig = rex_file::get(rex_path::coreData('config.yml'));
+        $config = rex_string::yamlDecode($coreConfig);
 
         // add as setup_addon, to make sure 2factor runs in safe_mode.
         // otherwise 2fa could be worked arround by a admin user.
@@ -34,7 +37,9 @@ final class setup
      */
     public static function uninstall()
     {
-        $config = rex_string::yamlDecode(rex_file::get(rex_path::coreData('config.yml')));
+        /** @var string $coreConfig */
+        $coreConfig = rex_file::get(rex_path::coreData('config.yml'));
+        $config = rex_string::yamlDecode($coreConfig);
 
         $key = array_search('2factor_auth', $config['setup_addons'], true);
         if (false !== $key) {

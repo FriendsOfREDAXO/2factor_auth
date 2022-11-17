@@ -1,12 +1,10 @@
 2factor_auth = 2-Faktor-Login
 2factor_auth_setup = Einstellungen
-2factor_auth_help = Hilfe
+2factor_auth_readme = ReadMe
 2factor_auth_OTP-Verifizierung = OTP-Verifizierung
 2factor_auth_page_setup = 2-Faktor-Authentifizierung einrichten
 2factor_auth_2fa_enforced = 2-Faktor-Authentifizierung
-2factor_auth_2fa_enforced_yes_all = Ja - Erzwungen für alle REDAXO-CMS Benutzer
-2factor_auth_2fa_enforced_yes_admins = Ja - Erzwungen nur für REDAXO-CMS Administratoren
-2factor_auth_2fa_enforced_no = Nein - Optional
+
 2factor_auth_2fa_active = 2-Faktor-Authentifizierung ist aktiviert.
 2factor_auth_2fa_inactive = 2-Faktor-Authentifizierung ist deaktiviert.
 2factor_auth_2fa_disable = 2-Faktor-Authentifizierung deaktivieren
@@ -40,4 +38,25 @@
 2factor_auth_2fa_info_email_sent = Eine E-Mail mit dem Code wurde versendet
 2factor_auth_2fa_info_email_enter_code = Bitte geben sie den Code aus der versendeten E-Mail ein.
 2factor_auth_2fa_info_topt_enter_code = Bitte schauen sie in der Authenticator App nach dem passenden Code.
+
+2factor_auth_private_setup = Persönliches Setup
+2factor_auth_config = Config
+
+2factor_auth_options = Optionen
+2factor_auth_settings = Einstellungen
+2factor_auth_enforce = Einschränkungen
+
+2factor_auth_enforce_all = Erzwungen für alle REDAXO-CMS Benutzer
+2factor_auth_enforce_admins_only = Erzwungen nur für REDAXO-CMS Administratoren
+2factor_auth_enforce_disabled = Keine Einschränkungen (Optional für jeden)
+
+2factor_auth_option_all = Alle Möglichkeiten erlauben
+2factor_auth_option_totp_only = Nur Time-Based One-Time Passwort erlauben
+2factor_auth_option_email_only = Nur One-Time Passwort über E-Mail erlauben
+
+2factor_auth_updated = Die Konfiguration wurde gespeichert
+
+2factor_auth_select_email_only = Nur 2-Faktor-Authentifizierung über E-Mail ist aktiviert
+2factor_auth_select_email_only = Nur 2-Faktor-Authentifizierung über TOTP ist aktiviert
+
 

@@ -23,6 +23,10 @@ final class one_time_password
     public const ENFORCED_ADMINS = 'admins_only';
     public const ENFORCED_DISABLED = 'disabled';
 
+    public const OPTION_ALL = 'all';
+    public const OPTION_TOTP = 'totp_only';
+    public const OPTION_EMAIL = 'email_only';
+
     /**
      * @var method_interface|null
      */
@@ -89,6 +93,19 @@ final class one_time_password
     public function isEnforced()
     {
         return rex_config::get('2factor_auth', 'enforce', self::ENFORCED_DISABLED);
+    }
+
+    /**
+     * @return self::OPTION*
+     */
+    public function getAuthOption()
+    {
+        return rex_config::get('2factor_auth', 'option', self::OPTION_ALL);
+    }
+
+    public function setAuthOption(string $option): void
+    {
+        rex_config::set('2factor_auth', 'option', $option);
     }
 
     /**

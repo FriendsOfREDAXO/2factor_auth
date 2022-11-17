@@ -39,9 +39,12 @@ if (isset($otp)) {
         rex_response::sendRedirect('?ok');
     } else {
         // requires redaxo-core 5.14+
+        /** @phpstan-ignore-next-line */
         if (method_exists(rex_backend_login::class, 'increaseLoginTries')) {
             $backendLogin = rex::getProperty('login');
-            $backendLogin->increaseLoginTries();
+            if (null !== $backendLogin && 'rex_backend_login' == get_class($backendLogin)) {
+                $backendLogin->increaseLoginTries();
+            }
         }
 
         $error_messages[] = $this->i18n('2fa_otp_wrong');

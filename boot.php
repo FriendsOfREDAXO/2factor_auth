@@ -1,6 +1,5 @@
 <?php
 
-use rex_2fa\enforce_system_setting;
 use rex_2fa\one_time_password;
 
 require_once __DIR__.'/vendor/autoload.php';
@@ -8,10 +7,6 @@ require_once __DIR__.'/vendor/autoload.php';
 $addon = rex_addon::get('2factor_auth');
 
 if (rex::isBackend() && null !== rex::getUser()) {
-    if ('system' === rex_be_controller::getCurrentPagePart(1)) {
-        rex_system_setting::register(new enforce_system_setting());
-    }
-
     if ('2factor_auth' === rex_be_controller::getCurrentPagePart(1)) {
         rex_view::addJsFile($addon->getAssetsUrl('qrious.min.js'));
         rex_view::addJsFile($addon->getAssetsUrl('clipboard-copy-element.js'));

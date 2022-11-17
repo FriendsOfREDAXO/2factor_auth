@@ -1,7 +1,7 @@
 <?php
 
-use rex_2fa\one_time_password;
-use rex_2fa\one_time_password_config;
+use FriendsOfREDAXO\TwoFactorAuth\one_time_password;
+use FriendsOfREDAXO\TwoFactorAuth\one_time_password_config;
 
 /** @var rex_addon $this */
 
@@ -38,10 +38,10 @@ if (one_time_password::OPTION_TOTP == $otp_options) {
 if ('setup-email' === $func || 'setup-totp' === $func) {
     switch ($func) {
         case 'setup-email':
-            $otpMethod = new \rex_2fa\method_email();
+            $otpMethod = new \FriendsOfREDAXO\TwoFactorAuth\method_email();
             break;
         default:
-            $otpMethod = new \rex_2fa\method_totp();
+            $otpMethod = new \FriendsOfREDAXO\TwoFactorAuth\method_totp();
             break;
     }
 

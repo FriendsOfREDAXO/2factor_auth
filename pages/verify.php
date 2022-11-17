@@ -1,6 +1,6 @@
 <?php
 
-use rex_2fa\one_time_password;
+use FriendsOfREDAXO\TwoFactorAuth\one_time_password;
 
 /** @var rex_addon $this */
 
@@ -15,14 +15,14 @@ if (!isset($otp)) {
 }
 
 switch (get_class(one_time_password::getInstance()->getMethod())) {
-    case 'rex_2fa\method_email':
+    case 'FriendsOfREDAXO\TwoFactorAuth\method_email':
         if (!isset($otp)) {
             $info_messages[] = rex_i18n::msg('2factor_auth_2fa_info_email_sent');
         }
         $info_messages[] = rex_i18n::msg('2factor_auth_2fa_info_email_enter_code');
         break;
     default:
-    case 'rex_2fa\method_totp':
+    case 'FriendsOfREDAXO\TwoFactorAuth\method_totp':
         $info_messages[] = rex_i18n::msg('2factor_auth_2fa_info_topt_enter_code');
         break;
 }

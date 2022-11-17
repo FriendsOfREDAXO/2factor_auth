@@ -40,7 +40,7 @@ class rex_command_2factor_auth_user extends rex_console_command
         }
 
         $user = rex_user::fromSql($user);
-        $config = \rex_2fa\one_time_password_config::forUser($user);
+        $config = \FriendsOfREDAXO\TwoFactorAuth\one_time_password_config::forUser($user);
 
         $io->info('User found: '.$user->getLogin()."\n".'Current status: '.$config->method);
 

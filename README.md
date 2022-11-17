@@ -5,10 +5,10 @@ Mit diesem Addon wird der Login in das REDAXO CMS durch einen zweiten Authentifi
 
 ![2-Faktor-Authentifizierung Weboberfläche](https://github.com/FriendsOfREDAXO/2factor_auth/blob/assets/screen.png?raw=true)
 
-## Systemeinstellungen
+## Einstellungen
 
-Der Administrator hat die Möglichkeit unter `System` die 2-Faktor-Authentifizierung für die Benutzer zu erzwingen.
-Alternativ kann die 2-Faktor-Authentifizierung als Optional gehandhabt werden.
+Der Administrator hat die Möglichkeit unter `Einstellungen` innerhalb des AddOns die 2-Faktor-Authentifizierung für die Benutzer zu erzwingen.
+Alternativ kann die 2-Faktor-Authentifizierung als Optional gehandhabt werden. Die Authentifizierungsoptionen können eingeschränkt werden, z.B. Ausschließlich E-Mail-Authentifizierung zu erlauben
 
 ## Einrichtung Endbenutzer
 
@@ -53,3 +53,6 @@ Anschließend ist man, wie gewohnt, im REDAXO-Backend eingeloggt.
 
 **Markus Staab**  
 https://github.com/staabm 
+
+**Jan Kristinus**
+https://github.com/dergel

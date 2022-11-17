@@ -1,6 +1,6 @@
 package: 2factor_auth
 version: '2.0.5'
-author: 'Markus Staab'
+author: 'Markus Staab, Jan Kristinus'
 
 page:
     title: 'translate:2factor_auth'

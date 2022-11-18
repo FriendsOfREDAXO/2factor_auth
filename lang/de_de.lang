@@ -14,7 +14,7 @@
 2factor_auth_2fa_page_instruction = 2-Faktor-Authentifizierung für den aktuell angemeldeten Benutzer einrichten.
 2factor_auth_2fa_setup_start_totp = TOTP Einrichtung starten (erfordert App; empfohlen)
 2factor_auth_2fa_otp_wrong = Falsches one-time-password, bitte erneut versuchen
-2factor_auth_2fa_setup_start_email = E-Mail basierte Einrichtung starten (geringere Sicherheit)
+2factor_auth_2fa_setup_start_email = E-Mail basierte Einrichtung starten
 2factor_auth_2fa_setup_start_email_required = Zunächst muss im Benutzerprofil eine gültige E-Mail Adresse hinterlegt werden.
 2factor_auth_2fa_setup_start_phpmailer_required = Für die E-Mail Einrichtung ist das PHPMailer-AddOn erforderlich.
 2factor_auth_2fa_setup_start_email_open_profile = zum Benutzerprofil

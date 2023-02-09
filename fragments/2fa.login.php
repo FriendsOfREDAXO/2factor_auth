@@ -1,5 +1,5 @@
 <form id="rex-form-login" method="post" autocomplete="off">
-    <input type="hidden" name="page" value="2factor_auth_verify"/>
+    <input type="hidden" name="page" value="profile"/>
     <?php echo $this->csrfToken->getHiddenField(); ?>
     <section class="rex-page-section">
         <div class="panel panel-default">

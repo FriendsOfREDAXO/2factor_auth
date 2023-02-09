@@ -27,20 +27,19 @@ if (rex::isBackend() && null !== rex::getUser()) {
     // und bisher fuer die session noch nicht eingegeben
     if ($otp->isEnabled()) {
         if (!$otp->isVerified()) {
-            rex_extension::register('PAGE_BODY_ATTR', static function (rex_extension_point $ep) {
-                $attributes = $ep->getSubject();
-                /** add rex-page-login id */
-                $attributes['id'] = ['rex-page-login'];
-
-                /** remove rex-is-logged-in class */
-                $attributes['class'] = array_filter($attributes['class'], static function ($class) {
-                    return 'rex-is-logged-in' !== $class;
+            rex_extension::register('PAGES_PREPARED', static function (rex_extension_point $ep) {
+                $profilePage = rex_be_controller::getCurrentPageObject('profile');
+                if(!$profilePage) return;
+                $profilePage->setPath(rex_path::addon('2factor_auth', 'pages/verify.php'));
+                $profilePage->setHasNavigation(false);
+                $profilePage->setPjax(false);
+                rex_extension::register('PAGE_BODY_ATTR', static function (rex_extension_point $ep) {
+                    $attributes = $ep->getSubject();
+                    /** add rex-page-login id */
+                    $attributes['id'] = ['rex-page-login'];
+                    $ep->setSubject($attributes);
                 });
-
-                $ep->setSubject($attributes);
             });
-
-            rex_be_controller::setCurrentPage('2factor_auth_verify');
         }
     }
 }

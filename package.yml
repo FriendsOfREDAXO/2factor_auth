@@ -33,6 +33,6 @@ console_commands:
 requires:
     php:
         version: '>=7.2'
-    redaxo: ^5.7.0
+    redaxo: ^5.13.0
 
 load: early

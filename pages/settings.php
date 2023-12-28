@@ -7,7 +7,7 @@ $table = rex_yform_manager_table::get('rex_ycom_user');
 if ('update' == rex_request('func', 'string')) {
     $this->setConfig('enforce', rex_request('2factor_auth_enforce', 'string'));
     $this->setConfig('option', rex_request('2factor_auth_option', 'string'));
-
+    $this->setConfig('email_period', rex_request('2factor_auth_email_period', 'int', 300));
     echo rex_view::success($this->i18n('2factor_auth_updated'));
 }
 
@@ -31,6 +31,17 @@ $selectOption->addOption($this->i18n('2factor_auth_option_'.FriendsOfREDAXO\TwoF
 $selectOption->addOption($this->i18n('2factor_auth_option_'.FriendsOfREDAXO\TwoFactorAuth\one_time_password::OPTION_TOTP), FriendsOfREDAXO\TwoFactorAuth\one_time_password::OPTION_TOTP);
 $selectOption->addOption($this->i18n('2factor_auth_option_'.FriendsOfREDAXO\TwoFactorAuth\one_time_password::OPTION_EMAIL), FriendsOfREDAXO\TwoFactorAuth\one_time_password::OPTION_EMAIL);
 
+$selectEmailPeriod = new rex_select();
+$selectEmailPeriod->setId('2factor_auth_email_period');
+$selectEmailPeriod->setName('2factor_auth_email_period');
+$selectEmailPeriod->setAttribute('class', 'form-control selectpicker');
+$selectEmailPeriod->setSelected($this->getConfig('email_period'));
+
+$selectEmailPeriod->addOption('5 '.$this->i18n('minutes'), 300);
+$selectEmailPeriod->addOption('10 '.$this->i18n('minutes'), 600);
+$selectEmailPeriod->addOption('15 '.$this->i18n('minutes'), 900);
+$selectEmailPeriod->addOption('30 '.$this->i18n('minutes'), 1800);
+
 $content = '
 <form action="index.php" method="post" id="ycom_auth_settings">
     <input type="hidden" name="page" value="2factor_auth/settings" />
@@ -39,21 +50,30 @@ $content = '
     <fieldset>
             <div class="row abstand">
                 <div class="col-xs-12 col-sm-6">
-                    <label for="auth_rules_select">' . $this->i18n('2factor_auth_enforce') . '</label>
+                    <label for="2factor_auth_enforce">' . $this->i18n('2factor_auth_enforce') . '</label>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                 '.$selectEnforce->get().'
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row abstand">
                 <div class="col-xs-12 col-sm-6">
-                    <label for="auth_cookie_ttl_select">' . $this->i18n('2factor_auth_options') . '</label>
+                    <label for="2factor_auth_options">' . $this->i18n('2factor_auth_options') . '</label>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                 '.$selectOption->get().'
+                </div>
             </div>
-        </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <label for="2factor_auth_email_period">' . $this->i18n('2factor_auth_email_period') . '</label>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                '.$selectEmailPeriod->get().'
+            </div>
+
     </fieldset>
 
 	<div class="row">

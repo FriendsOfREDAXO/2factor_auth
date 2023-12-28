@@ -37,7 +37,7 @@ final class one_time_password_config
      */
     public static function forCurrentUser()
     {
-        return self::forUser(rex::requireUser());
+        return self::forUser( rex::getImpersonator() ?? rex::requireUser());
     }
 
     /**

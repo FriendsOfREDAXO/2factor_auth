@@ -2,22 +2,12 @@
 
 namespace FriendsOfREDAXO\TwoFactorAuth;
 
-use InvalidArgumentException;
-use rex;
-use rex_config;
-
-use function rex_set_session;
-
-use rex_singleton_trait;
-
-use function str_replace;
-
 /**
  * @internal
  */
 final class one_time_password
 {
-    use rex_singleton_trait;
+    use \rex_singleton_trait;
 
     public const ENFORCED_ALL = 'all';
     public const ENFORCED_ADMINS = 'admins_only';
@@ -37,9 +27,9 @@ final class one_time_password
      */
     public function challenge()
     {
-        $user = rex::requireUser();
+        $user = \rex::getImpersonator() ?? \rex::requireUser();
 
-        $uri = str_replace('&amp;', '&', (string) one_time_password_config::forCurrentUser()->provisioningUri);
+        $uri = \str_replace('&amp;', '&', (string) one_time_password_config::forCurrentUser()->provisioningUri);
 
         $this->getMethod()->challenge($uri, $user);
     }
@@ -50,12 +40,12 @@ final class one_time_password
      */
     public function verify($otp)
     {
-        $uri = str_replace('&amp;', '&', (string) one_time_password_config::forCurrentUser()->provisioningUri);
+        $uri = \str_replace('&amp;', '&', (string) one_time_password_config::forCurrentUser()->provisioningUri);
 
         $verified = $this->getMethod()->verify($uri, $otp);
 
         if ($verified) {
-            rex_set_session('otp_verified', true);
+            \rex_set_session('otp_verified', true);
         }
 
         return $verified;
@@ -84,7 +74,7 @@ final class one_time_password
      */
     public function enforce($enforce)
     {
-        rex_config::set('2factor_auth', 'enforce', $enforce);
+        \rex_config::set('2factor_auth', 'enforce', $enforce);
     }
 
     /**
@@ -92,7 +82,7 @@ final class one_time_password
      */
     public function isEnforced()
     {
-        return rex_config::get('2factor_auth', 'enforce', self::ENFORCED_DISABLED);
+        return \rex_config::get('2factor_auth', 'enforce', self::ENFORCED_DISABLED);
     }
 
     /**
@@ -100,12 +90,12 @@ final class one_time_password
      */
     public function getAuthOption()
     {
-        return rex_config::get('2factor_auth', 'option', self::OPTION_ALL);
+        return \rex_config::get('2factor_auth', 'option', self::OPTION_ALL);
     }
 
     public function setAuthOption(string $option): void
     {
-        rex_config::set('2factor_auth', 'option', $option);
+        \rex_config::set('2factor_auth', 'option', $option);
     }
 
     /**
@@ -121,7 +111,7 @@ final class one_time_password
             } elseif ('email' === $methodType) {
                 $this->method = new method_email();
             } else {
-                throw new InvalidArgumentException("Unknown method: $methodType");
+                throw new \InvalidArgumentException("Unknown method: $methodType");
             }
         }
 

@@ -59,4 +59,5 @@
 2factor_auth_select_email_only = Nur 2-Faktor-Authentifizierung über E-Mail ist aktiviert
 2factor_auth_select_email_only = Nur 2-Faktor-Authentifizierung über TOTP ist aktiviert
 
-
+2factor_auth_email_period = Zeitintervall bei E-Mail Authentifizierung
+minutes = Minuten

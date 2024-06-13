@@ -34,7 +34,13 @@ final class method_email implements method_interface
     public function verify(string $provisioningUrl, string $otp): bool
     {
         // re-create from an existant uri
-        return Factory::loadFromProvisioningUri($provisioningUrl)->verify($otp);
+        if (Factory::loadFromProvisioningUri($provisioningUrl)->verify($otp)) {
+            return true;
+        }
+
+        // Check Period before
+        $period = (int) \rex_addon::get('2factor_auth')->getConfig('email_period', 300);
+        return Factory::loadFromProvisioningUri($provisioningUrl)->verify($otp, time() - $period);
     }
 
     public function getProvisioningUri(\rex_user $user): string

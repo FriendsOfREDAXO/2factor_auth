@@ -4,30 +4,27 @@ namespace FriendsOfREDAXO\TwoFactorAuth;
 
 use rex;
 use rex_sql;
+use rex_user;
+
+use function array_key_exists;
+use function is_array;
+use function is_string;
 
 /**
  * @internal
  */
 final class one_time_password_config
 {
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     public $provisioningUri;
-    /**
-     * @var bool
-     */
+    /** @var bool */
     public $enabled = false;
-    /**
-     * @var 'totp'|'email'|null
-     */
+    /** @var 'totp'|'email'|null */
     public $method;
-    /**
-     * @var \rex_user
-     */
+    /** @var rex_user */
     public $user;
 
-    public function __construct(\rex_user $user)
+    public function __construct(rex_user $user)
     {
         $this->user = $user;
     }
@@ -37,21 +34,18 @@ final class one_time_password_config
      */
     public static function forCurrentUser()
     {
-        return self::forUser( rex::getImpersonator() ?? rex::requireUser());
+        return self::forUser(rex::getImpersonator() ?? rex::requireUser());
     }
 
     /**
      * @return self
      */
-    public static function forUser(\rex_user $user)
+    public static function forUser(rex_user $user)
     {
         return self::fromJson($user->getValue('one_time_password_config'), $user);
     }
 
-    /**
-     * @return self
-     */
-    public static function loadFromDb(method_interface $method, \rex_user $user): self
+    public static function loadFromDb(method_interface $method, rex_user $user): self
     {
         // get non-cached values
         $userSql = rex_sql::factory();
@@ -69,14 +63,14 @@ final class one_time_password_config
      * @param string|null $json
      * @return self
      */
-    private static function fromJson($json, \rex_user $user)
+    private static function fromJson($json, rex_user $user)
     {
-        if (\is_string($json)) {
+        if (is_string($json)) {
             $configArr = json_decode($json, true);
 
-            if (\is_array($configArr)) {
+            if (is_array($configArr)) {
                 // compat with older versions, which did not yet define a method
-                if (!\array_key_exists('method', $configArr)) {
+                if (!array_key_exists('method', $configArr)) {
                     $configArr['method'] = 'totp';
                 }
 
@@ -157,7 +151,7 @@ final class one_time_password_config
                 'provisioningUri' => $this->provisioningUri,
                 'method' => $this->method,
                 'enabled' => $this->enabled,
-            ]
+            ],
         ));
         $userSql->addGlobalUpdateFields();
         $userSql->update();

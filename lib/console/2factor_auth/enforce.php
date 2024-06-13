@@ -45,7 +45,7 @@ class rex_command_2factor_auth_enforce extends rex_console_command
         }
         if ('none' == $all && 'none' == $admins && 'none' == $disable) {
             $io->info('Please decide: (--all) for all, (--admins) for admins or (--disable) for disabling 2factor_auth enforcement.
-Current Status: '.$status);
+Current Status: ' . $status);
             return 0;
         }
 

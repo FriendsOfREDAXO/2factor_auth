@@ -2,11 +2,11 @@
 
 namespace FriendsOfREDAXO\TwoFactorAuth;
 
-use function array_search;
-
 use rex_file;
 use rex_path;
 use rex_string;
+
+use function array_search;
 
 /**
  * @internal

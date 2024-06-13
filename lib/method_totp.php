@@ -6,6 +6,7 @@ use OTPHP\Factory;
 use OTPHP\TOTP;
 use rex;
 use rex_user;
+
 use function str_replace;
 
 /**

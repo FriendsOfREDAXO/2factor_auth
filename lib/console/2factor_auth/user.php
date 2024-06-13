@@ -1,5 +1,6 @@
 <?php
 
+use FriendsOfREDAXO\TwoFactorAuth\one_time_password_config;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -40,9 +41,9 @@ class rex_command_2factor_auth_user extends rex_console_command
         }
 
         $user = rex_user::fromSql($user);
-        $config = \FriendsOfREDAXO\TwoFactorAuth\one_time_password_config::forUser($user);
+        $config = one_time_password_config::forUser($user);
 
-        $io->info('User found: '.$user->getLogin()."\n".'Current status: '.$config->method);
+        $io->info('User found: ' . $user->getLogin() . "\n" . 'Current status: ' . $config->method);
 
         $enable = $input->getOption('enable');
         $disable = $input->getOption('disable');
@@ -54,12 +55,12 @@ class rex_command_2factor_auth_user extends rex_console_command
 
         if ('none' != $enable) {
             $config->enable();
-            $io->success('2factor_auth for User `'.$user->getLogin().'` has been enabled');
+            $io->success('2factor_auth for User `' . $user->getLogin() . '` has been enabled');
         }
 
         if ('none' != $disable) {
             $config->disable();
-            $io->success('2factor_auth for User `'.$user->getLogin().'` has been disabled');
+            $io->success('2factor_auth for User `' . $user->getLogin() . '` has been disabled');
         }
 
         return 0;

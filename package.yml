@@ -13,6 +13,10 @@ page:
             subPath: README.md
             icon: rex-icon fa-info-circle
             itemclass: pull-right
+        users:
+            title: translate:users
+            perm: admin[]
+            itemclass: pull-right
         settings:
             title: 'translate:2factor_auth_settings'
             perm: admin[]
@@ -29,6 +33,7 @@ pages:
 console_commands:
     2factor_auth:enforce: rex_command_2factor_auth_enforce
     2factor_auth:user: rex_command_2factor_auth_user
+    2factor_auth:status: rex_command_2factor_auth_status
 
 requires:
     php:

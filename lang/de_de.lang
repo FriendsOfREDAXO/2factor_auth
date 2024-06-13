@@ -61,3 +61,4 @@
 
 2factor_auth_email_period = Zeitintervall bei E-Mail Authentifizierung
 minutes = Minuten
+2factor_auth_users = Benutzer

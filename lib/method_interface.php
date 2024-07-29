@@ -11,18 +11,13 @@ interface method_interface
 {
     /**
      * @throws exception
-     * @return void
      */
-    public function challenge(string $provisioningUrl, rex_user $user);
+    public function challenge(string $provisioningUrl, rex_user $user): void;
 
     /**
      * @throws exception
-     * @return bool
      */
-    public function verify(string $provisioningUrl, string $otp);
+    public function verify(string $provisioningUrl, string $otp): bool;
 
-    /**
-     * @return string
-     */
-    public function getProvisioningUri(rex_user $user);
+    public function getProvisioningUri(rex_user $user): string;
 }

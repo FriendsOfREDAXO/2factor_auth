@@ -42,7 +42,7 @@ if (isset($otp)) {
         /** @phpstan-ignore-next-line */
         if (method_exists(rex_backend_login::class, 'increaseLoginTries')) {
             $backendLogin = rex::getProperty('login');
-            if (null !== $backendLogin && 'rex_backend_login' == get_class($backendLogin)) {
+            if (null !== $backendLogin && 'rex_backend_login' == $backendLogin::class) {
                 $backendLogin->increaseLoginTries();
             }
         }

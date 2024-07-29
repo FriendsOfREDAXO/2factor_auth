@@ -1,5 +1,7 @@
 <?php
 
+use FriendsOfREDAXO\TwoFactorAuth\method_email;
+use FriendsOfREDAXO\TwoFactorAuth\method_totp;
 use FriendsOfREDAXO\TwoFactorAuth\one_time_password;
 use FriendsOfREDAXO\TwoFactorAuth\one_time_password_config;
 
@@ -21,7 +23,7 @@ $otp_options = $otp->getAuthOption();
 
 if (one_time_password::OPTION_EMAIL == $otp_options) {
     // email_only -> kein totp
-    echo rex_view::info($this->i18n('2factor_auth_select_'.one_time_password::OPTION_EMAIL));
+    echo rex_view::info($this->i18n('2factor_auth_select_' . one_time_password::OPTION_EMAIL));
     if ('setup-totp' == $func) {
         $func = '';
     }
@@ -29,7 +31,7 @@ if (one_time_password::OPTION_EMAIL == $otp_options) {
 
 if (one_time_password::OPTION_TOTP == $otp_options) {
     // only email email_only
-    echo rex_view::info($this->i18n('2factor_auth_select_'.one_time_password::OPTION_EMAIL));
+    echo rex_view::info($this->i18n('2factor_auth_select_' . one_time_password::OPTION_EMAIL));
     if ('setup-email' == $func) {
         $func = '';
     }
@@ -38,10 +40,10 @@ if (one_time_password::OPTION_TOTP == $otp_options) {
 if ('setup-email' === $func || 'setup-totp' === $func) {
     switch ($func) {
         case 'setup-email':
-            $otpMethod = new \FriendsOfREDAXO\TwoFactorAuth\method_email();
+            $otpMethod = new method_email();
             break;
         default:
-            $otpMethod = new \FriendsOfREDAXO\TwoFactorAuth\method_totp();
+            $otpMethod = new method_totp();
             break;
     }
 
@@ -66,10 +68,10 @@ if ('disable' === $func) {
 }
 
 if (one_time_password::ENFORCED_ALL === $otp->isEnforced()) {
-    $message .= rex_view::info($this->i18n('2fa_enforced') . ': ' . $this->i18n('2factor_auth_enforce_'.one_time_password::ENFORCED_ALL));
+    $message .= rex_view::info($this->i18n('2fa_enforced') . ': ' . $this->i18n('2factor_auth_enforce_' . one_time_password::ENFORCED_ALL));
 }
 if (one_time_password::ENFORCED_ADMINS === $otp->isEnforced()) {
-    $message .= rex_view::info($this->i18n('2fa_enforced') . ': ' . $this->i18n('2factor_auth_enforce_'.one_time_password::ENFORCED_ADMINS));
+    $message .= rex_view::info($this->i18n('2fa_enforced') . ': ' . $this->i18n('2factor_auth_enforce_' . one_time_password::ENFORCED_ADMINS));
 }
 
 $config = one_time_password_config::loadFromDb($otpMethod, rex::requireUser());
@@ -77,10 +79,10 @@ if ($otp->isEnabled() && $config->enabled) {
     $title = $this->i18n('status');
     switch ($config->method) {
         case 'email':
-            $content = '<p>'.$this->i18n('2fa_status_email_info').'</p>';
+            $content = '<p>' . $this->i18n('2fa_status_email_info') . '</p>';
             break;
         default:
-            $content = '<p>'.$this->i18n('2fa_status_otp_info').'</p>';
+            $content = '<p>' . $this->i18n('2fa_status_otp_info') . '</p>';
             break;
     }
     $this->i18n('2fa_status_otp_instruction');
@@ -88,11 +90,11 @@ if ($otp->isEnabled() && $config->enabled) {
 } else {
     if ('' === $func) {
         if (one_time_password::OPTION_ALL == $otp_options || one_time_password::OPTION_TOTP == $otp_options) {
-            $content .= '<p>'.$this->i18n('2factor_auth_2fa_page_totp_instruction').'</p>';
+            $content .= '<p>' . $this->i18n('2factor_auth_2fa_page_totp_instruction') . '</p>';
             $content .= '<p><a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup-totp'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup_start_totp') . '</a></p>';
         }
         if (one_time_password::OPTION_ALL == $otp_options || one_time_password::OPTION_EMAIL == $otp_options) {
-            $content .= '<p>'.$this->i18n('2factor_auth_2fa_page_email_instruction').'</p>';
+            $content .= '<p>' . $this->i18n('2factor_auth_2fa_page_email_instruction') . '</p>';
             $content .= '<p><a class="btn btn-setup" href="' . rex_url::currentBackendPage(['func' => 'setup-email'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_setup_start_email') . '</a></p>';
         }
     } elseif ('setup-totp' === $func) {
@@ -104,7 +106,7 @@ if ($otp->isEnabled() && $config->enabled) {
         }
 
         $email = trim(rex::requireUser()->getEmail());
-        if ('' !== $func && ('' === $email || false === strpos($email, '@'))) {
+        if ('' !== $func && ('' === $email || !str_contains($email, '@'))) {
             $content = rex_view::error($this->i18n('2fa_setup_start_email_required'));
             $buttons = '<a class="btn btn-setup" href="' . rex_url::backendPage('profile') . '">' . $this->i18n('2fa_setup_start_email_open_profile') . '</a>';
 

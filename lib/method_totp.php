@@ -14,27 +14,18 @@ use function str_replace;
  */
 final class method_totp implements method_interface
 {
-    /**
-     * @return void
-     */
-    public function challenge(string $provisioningUrl, rex_user $user)
+    public function challenge(string $provisioningUrl, rex_user $user): void
     {
         // nothing todo
     }
 
-    /**
-     * @return bool
-     */
-    public function verify(string $provisioningUrl, string $otp)
+    public function verify(string $provisioningUrl, string $otp): bool
     {
         // re-create from an existant uri
         return Factory::loadFromProvisioningUri($provisioningUrl)->verify($otp);
     }
 
-    /**
-     * @return string
-     */
-    public function getProvisioningUri(rex_user $user)
+    public function getProvisioningUri(rex_user $user): string
     {
         // create a uri with a random secret
         // default period is 30s and digest is sha1. Google Authenticator is restricted to this settings

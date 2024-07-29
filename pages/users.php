@@ -16,6 +16,8 @@ foreach ($users as $user) {
         $user->getLogin(),
         $config->enabled ? 'on' : 'off',
         $config->method,
+        $user->getValue('one_time_password_tries'),
+        $user->getValue('one_time_password_lasttry'),
     ];
 }
 
@@ -27,6 +29,8 @@ $content .= '<th>id</th>';
 $content .= '<th>login</th>';
 $content .= '<th>status</th>';
 $content .= '<th>method</th>';
+$content .= '<th>tries</th>';
+$content .= '<th>last_try</th>';
 $content .= '</tr>';
 $content .= '</thead>';
 
@@ -37,6 +41,8 @@ foreach ($userRows as $row) {
     $content .= '<td data-title="login">' . rex_escape($row[1]) . '</td>';
     $content .= '<td data-title="enabled">' . rex_escape($row[2]) . '</td>';
     $content .= '<td data-title="method">' . rex_escape($row[3]) . '</td>';
+    $content .= '<td data-title="method">' . rex_escape($row[4]) . '</td>';
+    $content .= '<td data-title="method">' . rex_escape($row[5]) . '</td>';
     $content .= '</tr>';
 }
 $content .= '</tbody>';

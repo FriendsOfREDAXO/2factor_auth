@@ -25,11 +25,21 @@ final class method_totp implements method_interface
         return Factory::loadFromProvisioningUri($provisioningUrl)->verify($otp);
     }
 
+    public static function getPeriod(): int
+    {
+        // default period is 30s and digest is sha1. Google Authenticator is restricted to this settings
+        return 30;
+    }
+
+    public static function getloginTries(): int
+    {
+        return 10;
+    }
+
     public function getProvisioningUri(rex_user $user): string
     {
         // create a uri with a random secret
-        // default period is 30s and digest is sha1. Google Authenticator is restricted to this settings
-        $otp = TOTP::create();
+        $otp = TOTP::create(null, self::getPeriod());
 
         // the label rendered in "Google Authenticator" or similar app
         $label = $user->getLogin() . '@' . rex::getServerName() . ' (' . $_SERVER['HTTP_HOST'] . ')';

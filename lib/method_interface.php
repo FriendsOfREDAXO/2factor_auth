@@ -20,4 +20,8 @@ interface method_interface
     public function verify(string $provisioningUrl, string $otp): bool;
 
     public function getProvisioningUri(rex_user $user): string;
+
+    public static function getPeriod(): int;
+
+    public static function getloginTries();
 }

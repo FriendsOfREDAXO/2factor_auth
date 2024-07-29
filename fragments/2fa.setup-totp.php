@@ -56,14 +56,14 @@
     </div>
 <?php endif; ?>
 
-<style>
+<style nonce="<?php echo rex_response::getNonce() ?>">
     clipboard-copy {
         border: 2px solid black;
         cursor: default;
     }
 </style>
 
-<script>
+<script nonce="<?php echo rex_response::getNonce() ?>">
     new QRious({
         element: document.getElementById("qr-code"),
         value: document.getElementById("2fa-uri").value,

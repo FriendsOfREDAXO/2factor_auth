@@ -2,8 +2,6 @@
 
 use FriendsOfREDAXO\TwoFactorAuth\one_time_password;
 
-require_once __DIR__.'/vendor/autoload.php';
-
 $addon = rex_addon::get('2factor_auth');
 
 if (rex::isBackend() && null !== rex::getUser()) {
@@ -16,8 +14,8 @@ if (rex::isBackend() && null !== rex::getUser()) {
 
     // den benutzer auf das setup leiten, weil erwzungen aber noch nicht durchgefuehrt
     if (!$otp->isEnabled()) {
-        if (one_time_password::ENFORCED_ALL === $otp->isEnforced() ||
-            one_time_password::ENFORCED_ADMINS === $otp->isEnforced() && rex::getUser()->isAdmin()) {
+        if (one_time_password::ENFORCED_ALL === $otp->isEnforced()
+            || one_time_password::ENFORCED_ADMINS === $otp->isEnforced() && rex::getUser()->isAdmin()) {
             rex_be_controller::setCurrentPage('2factor_auth/setup');
             return;
         }
@@ -29,7 +27,9 @@ if (rex::isBackend() && null !== rex::getUser()) {
         if (!$otp->isVerified()) {
             rex_extension::register('PAGES_PREPARED', static function (rex_extension_point $ep) {
                 $profilePage = rex_be_controller::getCurrentPageObject('profile');
-                if(!$profilePage) return;
+                if (!$profilePage) {
+                    return;
+                }
                 $profilePage->setPath(rex_path::addon('2factor_auth', 'pages/verify.php'));
                 $profilePage->setHasNavigation(false);
                 $profilePage->setPjax(false);

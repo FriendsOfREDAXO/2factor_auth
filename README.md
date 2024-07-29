@@ -54,5 +54,5 @@ Anschließend ist man, wie gewohnt, im REDAXO-Backend eingeloggt.
 **Markus Staab**  
 https://github.com/staabm 
 
-**Jan Kristinus**
+**Jan Kristinus**  
 https://github.com/dergel

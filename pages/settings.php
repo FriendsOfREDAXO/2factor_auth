@@ -1,5 +1,6 @@
 <?php
 
+use FriendsOfREDAXO\TwoFactorAuth\method_totp;
 use FriendsOfREDAXO\TwoFactorAuth\one_time_password;
 
 /** @var rex_addon $this */
@@ -44,6 +45,16 @@ $selectEmailPeriod->addOption('10 ' . $this->i18n('minutes'), 600);
 $selectEmailPeriod->addOption('15 ' . $this->i18n('minutes'), 900);
 $selectEmailPeriod->addOption('30 ' . $this->i18n('minutes'), 1800);
 
+$selectTOTPPeriod = new rex_select();
+$selectTOTPPeriod->setAttribute('class', 'form-control selectpicker');
+$selectTOTPPeriod->setDisabled(true);
+$selectTOTPPeriod->addOption($this->i18n('2factor_auth_totp_period_info', method_totp::getPeriod()), 30);
+
+$selectLoginTries = new rex_select();
+$selectLoginTries->setAttribute('class', 'form-control selectpicker');
+$selectLoginTries->setDisabled(true);
+$selectLoginTries->addOption($this->i18n('2factor_auth_logintries_info', method_totp::getloginTries()), 30);
+
 $content = '
 <form action="index.php" method="post" id="ycom_auth_settings">
     <input type="hidden" name="page" value="2factor_auth/settings" />
@@ -68,12 +79,31 @@ $content = '
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row abstand">
                 <div class="col-xs-12 col-sm-6">
                     <label for="2factor_auth_email_period">' . $this->i18n('2factor_auth_email_period') . '</label>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                 ' . $selectEmailPeriod->get() . '
+                </div>
+            </div>
+
+            <div class="row abstand">
+                <div class="col-xs-12 col-sm-6">
+                    <label for="2factor_auth_email_period">' . $this->i18n('2factor_auth_totp_period') . '</label>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                ' . $selectTOTPPeriod->get() . '
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <label for="2factor_auth_email_period">' . $this->i18n('2factor_auth_logintries') . '</label>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                ' . $selectLoginTries->get() . '
+                </div>
             </div>
 
     </fieldset>

@@ -1,7 +1,11 @@
 <?php
+
 namespace Safe\Exceptions;
 
-class SimplexmlException extends \ErrorException implements SafeExceptionInterface
+/**
+ * @deprecated This exception is deprecated
+ */
+class PasswordException extends \ErrorException implements SafeExceptionInterface
 {
     public static function createFromPhpError(): self
     {

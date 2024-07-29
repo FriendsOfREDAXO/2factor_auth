@@ -1,6 +1,6 @@
 {
     "require": {
         "php": ">=8.1",
-        "spomky-labs/otphp": "^10.0"
+        "spomky-labs/otphp": "^11.3"
     }
 }

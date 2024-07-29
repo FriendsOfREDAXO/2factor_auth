@@ -2,52 +2,42 @@
 
 declare(strict_types=1);
 
-/*
- * The MIT License (MIT)
- *
- * Copyright (c) 2014-2019 Spomky-Labs
- *
- * This software may be modified and distributed under the terms
- * of the MIT license.  See the LICENSE file for details.
- */
-
 namespace OTPHP;
 
-use Assert\Assertion;
 use InvalidArgumentException;
-use ParagonIE\ConstantTime\Base32;
-use function Safe\sprintf;
+use function array_key_exists;
+use function assert;
+use function in_array;
+use function is_int;
+use function is_string;
 
 trait ParameterTrait
 {
     /**
-     * @var array<string, mixed>
+     * @var array<non-empty-string, mixed>
      */
-    private $parameters = [];
+    private array $parameters = [];
 
     /**
-     * @var string|null
+     * @var non-empty-string|null
      */
-    private $issuer;
+    private null|string $issuer = null;
 
     /**
-     * @var string|null
+     * @var non-empty-string|null
      */
-    private $label;
+    private null|string $label = null;
+
+    private bool $issuer_included_as_parameter = true;
 
     /**
-     * @var bool
-     */
-    private $issuer_included_as_parameter = true;
-
-    /**
-     * @return array<string, mixed>
+     * @return array<non-empty-string, mixed>
      */
     public function getParameters(): array
     {
         $parameters = $this->parameters;
 
-        if (null !== $this->getIssuer() && true === $this->isIssuerIncludedAsParameter()) {
+        if ($this->getIssuer() !== null && $this->isIssuerIncludedAsParameter() === true) {
             $parameters['issuer'] = $this->getIssuer();
         }
 
@@ -56,15 +46,13 @@ trait ParameterTrait
 
     public function getSecret(): string
     {
-        return $this->getParameter('secret');
+        $value = $this->getParameter('secret');
+        (is_string($value) && $value !== '') || throw new InvalidArgumentException('Invalid "secret" parameter.');
+
+        return $value;
     }
 
-    public function setSecret(?string $secret): void
-    {
-        $this->setParameter('secret', $secret);
-    }
-
-    public function getLabel(): ?string
+    public function getLabel(): null|string
     {
         return $this->label;
     }
@@ -74,7 +62,7 @@ trait ParameterTrait
         $this->setParameter('label', $label);
     }
 
-    public function getIssuer(): ?string
+    public function getIssuer(): null|string
     {
         return $this->issuer;
     }
@@ -96,30 +84,26 @@ trait ParameterTrait
 
     public function getDigits(): int
     {
-        return $this->getParameter('digits');
-    }
+        $value = $this->getParameter('digits');
+        (is_int($value) && $value > 0) || throw new InvalidArgumentException('Invalid "digits" parameter.');
 
-    private function setDigits(int $digits): void
-    {
-        $this->setParameter('digits', $digits);
+        return $value;
     }
 
     public function getDigest(): string
     {
-        return $this->getParameter('algorithm');
-    }
+        $value = $this->getParameter('algorithm');
+        (is_string($value) && $value !== '') || throw new InvalidArgumentException('Invalid "algorithm" parameter.');
 
-    private function setDigest(string $digest): void
-    {
-        $this->setParameter('algorithm', $digest);
+        return $value;
     }
 
     public function hasParameter(string $parameter): bool
     {
-        return \array_key_exists($parameter, $this->parameters);
+        return array_key_exists($parameter, $this->parameters);
     }
 
-    public function getParameter(string $parameter)
+    public function getParameter(string $parameter): mixed
     {
         if ($this->hasParameter($parameter)) {
             return $this->getParameters()[$parameter];
@@ -128,65 +112,85 @@ trait ParameterTrait
         throw new InvalidArgumentException(sprintf('Parameter "%s" does not exist', $parameter));
     }
 
-    public function setParameter(string $parameter, $value): void
+    public function setParameter(string $parameter, mixed $value): void
     {
         $map = $this->getParameterMap();
 
-        if (true === \array_key_exists($parameter, $map)) {
+        if (array_key_exists($parameter, $map) === true) {
             $callback = $map[$parameter];
             $value = $callback($value);
         }
 
         if (property_exists($this, $parameter)) {
-            $this->$parameter = $value;
+            $this->{$parameter} = $value;
         } else {
             $this->parameters[$parameter] = $value;
         }
     }
 
+    public function setSecret(string $secret): void
+    {
+        $this->setParameter('secret', $secret);
+    }
+
+    public function setDigits(int $digits): void
+    {
+        $this->setParameter('digits', $digits);
+    }
+
+    public function setDigest(string $digest): void
+    {
+        $this->setParameter('algorithm', $digest);
+    }
+
     /**
-     * @return array<string, mixed>
+     * @return array<non-empty-string, callable>
      */
     protected function getParameterMap(): array
     {
         return [
-            'label' => function ($value) {
-                Assertion::false($this->hasColon($value), 'Label must not contain a colon.');
+            'label' => function (string $value): string {
+                assert($value !== '');
+                $this->hasColon($value) === false || throw new InvalidArgumentException(
+                    'Label must not contain a colon.'
+                );
 
                 return $value;
             },
-            'secret' => function ($value): string {
-                if (null === $value) {
-                    $value = Base32::encodeUpper(random_bytes(64));
-                }
-                $value = trim(mb_strtoupper($value), '=');
-
-                return $value;
-            },
-            'algorithm' => function ($value): string {
+            'secret' => static fn (string $value): string => mb_strtoupper(trim($value, '=')),
+            'algorithm' => static function (string $value): string {
                 $value = mb_strtolower($value);
-                Assertion::inArray($value, hash_algos(), sprintf('The "%s" digest is not supported.', $value));
+                in_array($value, hash_algos(), true) || throw new InvalidArgumentException(sprintf(
+                    'The "%s" digest is not supported.',
+                    $value
+                ));
 
                 return $value;
             },
-            'digits' => function ($value): int {
-                Assertion::greaterThan($value, 0, 'Digits must be at least 1.');
+            'digits' => static function ($value): int {
+                $value > 0 || throw new InvalidArgumentException('Digits must be at least 1.');
 
                 return (int) $value;
             },
-            'issuer' => function ($value) {
-                Assertion::false($this->hasColon($value), 'Issuer must not contain a colon.');
+            'issuer' => function (string $value): string {
+                assert($value !== '');
+                $this->hasColon($value) === false || throw new InvalidArgumentException(
+                    'Issuer must not contain a colon.'
+                );
 
                 return $value;
             },
         ];
     }
 
+    /**
+     * @param non-empty-string $value
+     */
     private function hasColon(string $value): bool
     {
         $colons = [':', '%3A', '%3a'];
         foreach ($colons as $colon) {
-            if (false !== mb_strpos($value, $colon)) {
+            if (str_contains($value, $colon)) {
                 return true;
             }
         }

@@ -1,5 +1,5 @@
 package: 2factor_auth
-version: '2.1'
+version: '2.2'
 author: 'Markus Staab, Jan Kristinus'
 
 page:

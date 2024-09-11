@@ -1,6 +1,6 @@
 package: 2factor_auth
 version: '2.2'
-author: 'Markus Staab, Jan Kristinus'
+author: Friends Of REDAXO
 
 page:
     title: 'translate:2factor_auth'

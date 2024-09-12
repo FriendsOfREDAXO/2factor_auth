@@ -49,7 +49,7 @@ Anschließend ist man, wie gewohnt, im REDAXO-Backend eingeloggt.
 
 [Consider supporting the project](https://github.com/sponsors/staabm), so we can make this tool even better even faster for everyone.
 
-## Autoren
+## Credits
 
 **Markus Staab**  
 https://github.com/staabm 

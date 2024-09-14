@@ -47,6 +47,10 @@ Nach der erfolgreichen Einrichtung wird jeder neue Login in das REDAXO-Backend d
 
 Anschließend ist man, wie gewohnt, im REDAXO-Backend eingeloggt.
 
+## Hinweise
+
+Bei E-Mail OTP kann man das Zeitinterval für die Gültigkeit des OTP-Codes einstellen. Sollte es bereits Benutzer geben, die ein OTP eingerichtet haben, so gilt das neue Zeitinterval für diese nicht.
+
 ## 💌 Give back some love
 
 [Consider supporting the project](https://github.com/sponsors/staabm), so we can make this tool even better even faster for everyone.

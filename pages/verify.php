@@ -15,7 +15,12 @@ $OTPInstance = one_time_password::getInstance();
 $Method = $OTPInstance->getMethod();
 
 if (!isset($otp)) {
-    one_time_password::getInstance()->challenge();
+    try {
+        one_time_password::getInstance()->challenge();
+    } catch (Exception $e) {
+        $error = true;
+        $error_messages[] = $e->getMessage();
+    }
 }
 
 switch (get_class($Method)) {

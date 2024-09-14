@@ -1,5 +1,5 @@
 package: 2factor_auth
-version: '2.2'
+version: '2.3'
 author: Friends Of REDAXO
 
 page:
@@ -12,15 +12,15 @@ page:
             title: translate:readme
             subPath: README.md
             icon: rex-icon fa-info-circle
-            itemclass: pull-right
+            itemClass: pull-right
         users:
             title: translate:users
             perm: admin[]
-            itemclass: pull-right
+            itemClass: pull-right
         settings:
             title: 'translate:2factor_auth_settings'
             perm: admin[]
-            itemclass: pull-right
+            itemClass: pull-right
 
 pages:
     2factor_auth_verify:

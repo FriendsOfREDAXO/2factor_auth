@@ -114,8 +114,14 @@ if ($otp->isEnabled() && $config->enabled) {
         }
 
         if ('' !== $func) {
-            $message = rex_view::info($this->i18n('2fa_setup_start_email_send'));
-            one_time_password::getInstance()->challenge();
+            try {
+                one_time_password::getInstance()->challenge();
+                $message = rex_view::info($this->i18n('2fa_setup_start_email_send'));
+            } catch (Exception $e) {
+                $message = rex_view::error($e->getMessage());
+                $func = '';
+            }
+
         }
     } elseif ('verify-totp' === $func || 'verify-email' === $func) {
         $otp = rex_post('rex_login_otp', 'string', '');

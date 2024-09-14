@@ -26,9 +26,8 @@ final class method_email implements method_interface
         $mail->isHTML();
         $mail->Body = '<style>body { font-size: 1.2em; text-align: center;}</style><h2>' . rex::getServerName() . ' Login verification</h2><br><h3><strong>' . $otpCode . '</strong></h3><br> is your 2 factor authentication code.';
         $mail->AltBody = rex::getServerName() . " Login verification \r\n ------------------ \r\n" . $otpCode . "\r\n ------------------ \r\nis your 2 factor authentication code.";
-
         if (!$mail->send()) {
-            throw new exception('Unable to send e-mail. Make sure to setup the phpmailer AddOn.');
+            throw new exception('Unable to send E-Mail. Please try again of contact the administrator.');
         }
     }
 

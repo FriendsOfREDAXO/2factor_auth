@@ -7,7 +7,7 @@
 
 2factor_auth_2fa_active = 2-Faktor-Authentifizierung ist aktiviert.
 2factor_auth_2fa_inactive = 2-Faktor-Authentifizierung ist deaktiviert.
-2factor_auth_2fa_disable = 2-Faktor-Authentifizierung deaktivieren
+2factor_auth_2fa_disable = 2-Faktor-Authentifizierung für `{0}`deaktivieren
 2factor_auth_2fa_disable_instruction = 2-Faktor-Authentifizierung für den aktuell angemeldeten Benutzer deaktivieren.
 2factor_auth_2fa_setup = Einrichtung
 2factor_auth_2fa_verify_instruction = Geben Sie einen OTP-Code ein, um sich einzuloggen.
@@ -26,8 +26,8 @@
 2factor_auth_2fa_verify_action = Bestätigen
 2factor_auth_2fa_one_time_password = Einmal-Passwort
 2factor_auth_copy = Kopieren
-2factor_auth_2fa_status_email_info = Aktuell ist eine E-Mail-2-Faktor-Authentifizierung aktiviert.
-2factor_auth_2fa_status_otp_info = Aktuell ist eine OTP-2-Faktor-Authentifizierung aktiviert.
+2factor_auth_2fa_status_email_info = Aktuell ist eine E-Mail-2-Faktor-Authentifizierung für `{0} [{1}]` aktiviert.
+2factor_auth_2fa_status_otp_info = Aktuell ist eine OTP-2-Faktor-Authentifizierung für {0} aktiviert.
 
 2factor_auth_2fa_page_totp_instruction = Bei einer TOTP-Authentifizierung wird eine gesonderte Applikation benötigt, z.B. auf einem immer verfügbaren Mobilgerät. Diese muss initial eingerichtet werden. Nach einem Login in REDAXO wird ein Code abgefragt, welcher dann in dieser Applikation eingesehen und eingetragen werden kann, um ins REDAXO Backend zu kommen.
 2factor_auth_2fa_page_email_instruction = Bei einer E-Mail-Authentifizierung wird nach dem Login eine E-Mail an den entsprechenden User geschickt. Mit dem in der E-Mail mitgeschickten Code kommt man ins Backendsystem von REDAXO. Der User muss eine E-Mail im eigenen Profil eingetragen haben.

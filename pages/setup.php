@@ -79,14 +79,14 @@ if ($otp->isEnabled() && $config->enabled) {
     $title = $this->i18n('status');
     switch ($config->method) {
         case 'email':
-            $content = '<p>' . $this->i18n('2fa_status_email_info') . '</p>';
+            $content = '<p>' . $this->i18n('2fa_status_email_info', rex::getUser()->getLogin(), rex::getUser()->getEmail()) . '</p>';
             break;
         default:
-            $content = '<p>' . $this->i18n('2fa_status_otp_info') . '</p>';
+            $content = '<p>' . $this->i18n('2fa_status_otp_info', rex::getUser()->getLogin()) . '</p>';
             break;
     }
     $this->i18n('2fa_status_otp_instruction');
-    $content .= '<p><a class="btn btn-delete" href="' . rex_url::currentBackendPage(['func' => 'disable'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_disable') . '</a></p>';
+    $content .= '<p><a class="btn btn-delete" href="' . rex_url::currentBackendPage(['func' => 'disable'] + $csrfToken->getUrlParams()) . '">' . $this->i18n('2fa_disable', rex::getUser()->getLogin()) . '</a></p>';
 } else {
     if ('' === $func) {
         if (one_time_password::OPTION_ALL == $otp_options || one_time_password::OPTION_TOTP == $otp_options) {
@@ -121,7 +121,6 @@ if ($otp->isEnabled() && $config->enabled) {
                 $message = rex_view::error($e->getMessage());
                 $func = '';
             }
-
         }
     } elseif ('verify-totp' === $func || 'verify-email' === $func) {
         $otp = rex_post('rex_login_otp', 'string', '');

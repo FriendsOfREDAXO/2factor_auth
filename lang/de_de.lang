@@ -70,3 +70,5 @@ minutes = Minuten
 2factor_auth_logintries_info = {0} Versuche
 
 one_time_password_too_many_tries = Die maximale Anzahl von {1} Versuchen ist überschritten. Der Zugriff ist noch für <div id="otp_countdown">{0}</div> Sekunden geblockt. Jede erneute falsche Eingabe blockiert die Eingabe wieder für {2} Sekunden
+
+2factor_auth_mail_error = Bitte versuche es noch einmal oder kontaktiere den Administrator

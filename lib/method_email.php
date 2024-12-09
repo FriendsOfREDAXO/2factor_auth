@@ -6,6 +6,7 @@ use OTPHP\Factory;
 use OTPHP\TOTP;
 use rex;
 use rex_addon;
+use rex_i18n;
 use rex_mailer;
 use rex_user;
 
@@ -27,7 +28,7 @@ final class method_email implements method_interface
         $mail->Body = '<style>body { font-size: 1.2em; text-align: center;}</style><h2>' . rex::getServerName() . ' Login verification</h2><br><h3><strong>' . $otpCode . '</strong></h3><br> is your 2 factor authentication code.';
         $mail->AltBody = rex::getServerName() . " Login verification \r\n ------------------ \r\n" . $otpCode . "\r\n ------------------ \r\nis your 2 factor authentication code.";
         if (!$mail->send()) {
-            throw new exception('Unable to send E-Mail. Please try again of contact the administrator.');
+            throw new exception(rex_i18n::msg('2factor_auth_mail_error'));
         }
     }
 

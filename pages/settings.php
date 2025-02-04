@@ -110,7 +110,7 @@ $content = '
 
 	<div class="row">
 		<div class="col-xs-12 col-sm-6 col-sm-push-6">
-			<button class="btn btn-save right" type="submit" name="config-submit" value="1" title="' . $this->i18n('2factor_auth_config_save') . '">' . $this->i18n('ycom_auth_config_save') . '</button>
+			<button class="btn btn-save right" type="submit" name="config-submit" value="1" title="' . $this->i18n('2factor_auth_config_save') . '">' . $this->i18n('2factor_auth_config_save') . '</button>
 		</div>
 	</div>
 

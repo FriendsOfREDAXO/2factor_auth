@@ -19,8 +19,8 @@ class rex_command_2factor_auth_user extends rex_console_command
         $this
             ->setDescription('Deaktivates a 2factor_auth for a user')
             ->addArgument('user', InputArgument::REQUIRED, 'Username')
-            ->addOption('disable', 'disable', InputOption::VALUE_OPTIONAL, 'Disable', 'none')
-            ->addOption('enable', 'enable', InputOption::VALUE_OPTIONAL, 'Enable', 'none')
+            ->addOption('disable', 'd', InputOption::VALUE_NONE, 'Disable')
+            ->addOption('enable', 'e', InputOption::VALUE_NONE, 'Enable')
         ;
     }
 
@@ -43,22 +43,25 @@ class rex_command_2factor_auth_user extends rex_console_command
         $user = rex_user::fromSql($user);
         $config = one_time_password_config::forUser($user);
 
-        $io->info('User found: ' . $user->getLogin() . "\n" . 'Current status: ' . $config->method);
+        $io->info(
+            'User found: ' . $user->getLogin() .
+            "\n" . 'Method: ' . $config->method .
+            "\n" . 'Status: ' . ($config->enabled ? 'enabled' : 'disabled'));
 
         $enable = $input->getOption('enable');
         $disable = $input->getOption('disable');
 
-        if ('none' == $enable && 'none' == $disable) {
+        if ($enable && $disable) {
             $io->warning('Please decide: (--enable) or (--disable) for disabling 2factor_auth');
             return 0;
         }
 
-        if ('none' != $enable) {
+        if ($enable) {
             $config->enable();
             $io->success('2factor_auth for User `' . $user->getLogin() . '` has been enabled');
         }
 
-        if ('none' != $disable) {
+        if ($disable) {
             $config->disable();
             $io->success('2factor_auth for User `' . $user->getLogin() . '` has been disabled');
         }

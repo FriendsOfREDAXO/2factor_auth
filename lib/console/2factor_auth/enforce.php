@@ -16,9 +16,9 @@ class rex_command_2factor_auth_enforce extends rex_console_command
     {
         $this
             ->setDescription('Enforce/Disable a 2factor_auth for users/admins or admins')
-            ->addOption('all', 'all', InputOption::VALUE_OPTIONAL, 'All', 'none')
-            ->addOption('admins', 'admins', InputOption::VALUE_OPTIONAL, 'Admins only', 'none')
-            ->addOption('disable', 'disable', InputOption::VALUE_OPTIONAL, 'Disable', 'none')
+            ->addOption('all', null, InputOption::VALUE_NONE, 'All')
+            ->addOption('admins', null, InputOption::VALUE_NONE, 'Admins only')
+            ->addOption('disable', 'd', InputOption::VALUE_NONE, 'Disable')
         ;
     }
 
@@ -43,16 +43,17 @@ class rex_command_2factor_auth_enforce extends rex_console_command
                 $status = 'disabled';
                 break;
         }
-        if ('none' == $all && 'none' == $admins && 'none' == $disable) {
-            $io->info('Please decide: (--all) for all, (--admins) for admins or (--disable) for disabling 2factor_auth enforcement.
+
+        if ((!$all && !$admins && !$disable) || ($disable && ($all || $admins)) || ($all && $admins)) {
+            $io->info('Please decide: (--all) for all, (--admins) for admins or (--disable) without admin or all for disabling 2factor_auth enforcement.
 Current Status: ' . $status);
             return 0;
         }
 
-        if ('none' != $all) {
+        if ($all) {
             $value = one_time_password::ENFORCED_ALL;
             $io->success('2factor_auth is now enforced for all users');
-        } elseif ('none' != $admins) {
+        } elseif ($admins) {
             $value = one_time_password::ENFORCED_ADMINS;
             $io->success('2factor_auth is now enforced for admins only');
         } else {

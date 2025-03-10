@@ -5,8 +5,6 @@ use FriendsOfREDAXO\TwoFactorAuth\one_time_password;
 
 /** @var rex_addon $this */
 
-$table = rex_yform_manager_table::get('rex_ycom_user');
-
 if ('update' == rex_request('func', 'string')) {
     $this->setConfig('enforce', rex_request('2factor_auth_enforce', 'string'));
     $this->setConfig('option', rex_request('2factor_auth_option', 'string'));

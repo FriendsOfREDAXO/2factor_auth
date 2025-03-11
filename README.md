@@ -17,6 +17,7 @@ Als Authentifikator-Apps stehen alle Apps zur Verfügung, die den OTP-Standard e
 Umgebung                  | App                       | Hilfe
 ------------------------- |---------------------------| -----
 MacOS/Windows/Android/iOS | 1Password                 | Kurzanleitung: <https://support.1password.com/one-time-passwords/>
+MacOS native              | Native (ab Sequoia)       | Kurzanleitung weiter unten – "2-Faktor-Authentifizierung mit MacOS Bordmitteln"
 iOS                       | FreeOTP                   | App: <https://apps.apple.com/de/app/freeotp-authenticator/id872559395>, Kurzanleitung: <https://support.1password.com/one-time-passwords/>
 Android                   | FreeOTP                   | App: <https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp>
 Android                   | Microsoft Authentificator | App: <https://play.google.com/store/apps/details?id=com.azure.authenticator&hl=de>
@@ -46,6 +47,17 @@ Nach der erfolgreichen Einrichtung wird jeder neue Login in das REDAXO-Backend d
 4. Diesen Code eingeben und fortfahren.
 
 Anschließend ist man, wie gewohnt, im REDAXO-Backend eingeloggt.
+
+## 2-Faktor-Authentifizierung mit MacOS Bordmitteln
+
+Seit macOS Sequoia lässt sich die 2-Faktor-Authentifizierung auch ohne Dritt-App einrichten.
+
+1. In Redaxo startet man die TOTP-Einrichtung mittels Button "TOTP Einrichtung starten (erfordert App; empfohlen)". Das zeigt einem dann einen QR-Code sowie darunter eine Textzeile an, die mit "otpauth://" beginnt.
+3. Diese Zeile kopiert man in die Zwischenablage und wechselt zur Passwords App in macOS
+4. Dort sucht man das bestehende Login zu dieser Website (oder erstellt ein Neues, wenn noch nie gespeichert) und klickt auf "Edit" (Dt. wahrscheinlich "Bearbeiten") oben rechts.
+5. Dann klickt man "Setup Code..."
+6. und fügt die Zwischenablage in das Feld "Setup Key".
+7. Dann klickt man "Use Setup Key" und bekommt eine 6-stellige Nummer, welche man auf der Website in das Feld "2. OTP-Code eingeben um die Einrichtung abzuschliessen" einfügt und durch Bestätigen aktiviert.
 
 ## Hinweise
 

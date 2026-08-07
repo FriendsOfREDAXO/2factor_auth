@@ -23,7 +23,7 @@ final class method_email implements method_interface
         $otpCode = $otp->at(time());
 
         $mail->addAddress($user->getEmail());
-        $mail->Subject = '2FA-Code: ' . rex::getServerName() . ' (' . $_SERVER['HTTP_HOST'] . ')';
+        $mail->Subject = '2FA-Code: ' . rex::getServerName() . ' (' . rex_server('HTTP_HOST', 'string', '') . ')';
         $mail->isHTML();
         $mail->Body = '<style>body { font-size: 1.2em; text-align: center;}</style><h2>' . rex::getServerName() . ' Login verification</h2><br><h3><strong>' . $otpCode . '</strong></h3><br> is your 2 factor authentication code.';
         $mail->AltBody = rex::getServerName() . " Login verification \r\n ------------------ \r\n" . $otpCode . "\r\n ------------------ \r\nis your 2 factor authentication code.";
@@ -79,15 +79,15 @@ final class method_email implements method_interface
 
     public function getProvisioningUri(rex_user $user): string
     {
-        // create a uri with a random secret
-        $otp = TOTP::create(null, self::getPeriod());
-
         // the label rendered in "Google Authenticator" or similar app
-        $label = $user->getLogin() . '@' . rex::getServerName() . ' (' . $_SERVER['HTTP_HOST'] . ')';
+        $label = $user->getLogin() . '@' . rex::getServerName() . ' (' . rex_server('HTTP_HOST', 'string', '') . ')';
         $label = str_replace(':', '_', $label); // colon is forbidden
-        $otp->setLabel($label);
-        $otp->setParameter('period', self::getPeriod());
-        $otp->setIssuer(str_replace(':', '_', $user->getLogin()));
+
+        // create a uri with a random secret
+        $otp = TOTP::generate()
+            ->withPeriod(self::getPeriod())
+            ->withLabel($label)
+            ->withIssuer(str_replace(':', '_', $user->getLogin()));
 
         return $otp->getProvisioningUri();
     }

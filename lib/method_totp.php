@@ -38,14 +38,15 @@ final class method_totp implements method_interface
 
     public function getProvisioningUri(rex_user $user): string
     {
-        // create a uri with a random secret
-        $otp = TOTP::create(null, self::getPeriod());
-
         // the label rendered in "Google Authenticator" or similar app
-        $label = $user->getLogin() . '@' . rex::getServerName() . ' (' . $_SERVER['HTTP_HOST'] . ')';
+        $label = $user->getLogin() . '@' . rex::getServerName() . ' (' . rex_server('HTTP_HOST', 'string', '') . ')';
         $label = str_replace(':', '_', $label); // colon is forbidden
-        $otp->setLabel($label);
-        $otp->setIssuer(str_replace(':', '_', $user->getLogin()));
+
+        // create a uri with a random secret
+        $otp = TOTP::generate()
+            ->withPeriod(self::getPeriod())
+            ->withLabel($label)
+            ->withIssuer(str_replace(':', '_', $user->getLogin()));
 
         return $otp->getProvisioningUri();
     }

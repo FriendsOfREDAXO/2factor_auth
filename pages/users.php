@@ -2,15 +2,27 @@
 
 use FriendsOfREDAXO\TwoFactorAuth\one_time_password_config;
 
-if ('deactivate' == rex_get('func', 'string') && $userid = rex_get('userid', 'int')) {
-    try {
-        $user = rex_user::get($userid);
-        $config = one_time_password_config::forUser($user);
-        $config->disable();
+/** @var rex_addon $this */
 
-        echo rex_view::success('User ' . $user->getLogin() . ' deactivated');
-    } catch (Exception $e) {
-        echo rex_view::error($e->getMessage());
+$csrfToken = rex_csrf_token::factory('2factor_auth_users');
+
+if ('deactivate' == rex_get('func', 'string') && $userid = rex_get('userid', 'int')) {
+    if (!$csrfToken->isValid()) {
+        echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
+    } else {
+        try {
+            $user = rex_user::get($userid);
+            if (null === $user) {
+                throw new rex_exception('User with id ' . $userid . ' does not exist');
+            }
+
+            $config = one_time_password_config::forUser($user);
+            $config->disable();
+
+            echo rex_view::success('User ' . rex_escape($user->getLogin()) . ' deactivated');
+        } catch (Exception $e) {
+            echo rex_view::error($e->getMessage());
+        }
     }
 }
 
@@ -46,7 +58,7 @@ foreach ($users as $user) {
                 <td data-title="method">' . rex_escape($config->method) . '</td>
                 <td data-title="tries">' . rex_escape($user->getValue('one_time_password_tries')) . '</td>
                 <td data-title="last try">' . rex_escape($user->getValue('one_time_password_lasttry')) . '</td>
-                <td data-title="action"><a href="' . rex_url::currentBackendPage(['func' => 'deactivate', 'userid' => $user->getId()]) . '">deactivate</a></td>
+                <td data-title="action"><a href="' . rex_url::currentBackendPage(['func' => 'deactivate', 'userid' => $user->getId()] + $csrfToken->getUrlParams()) . '">deactivate</a></td>
                 </tr>';
 }
 

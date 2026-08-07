@@ -7,8 +7,12 @@
 
 2factor_auth_2fa_active = 2-Faktor-Authentifizierung ist aktiviert.
 2factor_auth_2fa_inactive = 2-Faktor-Authentifizierung ist deaktiviert.
-2factor_auth_2fa_disable = 2-Faktor-Authentifizierung für `{0}`deaktivieren
+2factor_auth_2fa_disable = 2-Faktor-Authentifizierung für `{0}` deaktivieren
 2factor_auth_2fa_disable_instruction = 2-Faktor-Authentifizierung für den aktuell angemeldeten Benutzer deaktivieren.
+2factor_auth_2fa_disable_verify_instruction = Zum Deaktivieren der 2-Faktor-Authentifizierung ist ein gültiges Einmal-Passwort erforderlich.
+2factor_auth_2fa_disable_verify_action = Deaktivieren bestätigen
+2factor_auth_2fa_disabled = Die 2-Faktor-Authentifizierung wurde deaktiviert.
+2factor_auth_2fa_impersonation_unsupported = Die 2-Faktor-Authentifizierung kann nicht eingerichtet werden, solange die Identität eines anderen Benutzers übernommen ist.
 2factor_auth_2fa_setup = Einrichtung
 2factor_auth_2fa_verify_instruction = Geben Sie einen OTP-Code ein, um sich einzuloggen.
 2factor_auth_2fa_page_instruction = 2-Faktor-Authentifizierung für den aktuell angemeldeten Benutzer einrichten.
@@ -58,7 +62,7 @@
 2factor_auth_updated = Die Konfiguration wurde gespeichert
 
 2factor_auth_select_email_only = Nur 2-Faktor-Authentifizierung über E-Mail ist aktiviert
-2factor_auth_select_email_only = Nur 2-Faktor-Authentifizierung über TOTP ist aktiviert
+2factor_auth_select_totp_only = Nur 2-Faktor-Authentifizierung über TOTP ist aktiviert
 
 2factor_auth_email_period = Zeitintervall bei E-Mail Authentifizierung
 minutes = Minuten

@@ -1,5 +1,7 @@
 <?php
 
+use FriendsOfREDAXO\TwoFactorAuth\method_email;
+use FriendsOfREDAXO\TwoFactorAuth\method_totp;
 use FriendsOfREDAXO\TwoFactorAuth\one_time_password_config;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
@@ -57,7 +59,12 @@ class rex_command_2factor_auth_user extends rex_console_command
         }
 
         if ($enable) {
+            // beim deaktivieren wird das secret verworfen, fuer die aktivierung
+            // muss deshalb ggf. ein neues erzeugt werden
+            $method = 'email' === $config->method ? new method_email() : new method_totp();
+            $config = one_time_password_config::loadFromDb($method, $user);
             $config->enable();
+
             $io->success('2factor_auth for User `' . $user->getLogin() . '` has been enabled');
         }
 

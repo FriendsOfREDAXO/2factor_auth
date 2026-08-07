@@ -59,9 +59,32 @@ Seit macOS Sequoia lässt sich die 2-Faktor-Authentifizierung auch ohne Dritt-Ap
 6. und fügt die Zwischenablage in das Feld "Setup Key".
 7. Dann klickt man "Use Setup Key" und bekommt eine 6-stellige Nummer, welche man auf der Website in das Feld "2. OTP-Code eingeben um die Einrichtung abzuschliessen" einfügt und durch Bestätigen aktiviert.
 
+## Konsolenbefehle
+
+Befehl                                     | Beschreibung
+------------------------------------------ | ------------
+`2factor_auth:status`                      | Übersicht aller Benutzer mit ihrem 2FA-Status
+`2factor_auth:enforce [--all\|--admins\|-d]` | 2FA für alle Benutzer, nur Administratoren oder für niemanden erzwingen
+`2factor_auth:user <user> [-e\|-d]`          | 2FA eines Benutzers aktivieren bzw. deaktivieren
+`2factor_auth:code <user> [--secret]`       | Aktuell gültigen Code eines Benutzers ausgeben
+
+`2factor_auth:code` hilft im Support und in der Entwicklung, wenn die Authentifikator-App
+nicht zur Hand oder keine E-Mail zustellbar ist. Der Befehl gibt das Geheimnis eines Benutzers
+preis – wer Zugriff auf die Konsole hat, kommt allerdings ohnehin an die Datenbank und damit
+an dieses Geheimnis.
+
+Nach zu vielen Fehleingaben ist die Code-Eingabe vorübergehend gesperrt. Die Sperre läuft
+nach Ablauf eines Zeitfensters von selbst ab (30 Sekunden bei TOTP, bei E-Mail das
+eingestellte Zeitintervall). Wer nicht warten kann oder den Zugang verloren hat, kann die
+2-Faktor-Authentifizierung mit `2factor_auth:user <user> -d` abschalten und neu einrichten.
+
 ## Hinweise
 
 Bei E-Mail OTP kann man das Zeitinterval für die Gültigkeit des OTP-Codes einstellen. Sollte es bereits Benutzer geben, die ein OTP eingerichtet haben, so gilt das neue Zeitinterval für diese nicht.
+
+Das Deaktivieren der 2-Faktor-Authentifizierung im eigenen Profil erfordert einen gültigen
+Code. Ist die 2FA erzwungen, lässt sie sich nicht deaktivieren. Administratoren können sie
+für andere Benutzer unter `2-Faktor-Login > Benutzer` abschalten.
 
 ## 💌 Give back some love
 

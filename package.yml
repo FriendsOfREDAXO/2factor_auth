@@ -34,6 +34,7 @@ console_commands:
     2factor_auth:enforce: rex_command_2factor_auth_enforce
     2factor_auth:user: rex_command_2factor_auth_user
     2factor_auth:status: rex_command_2factor_auth_status
+    2factor_auth:code: rex_command_2factor_auth_code
 
 requires:
     php:

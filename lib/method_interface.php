@@ -23,5 +23,5 @@ interface method_interface
 
     public static function getPeriod(): int;
 
-    public static function getloginTries();
+    public static function getloginTries(): int;
 }

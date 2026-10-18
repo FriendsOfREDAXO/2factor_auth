@@ -12,6 +12,12 @@ if (rex::isBackend() && null !== rex::getUser()) {
 
     $otp = one_time_password::getInstance();
 
+    // ein passkey (WebAuthn) ist bereits ein phishing-resistenter faktor und ersetzt
+    // den zweiten faktor. Bei passkey-anmeldung keine 2fa erzwingen oder abfragen.
+    if ($otp->isPasskeyLogin()) {
+        return;
+    }
+
     // bei einer impersonation zaehlt immer der real angemeldete benutzer
     $realUser = rex::getImpersonator() ?? rex::requireUser();
 

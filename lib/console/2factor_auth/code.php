@@ -31,7 +31,7 @@ class rex_command_2factor_auth_code extends rex_console_command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getStyle($input, $output);
 

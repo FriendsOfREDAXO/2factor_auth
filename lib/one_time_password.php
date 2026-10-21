@@ -223,6 +223,31 @@ final class one_time_password
     }
 
     /**
+     * Prueft, ob die aktuelle session ueber einen passkey (WebAuthn) angemeldet wurde.
+     *
+     * Ein passkey ist ein phishing-resistenter, geraetegebundener faktor und deckt den
+     * zweiten faktor bereits ab. Der redaxo-core behandelt eine passkey-anmeldung ebenso
+     * und setzt dafuer z.b. den erzwungenen passwortwechsel aus.
+     *
+     * @return bool
+     */
+    public function isPasskeyLogin()
+    {
+        $sessionId = session_id();
+        if (false === $sessionId || '' === $sessionId) {
+            return false;
+        }
+
+        $sql = rex_sql::factory();
+        $sql->setQuery(
+            'SELECT passkey_id FROM ' . rex::getTable('user_session') . ' WHERE session_id = ? LIMIT 1',
+            [$sessionId],
+        );
+
+        return $sql->getRows() > 0 && null !== $sql->getValue('passkey_id');
+    }
+
+    /**
      * Verbleibende sperrzeit in sekunden, nachdem zu viele codes falsch eingegeben wurden.
      *
      * @return int 0, wenn die eingabe nicht gesperrt ist

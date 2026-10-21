@@ -48,6 +48,16 @@ Nach der erfolgreichen Einrichtung wird jeder neue Login in das REDAXO-Backend d
 
 Anschließend ist man, wie gewohnt, im REDAXO-Backend eingeloggt.
 
+## Passkey-Login (WebAuthn)
+
+Erfolgt die Anmeldung im Backend über einen Passkey (WebAuthn), wird **kein** zweiter Faktor mehr abgefragt.
+
+Ein Passkey ist bereits ein phishing-resistenter, gerätegebundener Faktor und deckt damit die Anforderung einer Zwei-Faktor-Authentifizierung ab. Der REDAXO-Core behandelt eine Passkey-Anmeldung ebenso bevorzugt – zum Beispiel wird ein erzwungener Passwortwechsel dabei ausgesetzt.
+
+Das AddOn erkennt eine Passkey-Session anhand der `passkey_id` in der aktuellen `rex_user_session` und überspringt bei gesetztem Wert sowohl die erzwungene Einrichtung als auch die Code-Abfrage.
+
+> Hinweis: Jede über einen Passkey angemeldete Session umgeht die 2FA-Prüfung vollständig. Logins mit Benutzername und Passwort bleiben weiterhin durch den zweiten Faktor geschützt.
+
 ## 2-Faktor-Authentifizierung mit MacOS Bordmitteln
 
 Seit macOS Sequoia lässt sich die 2-Faktor-Authentifizierung auch ohne Dritt-App einrichten.

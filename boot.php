@@ -12,6 +12,12 @@ if (rex::isBackend() && null !== rex::getUser()) {
 
     $otp = one_time_password::getInstance();
 
+    // ein passkey (WebAuthn) ist bereits ein phishing-resistenter faktor und ersetzt
+    // den zweiten faktor. Bei passkey-anmeldung keine 2fa erzwingen oder abfragen.
+    if ($otp->isPasskeyLogin()) {
+        return;
+    }
+
     // bei einer impersonation zaehlt immer der real angemeldete benutzer
     $realUser = rex::getImpersonator() ?? rex::requireUser();
 
@@ -30,10 +36,17 @@ if (rex::isBackend() && null !== rex::getUser()) {
     $blockRequest = static function (array $allowedPages, string $target) use ($currentPage) {
         // api-funktionen werden unabhaengig von der aufgerufenen seite ausgefuehrt
         if ('' !== rex_request(rex_api_function::REQ_CALL_PARAM, 'string', '')) {
-            throw new rex_http_exception(
-                new rex_api_exception('the api function can only be called after a completed two-factor authentication!'),
-                rex_response::HTTP_UNAUTHORIZED,
+            // die antwort wird direkt gesendet statt eine exception zu werfen: der globale
+            // exception-handler wuerde diesen erwarteten, unkritischen fall sonst als fehler
+            // ins system-log schreiben (z.b. der session-keep-alive-ping waehrend der
+            // 2fa-eingabe, siehe issue #110).
+            rex_response::cleanOutputBuffers();
+            rex_response::setStatus(rex_response::HTTP_UNAUTHORIZED);
+            rex_response::sendContent(
+                'the api function can only be called after a completed two-factor authentication!',
+                'text/plain; charset=utf-8',
             );
+            exit;
         }
 
         if (!in_array($currentPage, $allowedPages, true)) {

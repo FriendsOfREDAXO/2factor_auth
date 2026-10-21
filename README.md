@@ -58,6 +58,14 @@ Das AddOn erkennt eine Passkey-Session anhand der `passkey_id` in der aktuellen 
 
 > Hinweis: Jede über einen Passkey angemeldete Session umgeht die 2FA-Prüfung vollständig. Logins mit Benutzername und Passwort bleiben weiterhin durch den zweiten Faktor geschützt.
 
+## Gerät merken bei „Eingeloggt bleiben“
+
+Wer sich mit „Eingeloggt bleiben“ anmeldet, wird standardmäßig in jeder neuen Sitzung erneut nach dem Code gefragt. In den Einstellungen lässt sich festlegen, dass ein solches Gerät den zweiten Faktor für 7 bis 90 Tage behält.
+
+Gemerkt wird das Gerät über den „Eingeloggt bleiben“-Cookie; gespeichert wird nur ein Hash davon. Die Freigabe erlischt, wenn die Sitzung beendet wird (Abmelden, Sitzungsliste im Profil, Passwortänderung) oder die 2FA des Benutzers deaktiviert wird. Anmeldungen ohne „Eingeloggt bleiben“ sind davon nicht betroffen.
+
+> Hinweis: Wer den Cookie eines gemerkten Geräts erbeutet, kommt innerhalb des Zeitraums ohne Passwort und ohne Code ins Backend. Die Standardeinstellung „Nie merken“ ist deshalb die sicherste.
+
 ## 2-Faktor-Authentifizierung mit MacOS Bordmitteln
 
 Seit macOS Sequoia lässt sich die 2-Faktor-Authentifizierung auch ohne Dritt-App einrichten.

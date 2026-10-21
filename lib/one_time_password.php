@@ -95,7 +95,7 @@ final class one_time_password
      */
     public function getTrustedDeviceDays()
     {
-        return max(0, (int) rex_config::get('2factor_auth', 'trusted_device_days', 30));
+        return max(0, (int) rex_config::get('2factor_auth', 'trusted_device_days', 0));
     }
 
     /**

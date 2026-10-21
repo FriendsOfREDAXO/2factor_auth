@@ -9,7 +9,7 @@ if ('update' == rex_request('func', 'string')) {
     $this->setConfig('enforce', rex_request('2factor_auth_enforce', 'string'));
     $this->setConfig('option', rex_request('2factor_auth_option', 'string'));
     $this->setConfig('email_period', rex_request('2factor_auth_email_period', 'int', 300));
-    $this->setConfig('trusted_device_days', rex_request('2factor_auth_trusted_device_days', 'int', 30));
+    $this->setConfig('trusted_device_days', rex_request('2factor_auth_trusted_device_days', 'int', 0));
     echo rex_view::success($this->i18n('2factor_auth_updated'));
 }
 
@@ -48,7 +48,7 @@ $selectTrustedDevice = new rex_select();
 $selectTrustedDevice->setId('2factor_auth_trusted_device_days');
 $selectTrustedDevice->setName('2factor_auth_trusted_device_days');
 $selectTrustedDevice->setAttribute('class', 'form-control selectpicker');
-$selectTrustedDevice->setSelected((int) $this->getConfig('trusted_device_days', 30));
+$selectTrustedDevice->setSelected((int) $this->getConfig('trusted_device_days', 0));
 
 $selectTrustedDevice->addOption($this->i18n('2factor_auth_trusted_device_disabled'), 0);
 $selectTrustedDevice->addOption('7 ' . $this->i18n('2factor_auth_days'), 7);

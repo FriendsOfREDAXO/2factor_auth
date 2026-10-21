@@ -9,6 +9,7 @@ if ('update' == rex_request('func', 'string')) {
     $this->setConfig('enforce', rex_request('2factor_auth_enforce', 'string'));
     $this->setConfig('option', rex_request('2factor_auth_option', 'string'));
     $this->setConfig('email_period', rex_request('2factor_auth_email_period', 'int', 300));
+    $this->setConfig('trusted_device_days', rex_request('2factor_auth_trusted_device_days', 'int', 0));
     echo rex_view::success($this->i18n('2factor_auth_updated'));
 }
 
@@ -42,6 +43,19 @@ $selectEmailPeriod->addOption('5 ' . $this->i18n('minutes'), 300);
 $selectEmailPeriod->addOption('10 ' . $this->i18n('minutes'), 600);
 $selectEmailPeriod->addOption('15 ' . $this->i18n('minutes'), 900);
 $selectEmailPeriod->addOption('30 ' . $this->i18n('minutes'), 1800);
+
+$selectTrustedDevice = new rex_select();
+$selectTrustedDevice->setId('2factor_auth_trusted_device_days');
+$selectTrustedDevice->setName('2factor_auth_trusted_device_days');
+$selectTrustedDevice->setAttribute('class', 'form-control selectpicker');
+$selectTrustedDevice->setSelected((int) $this->getConfig('trusted_device_days', 0));
+
+$selectTrustedDevice->addOption($this->i18n('2factor_auth_trusted_device_disabled'), 0);
+$selectTrustedDevice->addOption('7 ' . $this->i18n('2factor_auth_days'), 7);
+$selectTrustedDevice->addOption('14 ' . $this->i18n('2factor_auth_days'), 14);
+$selectTrustedDevice->addOption('30 ' . $this->i18n('2factor_auth_days'), 30);
+$selectTrustedDevice->addOption('60 ' . $this->i18n('2factor_auth_days'), 60);
+$selectTrustedDevice->addOption('90 ' . $this->i18n('2factor_auth_days'), 90);
 
 $selectTOTPPeriod = new rex_select();
 $selectTOTPPeriod->setAttribute('class', 'form-control selectpicker');
@@ -83,6 +97,16 @@ $content = '
                 </div>
                 <div class="col-xs-12 col-sm-6">
                 ' . $selectEmailPeriod->get() . '
+                </div>
+            </div>
+
+            <div class="row abstand">
+                <div class="col-xs-12 col-sm-6">
+                    <label for="2factor_auth_trusted_device_days">' . $this->i18n('2factor_auth_trusted_device') . '</label>
+                    <p class="help-block">' . $this->i18n('2factor_auth_trusted_device_info') . '</p>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                ' . $selectTrustedDevice->get() . '
                 </div>
             </div>
 

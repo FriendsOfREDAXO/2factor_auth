@@ -126,6 +126,13 @@ final class one_time_password_config
         $this->provisioningUri = null;
 
         $this->save();
+
+        // gemerkte geraete gelten nur fuer die bisherige einrichtung, nach einem
+        // zuruecksetzen muss der zweite faktor ueberall neu erbracht werden
+        rex_sql::factory()->setQuery(
+            'DELETE FROM ' . rex::getTable('2factor_auth_trusted_device') . ' WHERE user_id = ?',
+            [$this->user->getId()],
+        );
     }
 
     /**

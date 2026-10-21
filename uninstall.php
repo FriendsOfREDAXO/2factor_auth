@@ -5,3 +5,5 @@ rex_sql_table::get(rex::getTable('user'))
     ->removeColumn('one_time_password_tries')
     ->removeColumn('one_time_password_lasttry')
 ->ensure();
+
+rex_sql_table::get(rex::getTable('2factor_auth_trusted_device'))->drop();

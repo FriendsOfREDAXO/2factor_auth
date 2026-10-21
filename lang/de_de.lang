@@ -68,6 +68,11 @@
 minutes = Minuten
 2factor_auth_users = Benutzer
 
+2factor_auth_trusted_device = Vertrauenswürdiges Gerät ("eingeloggt bleiben")
+2factor_auth_trusted_device_info = Wie lange der zweite Faktor auf einem Gerät gemerkt wird, das beim Login "eingeloggt bleiben" aktiviert hat. Innerhalb dieses Zeitraums wird auf diesem Gerät kein zweiter Faktor erneut abgefragt. "Nie merken" fragt bei jeder neuen Sitzung erneut (sicherste Einstellung).
+2factor_auth_trusted_device_disabled = Nie merken (immer abfragen)
+2factor_auth_days = Tage
+
 2factor_auth_totp_period = Zeitintervall bei Authentikatoren (nicht veränderbar)
 2factor_auth_totp_period_info = {0} Sekunden
 

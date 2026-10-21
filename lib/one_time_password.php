@@ -73,6 +73,7 @@ final class one_time_password
 
         if ($verified) {
             rex_set_session('otp_verified', true);
+            $this->rememberTrustedDevice();
         }
 
         return $verified;
@@ -84,6 +85,141 @@ final class one_time_password
     public function isVerified()
     {
         return rex_session('otp_verified', 'boolean', false);
+    }
+
+    /**
+     * Anzahl der tage, fuer die der zweite faktor auf einem "eingeloggt bleiben"-geraet
+     * gemerkt wird. 0 deaktiviert die trusted-device-funktion (immer erneute abfrage).
+     *
+     * @return int
+     */
+    public function getTrustedDeviceDays()
+    {
+        return max(0, (int) rex_config::get('2factor_auth', 'trusted_device_days', 0));
+    }
+
+    /**
+     * Markiert die aktuelle session als verifiziert, wenn das geraet ueber einen gueltigen
+     * "eingeloggt bleiben"-cookie bereits den zweiten faktor erbracht hat.
+     *
+     * @return bool true, wenn die session dadurch als verifiziert markiert wurde
+     */
+    public function verifyViaTrustedDevice()
+    {
+        if (!$this->isTrustedDevice()) {
+            return false;
+        }
+
+        rex_set_session('otp_verified', true);
+
+        return true;
+    }
+
+    /**
+     * Prueft, ob fuer den "eingeloggt bleiben"-cookie der aktuellen session ein
+     * gueltiger (nicht abgelaufener) trusted-device-eintrag existiert.
+     *
+     * @return bool
+     */
+    public function isTrustedDevice()
+    {
+        $days = $this->getTrustedDeviceDays();
+        if (0 === $days) {
+            return false;
+        }
+
+        $cookieKey = $this->getCurrentCookieKey();
+        if (null === $cookieKey) {
+            return false;
+        }
+
+        $sql = rex_sql::factory();
+        $sql->setQuery(
+            'SELECT id FROM ' . rex::getTable('2factor_auth_trusted_device')
+            . ' WHERE cookie_key_hash = ? AND user_id = ? AND verified_at >= ? LIMIT 1',
+            [
+                hash('sha256', $cookieKey),
+                $this->getUser()->getId(),
+                rex_sql::datetime(time() - $days * 86400),
+            ],
+        );
+
+        return $sql->getRows() > 0;
+    }
+
+    /**
+     * Haelt fest, dass der zweite faktor fuer den "eingeloggt bleiben"-cookie der aktuellen
+     * session erbracht wurde. Bei sessions ohne "eingeloggt bleiben" (kein cookie) passiert
+     * nichts, sodass der zweite faktor dort wie gehabt pro session abgefragt wird.
+     *
+     * @return void
+     */
+    public function rememberTrustedDevice()
+    {
+        if (0 === $this->getTrustedDeviceDays()) {
+            return;
+        }
+
+        $cookieKey = $this->getCurrentCookieKey();
+        if (null === $cookieKey) {
+            return;
+        }
+
+        $sql = rex_sql::factory();
+        $sql->setTable(rex::getTable('2factor_auth_trusted_device'));
+        $sql->setValue('cookie_key_hash', hash('sha256', $cookieKey));
+        $sql->setValue('user_id', $this->getUser()->getId());
+        $sql->setValue('verified_at', rex_sql::datetime());
+        $sql->insertOrUpdate();
+
+        $this->purgeExpiredTrustedDevices();
+    }
+
+    /**
+     * Entfernt abgelaufene trusted-device-eintraege.
+     *
+     * @return void
+     */
+    private function purgeExpiredTrustedDevices()
+    {
+        $days = $this->getTrustedDeviceDays();
+        if (0 === $days) {
+            return;
+        }
+
+        $sql = rex_sql::factory();
+        $sql->setQuery(
+            'DELETE FROM ' . rex::getTable('2factor_auth_trusted_device') . ' WHERE verified_at < ?',
+            [rex_sql::datetime(time() - $days * 86400)],
+        );
+    }
+
+    /**
+     * Liefert den "eingeloggt bleiben"-cookie-key der aktuellen session, sofern vorhanden.
+     * Nur stay-logged-in-sessions haben einen cookie_key hinterlegt.
+     *
+     * @return string|null
+     */
+    private function getCurrentCookieKey()
+    {
+        $sessionId = session_id();
+        if (false === $sessionId || '' === $sessionId) {
+            return null;
+        }
+
+        $sql = rex_sql::factory();
+        $sql->setQuery(
+            'SELECT cookie_key FROM ' . rex::getTable('user_session') . ' WHERE session_id = ? LIMIT 1',
+            [$sessionId],
+        );
+
+        if (0 === $sql->getRows()) {
+            return null;
+        }
+
+        $cookieKey = $sql->getValue('cookie_key');
+
+        return null === $cookieKey ? null : (string) $cookieKey;
     }
 
     /**

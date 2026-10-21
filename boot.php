@@ -68,6 +68,13 @@ if (rex::isBackend() && null !== rex::getUser()) {
     // den benutzer zur einmal passwort eingabe leiten, weil one-time-passwort aktiv
     // und bisher fuer die session noch nicht eingegeben
     if ($otp->isEnabled()) {
+        // auf einem "eingeloggt bleiben"-geraet, das den zweiten faktor bereits innerhalb
+        // des konfigurierten zeitraums erbracht hat, die session ohne erneute abfrage
+        // verifizieren (trusted device)
+        if (!$otp->isVerified()) {
+            $otp->verifyViaTrustedDevice();
+        }
+
         if (!$otp->isVerified()) {
             // die verify-page laeuft ueber die profile-page, damit ein ggf. erzwungener
             // passwortwechsel erst nach der verifizierung greift
